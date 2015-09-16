@@ -1,0 +1,48 @@
+Reviewer 1 of ICRA 2015 submission 23
+
+Comments to the author
+======================
+
+This paper introduces a new MRI-based self-assembly Gauss
+gun for millirobots to generate large impulsive forces to
+penetrate tissue. The authors provide a comprehensive
+discussion on the theory and design of the new device. The
+experimental results show promising preliminary performance
+of the new MRI-Gauss gun. The paper is pretty well written
+and the idea flow is very clear. I've also noticed the
+video attachment is interesting and convincing.
+
+The following are some suggestions:
+
+In the experiment section (i.e., Section IV), I would like
+to suggest a comparison with traditional Gauss gun, at
+least in the experiments of penetration tests. Although the
+experimental results based on the proposed Gauss gun looks
+promising, without comparison with traditional devices, it
+is hard to evaluate the performance improvement.
+
+In the design section (i.e., Section III), the authors
+select values of the four parameters and materials based on
+theoretical analysis. I am wondering whether the authors
+perform any experiments to test the effects of different
+parameter values and materials? This set of experiments can
+be important to validate the correctness of the theoretical
+analysis, and may be able to reveal new conclusions.
+
+Since the title of the paper emphasizes "MRI-powered
+millirobots", I expected more details on how the MRI-Gauss
+gun can be installed and used by millirobots. In addition,
+it seems from the video that the prototype (as in Fig. 9)
+can be well controlled. It can be helpful to provide more
+details on how the prototype are controlled (and
+navigated). Last thing I've noticed from the video is that
+the Gauss gun components can be misaligned during contact,
+so how does this misalignment affect the performance? 
+
+
+Comments on the Video Attachment
+================================
+
+The one minute video clear explains the contribution and
+novelty of the approach and shows its promising
+performance.

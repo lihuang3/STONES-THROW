@@ -1,0 +1,13 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Multi-Rotor Control}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Open-Loop Multi-Actuator Control}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Closed-Loop Multi-Actuator Velocity Control }{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Closed-Loop Multi-Actuator Position Control}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{Multi-Actuator Design Constraints}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Actuator Interaction Forces}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Simultaneous Tracking of Multiple Rotors}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.3}{Optimal Geometric Arrangement of n Rotors}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.4}{Stall Torque versus Number of Actuators}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{Case Study: A Three-Axis Biopsy Robot}{}% 11
+\BOOKMARK [1][-]{section.5}{Conclusion}{}% 12
+\BOOKMARK [1][-]{section*.1}{References}{}% 13

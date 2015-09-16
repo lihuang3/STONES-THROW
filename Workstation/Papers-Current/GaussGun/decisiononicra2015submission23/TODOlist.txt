@@ -1,0 +1,69 @@
+Final submission deadline February 27, 2015
+
+Video Attachment:   Very helpful for the reader.  However, I found that reading
+the text and listening to the audio was confusing.  I suggest only audio or only text, but not both.  [slow down the text at the start to match with the voice-over, but it is fine as is.]
+
+- Introduction, Paragraph 5: "tissue penetration force"
+should be referred to as "tissue puncture force"
+
+
+adding labels to components in the figures (Figures 10 and 11)
+- It would be helpful to add labels in Figures 10 & 11
+- In Figure 10, arrows could be used to indicate how the
+component evolves from one image to the next
+
+
+
+
+ALL COMMENTS FOR THE JOURNAL VERSION:  (more experiments, etc.)
+
+ It would be informative to describe how the critical
+distance shown just after equation (5) was considered for
+the design of the device   YES IT WOULD
+
+- Finding a way to quantify the results provided in section
+IV B & IV C would strengthen the paper
+
+
+ a comparison of results from a traditional device compared to this new approach would be helpful.
+
+Including more design considerations/targets would also be helpful for the reader.
+
+
+In the experiment section (i.e., Section IV), I would like
+to suggest a comparison with traditional Gauss gun, at
+least in the experiments of penetration tests. Although the
+experimental results based on the proposed Gauss gun looks
+promising, without comparison with traditional devices, it
+is hard to evaluate the performance improvement.
+
+In the design section (i.e., Section III), the authors
+select values of the four parameters and materials based on
+theoretical analysis. I am wondering whether the authors
+perform any experiments to test the effects of different
+parameter values and materials? This set of experiments can
+be important to validate the correctness of the theoretical
+analysis, and may be able to reveal new conclusions.
+
+
+Since the title of the paper emphasizes "MRI-powered
+millirobots", I expected more details on how the MRI-Gauss
+gun can be installed and used by millirobots. In addition,
+it seems from the video that the prototype (as in Fig. 9)
+can be well controlled. It can be helpful to provide more
+details on how the prototype are controlled (and
+navigated). Last thing I've noticed from the video is that
+the Gauss gun components can be misaligned during contact,
+so how does this misalignment affect the performance? 
+
+The paper could be improved if more details about the
+design considerations of the device were provided in the
+design section. More importantly, the experimental section
+in its current state is weak and there lacks a clear
+connection between the theory and the experiments. It
+would be helpful to explicitly reinforce how the
+experiments tie-in with the theory and/or introduction
+topics. Although the motivation of the paper was on the use
+of high velocities to generate the forces necessary to
+puncture tissue, the experimental test focused on
+penetration depth rather than the puncture force/velocity.

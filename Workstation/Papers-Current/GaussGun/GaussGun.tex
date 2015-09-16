@@ -1,0 +1,655 @@
+% to submit https://ras.papercept.net/conferences/scripts-n/start.pl
+% http://icra2015.org/
+% DUE DATE: 1 October 2014: Initial Paper Submission deadline
+% Final submission deadline February 27, 2015
+%
+% TODO: 
+% IS THIS PATENTABLE?
+%  add optimization discussion
+% add talk/plot of separating components
+% add MRI image of the components
+% add MRI image of the test setup, before and after firing
+% add image of needle tip injected. with overlay
+% ADD http://www.google.com/patents/EP0434684A1?cl=en  Michael A. Lawson ; Kevin G. Wika ; George T. Gilles ; Rogers C. Ritter
+
+%
+%Self-assembled gauss gun -- this topic has the potential to be another award finalist. 
+% If the paper culminated in an MRI experiment with a penetration test, that would be great. (DONE)
+% Closed-loop position control would be nice, but is not necessary.  (FOR JOURNAL)
+% Right now, pieces of theory are there, but the story line has not been assembled. Please do not discuss TV, but rather include a paragraph mentioning a variety of things that could be done with higher forces. (DONE)
+% Figure 1-n: Please don't put paragraphs of text in figure captions. (DONE)
+% Figure 1(a) - please add another subfigure so that each collision can be understood. Same with figure 1(b).  (AARON, at work)
+% All text, drop phrases that sound less professional, e.g., "physics demonstration" in abstract.  (SOME FIXED)
+% Also, please avoid reusing sentences from prior papers: "An MRI scanner can power, image and control" (SOME FIXED)
+
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}
+\IEEEoverridecommandlockouts
+\usepackage{calc}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb}
+\usepackage{rotating}
+
+\usepackage{nicefrac}
+\usepackage{cite}
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{colortbl}
+\usepackage{overpic}
+\graphicspath{{./pictures/pdf/},{./pictures/ps/},{./pictures/png/},{./pictures/jpg/}}
+\usepackage{breqn} %for breaking equations automatically
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{multirow}
+\usepackage{soul}
+\usepackage{bm}   % boldface math type
+
+
+\newcommand{\topic}[1]{\textcolor{ForestGreen}{\footnotesize \textsf{#1}}}
+\newcommand{\todo}[1]{\textcolor{red}{\footnotesize \textsf{#1}}}
+
+
+%% ABBREVIATIONS
+\newcommand{\qstart}{q_{\text{start}}}
+\newcommand{\qgoal}{q_{\text{goal}}}
+\newcommand{\pstart}{p_{\text{start}}}
+\newcommand{\pgoal}{p_{\text{goal}}}
+\newcommand{\xstart}{x_{\text{start}}}
+\newcommand{\xgoal}{x_{\text{goal}}}
+\newcommand{\ystart}{y_{\text{start}}}
+\newcommand{\ygoal}{y_{\text{goal}}}
+\newcommand{\gammastart}{\gamma_{\text{start}}}
+\newcommand{\gammagoal}{\gamma_{\text{goal}}}
+\providecommand{\proc}[1]{\textsc{#1}}
+
+
+\newcommand{\ARLfull}{Aero\-space Ro\-bot\-ics La\-bora\-tory }
+\newcommand{\ARL}{\textsc{arl}}
+\newcommand{\JPL}{\textsc{jpl}}
+\newcommand{\PRM}{\textsc{prm}}
+\newcommand{\CM}{\textsc{cm}}
+\newcommand{\SVM}{\textsc{svm}}
+\newcommand{\NN}{\textsc{nn}}
+\newcommand{\prm}{\textsc{prm}}
+\newcommand{\lemur}{\textsc{lemur}}
+\newcommand{\Lemur}{\textsc{Lemur}}
+\newcommand{\LP}{\textsc{lp}} 
+\newcommand{\SOCP}{\textsc{socp}}
+\newcommand{\SDP}{\textsc{sdp}}
+\newcommand{\NP}{\textsc{np}}
+\newcommand{\SAT}{\textsc{sat}}
+\newcommand{\LMI}{\textsc{lmi}}
+\newcommand{\hrp}{\textsc{hrp\nobreakdash-2}}
+\newcommand{\DOF}{\textsc{dof}}
+\newcommand{\UIUC}{\textsc{uiuc}}
+%% MACROS
+
+
+\providecommand{\abs}[1]{\left\lvert#1\right\rvert}
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
+\providecommand{\normn}[2]{\left\lVert#1\right\rVert_#2}
+\providecommand{\dualnorm}[1]{\norm{#1}_\ast}
+\providecommand{\dualnormn}[2]{\norm{#1}_{#2\ast}}
+\providecommand{\set}[1]{\lbrace\,#1\,\rbrace}
+\providecommand{\cset}[2]{\lbrace\,{#1}\nobreak\mid\nobreak{#2}\,\rbrace}
+\providecommand{\lscal}{<}
+\providecommand{\gscal}{>}
+\providecommand{\lvect}{\prec}
+\providecommand{\gvect}{\succ}
+\providecommand{\leqscal}{\leq}
+\providecommand{\geqscal}{\geq}
+\providecommand{\leqvect}{\preceq}
+\providecommand{\geqvect}{\succeq}
+\providecommand{\onevect}{\mathbf{1}}
+\providecommand{\zerovect}{\mathbf{0}}
+\providecommand{\field}[1]{\mathbb{#1}}
+\providecommand{\C}{\field{C}}
+\providecommand{\R}{\field{R}}
+\newcommand{\Cspace}{\mathcal{Q}}
+\newcommand{\Uspace}{\mathcal{U}}
+\providecommand{\Fspace}{\Cspace_\text{free}}
+\providecommand{\Hcal}{$\mathcal{H}$}
+\providecommand{\Vcal}{$\mathcal{V}$}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\homog}{homog}
+\DeclareMathOperator{\domain}{dom}
+\DeclareMathOperator{\range}{range}
+\DeclareMathOperator{\sign}{sgn}
+\DeclareMathOperator{\sgn}{sgn}
+\providecommand{\polar}{\triangle}
+\providecommand{\ainner}{\underline{a}}
+\providecommand{\aouter}{\overline{a}}
+\providecommand{\binner}{\underline{b}}
+\providecommand{\bouter}{\overline{b}}
+\newcommand{\D}{\nobreakdash-\textsc{d}}
+%\newcommand{\Fspace}{\mathcal{F}}
+\providecommand{\Fspace}{\Cspace_\text{free}}
+\providecommand{\free}{\text{\{}\mathsf{free}\text{\}}}
+\providecommand{\iff}{\Leftrightarrow}
+\providecommand{\subinner}[1]{#1_{\text{inner}}}
+\providecommand{\subouter}[1]{#1_{\text{outer}}}
+\providecommand{\Ppoly}{\mathcal{X}}
+\providecommand{\Pproj}{\mathcal{Y}}
+\providecommand{\Pinner}{\subinner{\Pproj}}
+\providecommand{\Pouter}{\subouter{\Pproj}}
+\DeclareMathOperator{\argmax}{arg\,max}
+\providecommand{\Aineq}{B}
+\providecommand{\Aeq}{A}
+\providecommand{\bineq}{u}
+\providecommand{\beq}{t}
+\DeclareMathOperator{\area}{area}
+\newcommand{\contact}[1]{\Cspace_{#1}}
+\newcommand{\feasible}[1]{\Fspace_{#1}}
+\newcommand{\dd}{\; \mathrm{d}}
+\newcommand{\figwid}{0.22\columnwidth}
+
+\DeclareMathOperator{\atan2}{atan2}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\begin{document}
+
+
+%%%%%%%%%%%%%% For debugging purposes, I like to display the TOC
+%    \tableofcontents
+%    \setcounter{tocdepth}{4}
+%    \newpage
+%%%%%% END TOC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\LARGE \bf 
+Toward Tissue Penetration by MRI-powered Millirobots\\ Using a Self-Assembled Gauss Gun
+%Generating Clinically Relevant Forces with MRI-Powered Milli-Robots using a Self-Assembled Gauss Gun
+%Penetrating tissue with MRI-Powered Milli-Robots 
+}
+\author{Aaron T.\ Becker,~\IEEEmembership{Member,~IEEE}, Ouajdi Felfoul, and Pierre E.\ Dupont,~\IEEEmembership{Fellow,~IEEE}%%, 
+\thanks{{A.~T.~Becker is with the  Dept.~of Electrical and Computer Engineering,  University of Houston, Houston, TX 70004, USA {\tt\small atbecker@uh.edu},
+ O.~Felfoul, and P.~E.~Dupont are with the Department of Cardiovascular Surgery,  Boston Children's Hospital and Harvard Medical School, Boston, MA, 02115 USA {\tt\small first name.lastname@childrens.harvard.edu}. This work was supported by the National Science Foundation under
+\href{http://nsf.gov/awardsearch/showAward?AWD_ID=1208509}{IIS-1208509} and by the \href{http://wyss.harvard.edu/}{Wyss Institute for Biologically Inspired Engineering}.  
+}
+} %\end thanks
+} % end author block
+\maketitle
+
+\begin{abstract} 
+MRI-based navigation and propulsion of millirobots is a new and promising approach for minimally invasive therapies. The strong central field inside the scanner, however, precludes torque-based control. Consequently, prior propulsion techniques have been limited to gradient-based pulling through fluid-filled body lumens.  This paper introduces a technique for generating large impulsive forces that can be used to penetrate tissue. The approach is based on navigating multiple robots to a desired location and using self-assembly to trigger the conversion of magnetic potential energy into sufficient kinetic energy to achieve penetration. The approach is illustrated through analytical modeling and experiments in a clinical MRI scanner. 
+\end{abstract}
+
+%##################################################################    
+\section{Introduction}\label{sec:Intro}
+%##################################################################    
+Millimeter-scale robots have the potential to provide highly localized therapies with minimal trauma by navigating through the natural fluid-filled passageways of the body. 
+While navigation through, e.g., the circulatory system or cerebrospinal fluid spaces, is sufficient for some applications, it can also be necessary to penetrate into the surrounding tissue. Examples include puncturing a membrane to release trapped fluid, opening a blocked passageway or delivering a drug to a tissue location several centimeters from a fluid-filled space.  The forces required for tissue penetration, however, are substantially higher than those needed to propel a millirobot through a bodily fluid and, consequently, can be difficult to achieve.  Prior tetherless systems for moving through tissue have relied on magnetic forces and torques produced by large external magnets to either pull magnetic spheres through brain tissue~\cite{Ritter1996} or to rotate threaded magnetic cylinders through muscle tissue~\cite{ishiyama2001swimming}. 
+
+Alternatively, methods for tetherless robot propulsion and control have been developed that employ the magnetic gradients of clinical MRI scanners  \cite{Chanu2008, Vartholomeos2012,Vartholomeos2013,Becker2014}. MRI also provides the capability to image both the robot and surrounding tissue to guide navigation. MRI-based millirobot navigation in the vasculature was first demonstrated in~\cite{Chanu2008}. Recently, algorithms enabling the simultaneous MRI-based control of multiple millirobots~\cite{Vartholomeos2012,Eqtami2014} and macro-scale rotary actuators \cite{Vartholomeos2013,Becker2014} have also been developed. 
+
+To date, however, the motion of MRI-powered millirobots has been constrained to fluid-filled spaces since the magnetic gradients produced by the scanner are relatively weak. The maximum gradient produced by most clinical scanners is in the range of 20-40mT/m producing a force on a magnetized steel particle equal to 36-71\% of its gravitational force. While it is possible to install custom high-strength gradient coils, such as the 400mT/m coil reported in~\cite{Bigot2014}, %(see our IJRR paper Ð the Martinez? lab at MGH has published abstracts with much higher gradients)
+ this approach is costly and can reduce the size of the MRI bore. While to facilitate motion within a fluid, a millirobot can be designed to be neutrally buoyant, the force magnitude produced by the magnetic gradient is not capable of producing tissue penetration.  
+ 
+ \begin{figure}
+ \centering
+\begin{overpic}[width = \columnwidth]{GaussGunToyAndMRI.pdf}
+\put(5,26.5){(a) Traditional \emph{Gauss gun} before and after triggering}
+\put(46,44){\scriptsize$2r$}
+\put(51.5,44){\scriptsize$2r$}
+\put(57,44){\scriptsize$2r$}
+\put(67,44){\scriptsize$a$}
+\put(5,-4){(b) \emph{MRI-Gauss Gun} before and after triggering}
+\put(18,8.5){\scriptsize$a$}
+\put(46,8.5){\scriptsize$2r$}
+\put(52,8.5){\scriptsize$s$}
+\put(57,8.5){\scriptsize$2r$}
+\put(67,8.5){\scriptsize$a$}
+\end{overpic}
+\caption{\label{fig:GaussGunToyAndMRI}Operation of a Gauss gun. (a) Standard design for use outside an MRI scanner shown before and after triggering. Magnetized spheres are red and green. Non-magnetized spheres are gray. (b) Design for use inside an MRI scanner shown before and after triggering. All spheres are magnetized when inside scanner. See video at \href{http://youtu.be/uJ4rFA8x2Js}{http://youtu.be/uJ4rFA8x2Js.}}
+%The MRI magnetic accelerator used in this paper is inspired by traditional Gauss gun design, but requires different components and has a modular design.}
+%http://www.discovery.com/tv-shows/other-shows/videos/time-warp-gauss-gun.htm
+%http://www.ucke.de/christian/physik/ftp/lectures/Magnetic_Cannon.pdf
+\end{figure}
+
+Consider, for example, that a standard 18 gauge needle requires 0.59$\pm$0.11N of force to penetrate 10mm into muscle tissue~\cite{Cho26122012}. Bioinspired design can somewhat reduce these forces, e.g., the backward-tipped barbs of the North American porcupine quill exhibit forces of 0.33$\pm$0.08N for 10mm of muscle penetration~\cite{Cho26122012}. Nevertheless, to reproduce even these forces using an MRI with a steel needle would require a 3.3m long shaft -- longer than the bore of the scanner. While the size of macro-scale MRI-based actuators permits the use of gear transmissions to trade off velocity and force \cite{Vartholomeos2012,Felfoul2014}, this approach is not feasible at the millimeter scale. Therefore, to address the challenge of MRI-based tissue penetration, an alternative to gradient-based force production is needed.  
+
+The observation that tissue puncture force is inversely related to penetration velocity~\cite{Mahvash2010} motivates the concept of using energy storage and sudden release to perform penetration. Furthermore, while the maximum gradient forces produced on a steel particle are low, the magnetic attraction forces between particles inside the scanner is, by comparison, quite high. Thus, the approach proposed here involves navigating individual millirobots to a target location and allowing them to self-assemble in a manner that focuses the stored magnetic potential energy as kinetic energy for tissue penetration. 
+
+The concept, illustrated in Fig.~\ref{fig:GaussGunToyAndMRI}, corresponds to a Gauss gun or accelerator~\cite{rabchuk2003gauss,kagan2004energy}.   Comprised of one or more stages, each stage is composed of a strong magnet, followed by two or more steel spheres (bearing balls). By colliding a single steel sphere with the first magnet, a chain reaction is initiated, greatly amplifying the speed of the first sphere. 
+
+In an MRI scanner, there is no need for permanent magnets, since steel is highly magnetized by the 3T magnetic field of an MRI. Each stage, containing two magnetized spheres separated by a nonmagnetic spacer, is individually stable. Using existing control approaches~\cite{Vartholomeos2012,Eqtami2014}, they can be navigated through fluid-filled spaces and self-assembled at a desired penetration location. The assembly can then be fired by a special trigger module consisting of two spheres separated by a spacer longer than that used in the individual stages. After firing, the assembly can be navigated out of the body.
+
+The remainder of the paper is arranged as follows. The mathematical model of the MRI Gauss gun is derived in the next section. Section \ref{sec:Design} details the design of experimental prototypes. Experiments evaluating self-assembly and penetration are provided in Section \ref{sec:Experiment}. Conclusions appear in Section~\ref{sec:CONCLUSION}.
+
+% NOT RELEVANT
+%Abbott et al. explained  convincingly that at micro scales magnetic torques are far more effective than magnetic forces for robot propulsion~\cite{Abbott_09_01}.  Unfortunately, MR scanners can  produce forces, but not torques.
+
+
+
+%The Gauss gun components  can be individually steered to the desired location and then assembled. The low gradient strength in clinical MR scanners dictates that components should be deployed in liquid-filled body regions with little to no flow. The cerebrospinal fluid (CSF) in the spinal canal and the brain ventricles, the urinary tract, the Wirsung duct in the pancreas, and the ovaries are regions where a self-propelled auto injector could provide  therapeutic benefits. Alternatively, a balloon catheter can be used to temporarily halt blood flow in an artery or vein, as in \cite{Martel2007}, and thereby extend access to the major organs of the body.
+%The resulting MRI-Gauss gun can function as a self-propelled, remotely triggered auto-injector.  
+
+    
+%##################################################################    
+%\section{Related Work}
+%##################################################################    
+   
+%   \subsection{Clinical Forces}
+  %can be treated by third ventrisculotomy (cite information from paper by Drake, )
+%needle insertion (porcupine study \cite{Cho26122012}, Dupont needle insertion \cite{Mahvash2010}
+  
+% \begin{figure}\centering
+%\begin{overpic}[width =\columnwidth]{SpinalCrossSection}\end{overpic}
+%\caption{\label{fig:SpinalCrossSection}Processed MRI scan of the spine of a healthy 31-year-old male. Shown are three vertebrae (pink), connective tissue (grey), and the spinal cord (yellow). The gap around the spinal cord is filled with CSF.}
+%\end{figure}    
+
+%##################################################################       
+\section{Theory}\label{sec:theory}
+%##################################################################    
+
+Ferrous material placed inside the strong $B_0$ field of an MRI become strong magnets.  This section describes the forces and torques these magnets exert on other magnets, the magnetic potential energy between these magnets, and how this energy is exploited in a Gauss gun.
+
+\subsection{Magnet Interaction Forces}\label{subsec:magnetforces}
+Any ferrous material placed in the magnetic field of an MR scanner becomes a strong magnetic dipole. The gradient fields can then apply forces on these dipoles.  Additionally, the dipoles exert forces on each other.  Dipole forces overpower MRI gradient forces if the materials are closer than a threshold distance.
+
+
+The magnetic field at position $\mathbf{p}_2$ generated by a spherical magnet at position $\mathbf{p}_1$ with magnetization  $\mathbf{m}_1$ is  \cite{Schill2003} %\cite{thomaszewski2008magnets}
+\begin{align}
+\label{eq:dipoleMagField}
+ \mathbf{B}_{\mathbf{p}_1}(\mathbf{p}_2) = \frac{\mu_0}{4 \pi}\frac{3 \mathbf{n}_{12}(\mathbf{n}_{12} \cdot \mathbf{m}_1) - \mathbf{m}_1}
+ {|\mathbf{p}_2-\mathbf{p}_1|^3},
+\end{align}
+with  $\mathbf{n}_{12} = (\mathbf{p}_2-\mathbf{p}_1)/|\mathbf{p}_2-\mathbf{p}_1|$. This is the \emph{magnetic field of a dipole}.
+ The force applied to a dipole at $\mathbf{p}_1$ with magnetic moment $\mathbf{m}_1$ by another dipole at $\mathbf{p}_2$ with magnetic moment $\mathbf{m}_2$ is approximated by
+\begin{align}
+\mathbf{F}_{12} \approx \frac{3\mu_0}{4 \pi} \frac{1}{|\mathbf{p}_2 - \mathbf{p}_1 |^4}
+\left[5 \mathbf{n}_{12}\Big(\left(\mathbf{m}_1 \cdot \mathbf{n}_{12} \right)   \left(\mathbf{m}_2 \cdot \mathbf{n}_{12} \right) \Big) \right. \nonumber \\
+\left.
+-  \mathbf{n}_{12} \left(\mathbf{m}_2 \cdot \mathbf{m}_1 \right)
+-  \mathbf{m}_{1} \left(\mathbf{m}_2 \cdot \mathbf{n}_{12} \right)  -  \mathbf{m}_{2} \left(\mathbf{m}_1 \cdot \mathbf{n}_{12}\right)   \right].
+\label{eq:dipoleForce}
+\end{align}
+
+The torque applied on a dipole at $\mathbf{p}_2$ by a dipole at $\mathbf{p}_1$ is 
+\begin{align}
+\mathbf{\tau}_{12} = \mathbf{m}_2 \times  \mathbf{B}_{\mathbf{p}_1}(\mathbf{p}_2) 
+\label{eq:dipoleTorque}
+\end{align}
+
+ \begin{figure}
+ \centering
+\begin{overpic}[height = 0.47\columnwidth]{MagneticDipoleField3mmRast}
+\tiny
+\put(28,29){0}
+\put(28,73){0}
+\put(89,73){0}
+\put(89,29){0}
+\put(27,51){-0.1$g_{M}$}
+\put(52,17){0.1$g_{M}$}
+\put(56,38){$g_{M}$}
+\put(64.5,52){-$g_{M}$}
+\small
+\put(35,-8){$r_{sphere}$ = 3mm}
+\end{overpic}
+\begin{overpic}[height = 0.47\columnwidth]{MagneticDipoleField6mmRast}
+\tiny
+\put(20,29){0}
+\put(20,79){0}
+\put(89,79){0}
+\put(89,30){0}
+\put(15,70){-0.1$g_{M}$}
+\put(25,15){0.1$g_{M}$}
+\put(52,38){$g_{M}$}
+\put(68.5,55){-$g_{M}$}
+\small
+\put(30,-8){$r_{sphere}$ = 6mm}
+ \end{overpic}
+\caption{\label{fig:MagneticDipoleField3mmRast}Contour lines show the force component radially outward from a sphere at $(0,0)$ on an identical sphere in an MRI. The magnetic field is symmetric about the $z$-axis.}
+\end{figure}
+Inside a 3T MRI, a steel sphere becomes fully magnetized with magnetic saturation $M_s$=1.36$\times10^6$.  The magnetic moment of a sphere with radius $r_{sphere}$ is aligned with the MRI $B_0$ field:
+\begin{equation}
+\mathbf{m}(r_{sphere})=\left[ \begin{array}{ccc}
+0 \\
+0\\
+1 \end{array} \right]
+ \frac{4}{3} \pi r_{sphere}^3 M_s.\label{eq:magnetMoment}
+\end{equation} 
+
+Figure \ref{fig:MagneticDipoleField3mmRast} shows contour plots for the magnetic force exerted by two identical spheres on each other.  
+   The contour lines show $\mathbf{F}\cdot \mathbf{n}_{12}$, the force component radially outward from the sphere at $(0,0)$ compared to the maximum force provided by the gradient coils $g_{M}$.  This force is attractive (red) along the $z$-axis and repulsive (blue) perpendicular to $z$. The magnetic field is symmetric about the $z$-axis.  If two spheres move within the dark red region, they cannot be separated using the gradient field. The contour lines are drawn at $\mathbf{F}_{12}\cdot \mathbf{n}_{12} = g_{M}\cdot \{-1,-\frac{1}{10},0,\frac{1}{10},1\}$.  The maximum force is along the $z$-axis
+
+\begin{equation}
+F_{\text{attraction}} = -\frac{ 8 M_{s}^2 \mu_0 \pi  r^3_1 r^3_2 }{3 d^4},
+\label{eq:attractionForce}
+\end{equation}
+where $d$ is the distance separating two spheres of radiis $r_1$ and $r_2$, each with magnetic saturation $M_{s}$. 
+The vacuum permeability $\mu_0$ is, by definition, $4 \pi\times 10^{-7}$ V$\cdot$ s/(A$\cdot$m).
+
+The critical distance when the attractive force becomes greater than the maximum gradient force is $\sqrt[4]{\frac{2  \mathbf{M}_s \mu_0 r^3_{sphere} }{g_{M}}}. $  
+%This interaction decays quickly and at distance $\approx 5.4 r_{sphere}^{3/4}$ is  10\% of the maximum gradient. The required distance, $d$, to ensure dipole-dipole forces are less than some $percentage$ of the maximum gradient is given by
+%%but rather the distance at which you can ignore the interaction - e.g., it only reduces max torque by 10\%. 
+%\begin{equation}
+%d \ge \sqrt[4]{\frac{ 2 \frac{100}{percentage} M_{sz} \mu_0 r^3_{sphere} }{g_{M}}}.
+%\label{eq:dipoledipolePercentGrad}
+%\end{equation}
+
+
+\subsection{Magnetic Potential Energy}\label{subsec:PotentialEnergy}
+A Gauss gun converts the potential energy stored by an  arrangement of magnets into kinetic energy.
+   
+The potential energy of two spherical magnets with magnetism $M_s$ and radii $r_1$ and $r_2$ is 
+\begin{align}
+PE(d,r_1,r_2,M_s) &= - \frac{ 8 M_{s}^2 \mu_0 \pi  r^3_1 r^3_2 }{3} \int_d^\infty \frac{ 1}{ x^4} \textrm{d} x \nonumber \\
+&= -\frac{ 8 M_{s}^2 \mu_0 \pi  r^3_1 r^3_2 }{9 d^3} = \frac{C_{r_1r_2}}{d^3}
+\label{eq:potentialEnergy}
+ \end{align}   
+ The constant $C_{r_1r_2}$ includes all terms except the distance between the spheres.
+ The change in potential energy, $\Delta PE$, when moving from separation $d_1$ to separation $d_2$ is
+ %elta E =  Final_E - Start_E
+    \begin{align}
+\Delta PE(d_1,d_2) =  C_{r_1r_2}\left( \frac{1}{d_2^3} -  \frac{1}{d_1^3} \right)
+ %\frac{ 8 M_{s}^2 \mu_0 \pi  r^3_1 r^3_2 }{9} \cdot \frac{ d_2^3-d_1^3}{d_1^3 d_2^3} \label{eq:DeltaPotentialEnergy}
+ \end{align}   
+
+ 
+ \subsection{Gauss Gun Energy}\label{subsec:GaussGunEnergy}
+When a Gauss gun is fired, at each stage at most one sphere is moving.  The energy released at each stage is the summation of potential energy before and after the movement as sphere $i$ moves from position $p_i^-$ to position $p_i^+$, as shown in the two-stage version in Fig.~\ref{fig:GaussGunToyAndMRI}.
+  
+  \begin{align}\label{eq:DeltaPEsinglestage}
+ PE_i^- &= \sum_{i\neq j}  C_{r_ir_j}\left( \frac{1}{ \left(p_i^- -p_j\right)^3  }  \right)\nonumber \\
+  PE_i^+ &= \sum_{i\neq j}  C_{r_ir_j}\left( \frac{1}{ \left(p_i^+ -p_j\right)^3  }  \right)\nonumber \\
+  \Delta PE_i &=  PE_i^+ - PE_i^-
+  \end{align}  
+
+The total energy delivered by the Gauss gun is a sum of $\Delta PE_i$, \eqref{eq:DeltaPEsinglestage}, calculated for each stage.
+This simplified analysis ignores mechanical energy losses, which include friction, inelastic collisions, and ohmic heating.
+
+If the initial ball begins with zero velocity, the final velocity of the last steel sphere with mass $m$ can be calculated according to the law of conservation of energy:
+\begin{align}\label{eq:DeltaPEtoVelocity}
+v = \sqrt{ \frac{2\Delta PE}{m}}.
+ \end{align}  
+ 
+ Interestingly, both the energy $\Delta PE$ and mass $m$ scale with the cube of ball radius, and so cancel each other.  This means that two Gauss guns that are identical up to a scaling factor will have the same final projectile velocity.
+
+%   
+%   Presumably, the 1.3 mJ of lost mechanical energy
+%can be explained by the rotational kinetic energy of
+%the incoming ball being lost to friction, inelastic
+%behavior of the colliding spheres, ohmic heating due
+%to induced eddy currents, and other nonconservative
+%losses.
+%   
+   
+\subsection{Self-Assembly Forces and Torques}
+The components of the Gauss gun are attracted to each other.  Additionally, the strong $B_0$ field of the MRI produces a strong torque that aligns the components.
+These attraction forces, combined with the aligning torque, enable rapid self-assembly of the modules.
+
+\paragraph{Component forces before and after firing}
+ Consider two barrel components, each with two steel spheres of radius $r$ and a separator of length $s$. If the components have an air gap $a$, where both $s$ and $a$ are in units of sphere radius $r$, the ratio of force between components before and after firing is
+ \begin{align}\label{eq:ForceRatioBeforeOverAfter}\left| \frac{\mathbf{F}_{12}^- }{\mathbf{F}_{12}^+} \right|=
+  \frac{(2+a+s)^{-4} + (4+a+s)^{-4} }{(2+a)^{-4} +2 (4+a+s)^{-4} + (6+a+2s)^{-4}} 
+% \frac{(2+a+s)^{-4} + (4+a+s)^{-4} + (6+a+2s)^{-4} }{(2+a)^{-4} +\frac{1}{2} (4+a+s)^{-4} + (6+a+2s)^{-4}}  % OLD VALUE
+ \end{align}
+notice that $r$ values cancel out.  For $s<4r$, the attraction force after firing is between 16\% and 94\% of the  force before firing. This relationship is plotted in Fig.~\ref{fig:AttractionForceBeforeAfter}. Because the attraction force is always less after firing, it is possible to find $r,a,s$ values such that the MRI gradient fields can separate components after firing.
+
+%TODO FUTURE WORK: \textcolor{red}{What values are less than $F_{gradient}$}
+
+\begin{figure}
+\centering
+\begin{overpic}[width =\columnwidth]{AttractionForceBeforeAfter}\end{overpic}%graphic generated  in code/mathematica/MagneticStrengthExp.nb
+\caption{\label{fig:AttractionForceBeforeAfter}Ratio of  $\frac{\textrm{attraction force before firing}}{\textrm{attraction force after firing}}$  between two components.
+}
+\end{figure}   
+
+\paragraph{Torque on a Gauss gun component}
+Because each Gauss gun component has at least two ferrous spheres, the MRI $B_0$ field creates a torque that acts to line the components parallel to the $z$-axis.
+Applying \eqref{eq:dipoleTorque}, with magnetic moments given by \eqref{eq:magnetMoment}, on a component with sphere radiis $r_1$ and $r_2$, separated by $s$, and the line between the spheres at an angle of $\theta$ from $z$, generates the restoring torque
+
+  \begin{align}\label{eq:GaussGunTorque}
+ \tau = \frac{4}{3 s^3} M_s^2 \pi \mu_0 r_1^3 r_2^3 \sin(2\theta)  %computed in code/mathematica/MagneticStrengthExp.nb
+  \end{align}  
+  Both decreasing $s$ and increasing $r_1$ and/or $r_2$ increases this torque. 
+This torque results in stable equilibrium configurations pointing along the $\pm z$-axis and unstable equilibriums perpendicular to the axis.  The stable equilibriums correspond with maximum attractive force between the spheres, and the unstable equilibriums with maximum repulsive force. The average torque on the spheres is $4/\pi$ the average force between the spheres.
+% Note that the torque is maximum where the force is zero, and zero where the force is maximum.
+
+ 
+%##################################################################    
+\section{Design}\label{sec:Design}
+%##################################################################    
+    
+%    There are several methods to store potential energy in a manner that can be used to deliver power for medical procedures.  Gravity is suitable for delivering fluids, e.g. IV bags, but is a relatively weak force that is proportional to volume. 
+
+%TODO: move to intro??
+% Tiny robots for use inside the body by definition have little volume and so require a different energy source.  Energy can be stored in compressed springs.  Medical uses range from \emph{autoinjectors}, spring-loaded syringes used in the military for self-aid, to spring-loaded lancets used by phlebotomists and for diabetes care. % spring-loaded lancet; Phlebotomy A mechanical device used to draw a capillary blood for microchemical analysis, which 'shoots' a sharp point/blade into the site from which the blood is drawn.
+%http://en.wikipedia.org/wiki/Autoinjector 
+%     (TZ Spring-loaded Biopsy Needle)
+%
+%Lightweight and compact
+%One-hand operation
+%Echogenic tip and centimeter markings
+%Intact core tissue sample \url{http://www.coneinstruments.com/tz-spring-loaded-biopsy-needle/p/936410/}
+%    Veress needle %http://en.wikipedia.org/wiki/Veress_needle
+%These approaches require a coiled spring, and must be triggered by some other source. By instead storing energy as magnetic potential energy, the components are safe when outside the MRI, and can be triggered by the approach of an additional small steel sphere.
+
+
+ %   \subsection{Scaling Issues}
+There are four parameters that can be optimized in the design shown in Fig.~\ref{fig:GaussGunToyAndMRI}: the sphere radius $r$, the intra-stage separation $s$, the inter-stage air gap $a$, and the number of stages $N$.  
+
+Each component contains two spheres and a separator.
+Each \emph{barrel} contains a separator of length $s$ and 1/2$a$  of material to create an air gap at each end, with a total length of $4r+a+s$.
+ The \emph{trigger} component must have a separator at least as long as $a$ to ensure automatic firing when the \emph{trigger}  is attached to another component.  The \emph{trigger}  also contains connective material to create the air gap $a/2$, giving a total length of $1.5a + 4r$.
+
+
+%\subsection{Optimizing Spacing}
+Tradeoffs between the parameters are shown in Fig.~\ref{fig:PEparams}.  Potential energy increases with the cube of ball radius, linearly with number of stages, and asymptotically increases to a limit with inter- and intra-component spacing.
+
+\begin{figure*}
+\centering
+\begin{overpic}[width =.48\columnwidth]{PEfors}\end{overpic}
+\begin{overpic}[width =.48\columnwidth]{PEfora}\end{overpic}
+\begin{overpic}[width =.48\columnwidth]{PEforN}\end{overpic}
+\begin{overpic}[width =.48\columnwidth]{PEforr}\end{overpic}
+\caption{
+\label{fig:PEparams} %graphic generated  in code/mathematica/MagneticStrengthExp.nb
+Potential energy as a function of four design parameters. See design software at \href{http://demonstrations.wolfram.com/OptimizingAGaussGun/}{http://demonstrations.wolfram.com/OptimizingAGaussGun/}\cite{Becker2014optimizeGaussGun}.
+}
+\end{figure*}   
+
+\subsection{Construction}
+        
+        Gauss guns are often composed of one or more neodymium magnets and several similarly sized steel spheres. 
+        % An example setup in shown in Fig.~\ref{fig:GaussGunToyAndMRI}.  They are used for physics lab experiments on magnetism and energy, and as toys, and are available in kit form\footnote{\url{http://shop.miniscience.com/navigation/detail.asp?id=GRIFLE}}.
+        The Gauss guns described in this paper use chrome steel spheres (\href{http://www.mcmaster.com/#9292K41}{E52100 Alloy, McMaster 9292K41}) for the magnets and shaped rods of nonmagnetic metal for spacers.  This provides several benefits:
+        \begin{itemize}
+        \item inside an MRI, steel is a stronger magnet than neodymium
+        \item spacer length is arbitrary and can be chosen to maximize energy
+        \item leaving multiple magnets in tissue is potentially dangerous, leading, e.g.,  to  bowel necrosis, perforation, volvulus, sepsis, and possible death \cite{centers2006gastrointestinal,kircher2007ingestion}.  In contrast, the steel bearing balls used in this study lose their magnetism when removed from the magnetic field of the MRI
+        \item MRI enables imaging and control to assemble components at target
+        \item MRI enables controlled removal of components
+        \end{itemize}
+  
+  The prototype Gauss gun components are shown in Fig.~\ref{fig:DiagramGaussComponent}.
+The \emph{barrel} components can be stacked to achieve stronger forces.  A \emph{trigger} component fires the Gauss gun.  An optional \emph{delivery} component can be used to administer the desired treatment, either a puncture or a drug delivery. Several projectiles were tested; a 6mm diameter sphere, a 1mm diameter sphere, an 18 gauge needle tip, and 1mm spheres connected to 18, 20, and 26 gauge needle tips.  The steel spheres are TIG welded to the needle tips.
+%Early prototypes used epoxy to connect the steel spheres to the needle tip, but this resulted in a 66\% failure mode when the ball and needle tip would separate.  All subsequent tips were TIG welded to the needle tips, and no more failures were observed.
+    
+\begin{figure}
+\centering
+\begin{overpic}[width =\columnwidth]{GaussGunComponents.JPG}
+\footnotesize
+\put(12,34){trigger}
+\put(42,34){barrel}
+\put(70,34){delivery}
+\put(10,20){6mm}
+\put(18,20){1mm}
+\put(30,20){18 gauge}
+\put(44,20){20 gauge}
+\put(58,20){26 gauge}
+\end{overpic}\caption{
+\label{fig:DiagramGaussComponent}
+Gauss gun components.  
+}
+\end{figure}    
+
+ \begin{figure}
+\centering
+\begin{overpic}[width =\columnwidth]{CutAwayBeforeAfter.JPG}\end{overpic}
+\caption{\label{fig:CutAway}Cross-section, three component Gauss gun before and after firing.  
+}
+\end{figure}    
+ 
+\subsection{Material Selection}    
+ 
+% \paragraph{Magnetic material}
+ The attraction force between two spherical magnets is given by \eqref{eq:attractionForce}.  This can be verified by measuring the force required to break the magnetic bond at different initial separation distances:  secure string to two magnets, place different nonmagnetic feeler gauges (\href{http://www.mcmaster.com/#82755a13}{McMaster-Carr 82755A13}) between the magnets, attach one string to a fixed support and the other string over a low-friction pulley, attached to a small bucket.  Weights are added to the bucket until the magnets separate.  A schematic is shown as an inset to  Fig.~\ref{fig:MagneticStrengthExpMRI}. The weight required to separate is equal to the magnetic strength at this separation distance. This experiment was run with two 6mm E52100 Alloy steel spheres in a 3T Siemens Skyra MRI scanner, resulting in remarkable similarity to the model \eqref{eq:attractionForce}, as shown in Fig.~\ref{fig:MagneticStrengthExpMRI}.
+
+ 
+ Neodymium magnets come in a variety of grades.  Using the same plastic feeler gauge setup, using 5mm diameter neodymium beads (\url{http://neocubes.com}), provided 43\% the force of equivalent magnetically saturated E52100 steel spheres. According to tests of 16 N42 neodymium spherical magnets\footnote{\url{https://www.kjmagnetics.com/magnetsummary.asp}}, N42 magnets have 77\% the magnetic saturation of  E52100 steel spheres in a 3T MRI.
+ 
+\begin{figure}.
+\centering
+\begin{overpic}[width =\columnwidth]{MagneticStrengthExpMRI}
+\end{overpic}
+\vspace{-2em}
+\caption{\label{fig:MagneticStrengthExpMRI}%graphic generated  in code/mathematica/MagneticStrengthExp.nb
+The force between two magnetized spheres was determined by placing plastic feeler gauges between them and increasing mass $M$ until the spheres separated.  The experimental force (dashed) is plotted next to the theoretical value.
+}
+\end{figure}
+     
+%\paragraph{Material}
+     
+   Because most MRI scanners can apply forces  36-71\% the force due to gravity, it is necessary to offset the force of gravity using buoyancy forces.  Ideally the Gauss gun components would be neutrally buoyant
+     \begin{align}
+     \rho_{\text{H$_2$O}} \sum v_{i} &=     \sum  \rho_{i} v_{i} \label{eq:neutralbouyant}.
+     \end{align}
+    Early prototypes used small hollow compartments to float the Gauss gun components at the water surface, as shown in Fig.~\ref{fig:GaussGunFloats}.
+     A list of materials used for Gauss gun prototypes is given in Table~\ref{tab:GGmaterials}.  The shells are printed using a Stratasys Objet printer with VeroWhite polymer, which is only slightly more dense than water.  The E52100 alloy steel spheres are largest weight contributors to the Gauss gun.  The separator material must have low magnetic saturation and transmit kinetic energy by having a high coefficient of restitution.  Aluminum, tungsten, and titanium are all reasonable replacements, but tungsten is heavy, and aluminum is soft.  The separator need not be the same diameter as the spheres and instead can be a thin rod, further lowering the weight.  
+     
+%\textcolor{red}{  talk about separating components   }   
+     
+     \begin{table}[h]\footnotesize
+  \caption{material properties for Gauss gun\label{tab:GGmaterials}}
+  \begin{tabular}{ r || c | c | c }
+ & density & permeability &  Mod of elasticity\\ %coeff. restitution --  I don't know how to find this.
+    material & g/cm$^3$& H/m & GPa\\ 
+  \hline
+  VeroWhite &    1.17	& --	&	 2.6-3.0  \\ %http://www.stratasys.com/~/media/Main/Secure/Material%20Specs%20MS/PolyJet-Material-Specs/PolyJet_Materials_Data_Sheet.pdf
+E52100 steel  &	 7.81  	& $1.3\times10^-4$	&	 210 \\	 %http://www.matweb.com/search/DataSheet.aspx?MatGUID=d0b0a51bff894778a97f5b72e7317d85&ckck=1
+  aluminum &	 2.70 	&$1.3\times10^-6$	&	68.0  \\	 %http://www.matweb.com/search/DataSheet.aspx?MatGUID=0cd1edf33ac145ee93a0aa6fc666c0e0
+  tungsten &	 19.3 	& $3.3\times10^-7$	& 400	\\ %http://www.matweb.com/search/DataSheet.aspx?MatGUID=41e0851d2f3c417ba69ea0188fa570e3
+  titanium&	 4.50 	& $1.6\times10^-6$	& 116	\\ %http://www.matweb.com/search/DataSheet.aspx?MatGUID=66a15d609a3f4c829cb6ad08f0dafc01
+  % 1.00005	 at  1.6kA/m
+      % ...
+  \end{tabular}
+\end{table}
+     
+     
+    
+%##################################################################    
+\section{Experiments}\label{sec:Experiment}
+%##################################################################     
+
+The MRI Gauss gun components described in Section \ref{sec:Design}, and shown in Figs.~\ref{fig:DiagramGaussComponent} and \ref{fig:CutAway}, were tested in a Siemen's Skyra 3T clinical MRI scanner.  Experiments tested penetration depth as a function of needle size and the ability of components to self-assemble.
+
+   
+    \subsection{Penetration Tests}
+    
+Several experiments were conducted to test the ability of the MRI-Gauss gun at tissue penetration. The tests use a brain model composed of a solidified 0.5\% agarose gel solution~\cite{Howard1999}. A 30mm block of agarose was used and placed near the isocenter of a Siemen's Skyra 3T MRI scanner.  The delivery component, loaded with either an 18, 20, or 26-gauge needle was placed against the solution.   Zero, one, or two barrel components were attached, and the trigger component was then manually pushed toward the assembled Gauss gun. Needle penetration was measured using a plastic ruler mounted underneath the transparent agar solution. 
+%\textcolor{red}{(can we have a picture of the agar being pierced?)}
+
+The experiment results are represented in Fig.~\ref{fig:PenetrationExperimentOneStage}. Five trials were recorded for each needle size.  The penetration distance increases as the gauge increases (needle diameter decreases).
+
+\begin{figure}
+\centering
+\begin{overpic}[width =\columnwidth]{PenetrationExperimentOneStage}
+\end{overpic}
+\vspace{-1em}
+\caption{
+\label{fig:PenetrationExperimentOneStage}%graphic generated  in code/mathematica/MagneticStrengthExp.nb
+Penetration of the three needle tips with 1mm sphere shown in Fig. \ref{fig:DiagramGaussComponent} into 5\% agar solution, using single-stage MRI Gauss gun.
+}
+\end{figure} 
+
+
+\subsection{Self-Assembly Tests}
+        
+     Figure~\ref{fig:GGexperiment} shows photos from two experiments with Gauss gun assembly and membrane penetration.  The experiments were performed under MRI control, using gradients in the $x$ and $z$ direction of $\pm23$mT/m. The workspace was a plastic toolbox (\href{http://www.mcmaster.com/#8704t73}{McMaster-Car 8704T73}) filled with water. The Gauss gun components were mounted on floats and colored green to increase visibility.  Three tests were performed, and are included in the video attachment.  The first two experiments each used a \emph{delivery} and a \emph{trigger} component and fired 18-gauge needle tips welded to 1mm spheres into a membrane model, a water balloon filled with blue dye. The third experiment tested ranged delivery, by firing the needle projectile using a \emph{delivery}, \emph{barrel}, and \emph{trigger} component to penetrate a membrane model from a distance of 240 mm.
+    
+         
+\begin{figure}
+\centering
+\begin{overpic}[width =\columnwidth]{GaussBoats}
+\end{overpic}
+\vspace{-2em}
+\caption{
+\label{fig:GaussGunFloats}
+Gauss gun components used in MRI experiments
+}\vspace{-1.5em}
+\end{figure} 
+
+         
+         
+\subsection{MRI Tracking}         
+    The MRI could provide an integrated environment for intervention using the Gauss gun. 
+  Pre-operative and post-operative images could be acquired with the MRI as depicted in Fig.~\ref{fig:MRImembrane}, showing the membrane model before and after Gauss gun deployment, assembly, and firing. The individual components of the Gauss gun could also be tracked in real-time using RF-selective excitation~\cite{felfoul2008vivo}. Distinct peaks, corresponding to the locations of the Gauss gun components, can be acquired in less than 20ms, as shown in Fig.~\ref{fig:MRIprojection}.
+  
+         
+\begin{figure*}
+\newcommand{\figheight}{1.75in}
+\centering
+%\begin{overpic}[height =\figheight]{gg01.jpg}\put(0,28){ $z $ }  
+%\put(0,18){ $\downarrow $ }   \put(0,8){ $\rightarrow x$ }\end{overpic}~
+%\begin{overpic}[height =\figheight]{gg02.jpg}	\put(20,-8){(a) Membrane puncture, two components}\end{overpic}~
+%\begin{overpic}[height =\figheight]{gg03.jpg}\end{overpic}~
+%\begin{overpic}[height =\figheight]{gg04.jpg}\end{overpic}~
+%\begin{overpic}[height =\figheight]{gg05.jpg}\end{overpic}~
+%\begin{overpic}[height =\figheight]{gg06.jpg}\end{overpic}~
+%~~~~~
+%\begin{overpic}[height =\figheight]{gg07.jpg}\put(0,-8){(b) Long distance membrane puncture}\end{overpic}~
+%\begin{overpic}[height =\figheight]{gg08.jpg}\end{overpic}~
+%\begin{overpic}[height =\figheight]{gg09.jpg}\end{overpic}
+\begin{overpic}[width =\textwidth]{GGexperiment}
+\put(30,0.25){\footnotesize (a) Membrane puncture, two components}
+\put(71,0.25){\footnotesize (b) Long distance membrane puncture}
+\end{overpic}
+\vspace{-1.75em}
+\caption{
+\label{fig:GGexperiment}
+Photos from an experiment within the MRI bore.  The membrane model is a water balloon filled with dye. \href{http://youtu.be/uJ4rFA8x2Js}{See the video attachment.}}
+\end{figure*} 
+%did 2 tests with 3 components, 12mm and 11 mm penetration.  Often had problems with the components not aligning (bouyancy issues)
+    
+    
+\begin{figure}
+\centering
+ \begin{overpic}[height=0.5\columnwidth]{MRIGaussGunSetupAllBeforeFiringAnnotate.pdf}\end{overpic}
+~~~~~~
+ \begin{overpic}[height=0.5\columnwidth]{MRIGaussGunSetupAllAfterFiringAnnotate.pdf}\end{overpic}
+\vspace{-.5em}\caption{\label{fig:MRImembrane}
+A T2 weighted Turbo Spin Echo MRI image showing the dye-filled balloon before and after penetration. The agar used to stabilize the balloon is visible in both images.% shown in Fig.~\ref{fig:GGexperiment}a.
+}
+\end{figure} 
+
+\begin{figure}
+\centering
+\begin{overpic}[width=\columnwidth]{GaussGunProjections}\end{overpic}\vspace{-1.5em}
+\caption{\label{fig:MRIprojection} MRI projections of the Gauss gun components using a custom MR sequence based on a spin echo acquisition with a pixel size of 0.59mm. (a) Projection along the $x$-axis corresponding to the Gauss gun components in Fig.~\ref{fig:GGexperiment}a, frame 2. (b) Projection along the $z$-axis corresponding to the Gauss gun components in Fig.~\ref{fig:GGexperiment}a, frame 3. }
+\vspace{-1.5em}
+\end{figure} 
+    
+%##################################################################    
+\section{Conclusion}\label{sec:CONCLUSION}
+%##################################################################
+
+This paper presented a model, verification, and optimizations for multi-stage Gauss guns. The traditional Gauss gun depends on permanent magnets and steel spheres.  To use stored magnetic potential energy, a new MRI Gauss gun was designed.  The MRI Gauss gun can be self-assembled into a larger tool to increase puncture force, far stronger than the forces possible with MRI gradients.  Experiments performed using a clinical MRI scanner illustrate the potential of this device. Future work should investigate how the design can be optimized for clinical use cases and implement closed-loop control of the components.
+
+%\section*{Acknowledgements}
+%Thanks to Ali Ataollahi for inventing an automated TIG welder and helping manufacture the needle tips. %can I put a link?
+%This work was supported by the National Science Foundation under
+%\href{http://nsf.gov/awardsearch/showAward?AWD_ID=1208509}{IIS-1208509} and by the \href{http://wyss.harvard.edu/}{Wyss Institute for Biologically Inspired Engineering}.  
+%   
+ % \IEEEtriggeratref{3}   %used to manually flush the columns
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,../bib/aaronrefs}%,../aaronrefs}
+\end{document}
+

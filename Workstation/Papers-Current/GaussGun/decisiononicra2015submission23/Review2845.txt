@@ -1,0 +1,56 @@
+Reviewer 3 of ICRA 2015 submission 23
+
+Comments to the author
+======================
+
+This paper describes the design of an MRI propulsion based
+robot for minimally invasive surgery. Each component of the
+robot is comprised of two spheres that act as magnets when
+exposed to a magnetic field. The proposed approach involves
+allowing individual components to self-assemble. Using a
+gauss gun concept, the spheres can be fired against each
+other, conveying their magnetic potential energy into
+kinematic energy, which results in high puncture force
+capability of the robot.
+
+The paper is well written and the concept is explained
+clearly. The introduction gives strong motivation for the
+clinical applications and clearly identifies the novelty of
+the research. A fairly comprehensive overview of the
+theoretical foundation is provided.
+
+The paper could be improved if more details about the
+design considerations of the device were provided in the
+design section. More importantly, the experimental section
+in its current state is weak and there lacks a clear
+connection between the theory and the experiments. It
+would be helpful to explicitly reinforce how the
+experiments tie-in with the theory and/or introduction
+topics. Although the motivation of the paper was on the use
+of high velocities to generate the forces necessary to
+puncture tissue, the experimental test focused on
+penetration depth rather than the puncture force/velocity.
+
+Despite these issues, overall the concept presented in the
+paper is interesting, and the paper is suitable for
+publication.
+
+Other minor comments:
+- Introduction, Paragraph 5: "tissue penetration force"
+should be referred to as "tissue puncture force"
+- It would be informative to describe how the critical
+distance shown just after equation (5) was considered for
+the design of the device
+- Finding a way to quantify the results provided in section
+IV B & IV C would strengthen the paper
+- It would be helpful to add labels in Figures 10 & 11
+- In Figure 10, arrows could be used to indicate how the
+component evolves from one image to the next
+
+Comments on the Video Attachment
+================================
+
+The video was an informative supplement to the paper, and
+it was very helpful to see the device in motion. A minor
+suggestion would be to slow down the text at the start to
+match with the voice-over, but it is fine as is.

@@ -1,0 +1,86 @@
+\section{Feedback Control}\label{sec:controlLaw}
+
+A ferrous particle in the strong static field of an MRI becomes magnetized, and its magnetization magnitude asymptotically approaches the saturation magnetization $\mathbf{M}_s$ per unit volume of the material.  The MRI gradient coils  produce a magnetic field  $\mathbf{B}_g(t)$. This field exerts 
+ on the ferrous particle the force 
+\begin{equation}
+\mathbf{F}(t) = v\left( \mathbf{M}_s
+\cdot \nabla \right) \mathbf{B}_g(t). \label{eq:forceOnDipole}
+\end{equation}
+Here $v$ is the magnetic volume of the material.  The magnetic field $\mathbf{B}_g(t)$ is designed to produce three independent gradients:
+\begin{equation}
+\left[ F_x,F_y, F_z \right]^\intercal\!\!(t)= v M_{sz}\left[  \frac{ \partial B_{gx}}{\partial z},  \frac{ \partial B_{gy}}{\partial z}, \frac{ \partial B_{gz}}{\partial z} \right]^\intercal\!\!\!\!(t)
+\label{eq:applicableForces}
+\end{equation}
+Here it has been reasonably assumed that $M_{sz} \gg M_{sx}, M_{sy}$.
+These gradients apply three independent forces on any ferromagnetic spheres inside the MRI.  
+ \begin{figure}
+ \centering
+\begin{overpic}[width = 0.85\columnwidth]{Schematic.pdf}\end{overpic}
+\caption{
+\label{fig:Schematic}
+MRI-powered, single-DOF rotor with fiducial marker and gear for power transmission. \todo{remove $i$ subscripts}
+}
+\end{figure}
+The rotor construction constrains the ferromagnetic sphere to rotate about an axis $\mathbf{a}$ with a moment arm of length  $r$, as shown in Fig.~\ref{fig:Schematic}.  The rotor's configuration at time $t$ is fully described  by its angular position and velocity $[\theta(t), \dot{\theta}(t)]^\intercal$. The configuration space is $\R^{2}$,  and the dynamic equations are given by
+
+\begin{equation}
+\ddot{\theta}(t) = \frac{1}{J}\left(-b\dot{\theta}(t) -\tau_{f}-\tau_{\ell} + r \mathbf{F}(t)\cdot \mathbf{p}(t) \right)
+\label{eq:rotorDynamics}
+\end{equation}
+Here $J$ is the moment of inertia, $b$ the coefficient of viscous friction,  $\tau_{f}$ the summation of all non-viscous friction terms seen by the input,  and $\tau_{\ell}$ the load torque. The rotor torque is the magnetic force projected  to a vector tangent to the ferrous sphere's positive direction of motion, $r \mathbf{F}\cdot \mathbf{p}(t)$.  The model assumes that the rotor is perfectly balanced, and thus there is no gravity-related term.
+Actuator torque is maximized when $\mathbf{F}(t) = g_{M}V M_{sz}\sgn(\mathbf{p}(t)) $, where  $g_{M}$ is the maximum gradient.
+
+When the rotor axis is aligned with a coordinate axis, $\mathbf{p}(t)$ has a particularly simple form. The remainder of the paper will assume  $\mathbf{a} = \{0,1,0\}$.
+
+\begin{equation}
+\ddot{\theta}(t) = \frac{1}{J}\left(-b\dot{\theta}(t) -\tau_{f}-\tau_{\ell} + r \left( F_x(t) \cos(\theta(t)) - F_z(t) \sin(\theta(t)) \right)\right)
+\todo{check signs}
+\label{eq:rotorDynamicsYAxis}
+\end{equation}
+
+\subsection{Discrete time model}
+Both the control and measurements are taken at discrete time intervals, so it is necessary to provide a discrete-time model.  This can be obtained by direct integration of \eqref{eq:rotorDynamics}, or can be approximated by 
+\begin{align}
+\theta(k+1) &= \theta(k) + \dot{\theta}(k) T \nonumber \\
+\dot{\theta}(k+1) &= \dot{\theta}(k) +  \frac{ T}{J}\left(-b\dot{\theta}(k) -\tau_{f}-\tau_{\ell} + r \mathbf{F}(t) \cdot \mathbf{p}(k) \right)
+\label{eq:rotorDynamicsDisc}
+\end{align}
+with time steps of  $T$ seconds.  
+
+The position of a nonmoving rotor can be measured by two orthogonal MRI line scans.  These line scans measure the rotor's position in 1D.  These line scans cannot be measured simultaneously. If the rotor is moving, these scans measure the 1D projection of the rotor's position at two different times:
+\begin{align}
+y_x(t_1) &= cos(\theta(t_1))  \nonumber \\
+y_z(t_2) &= sin(\theta(t_2)) 
+\label{eq:measurement}
+\end{align}
+Each scan requires $T_S = 9$ms.
+
+
+ \begin{figure}
+ \centering
+\begin{overpic}[width = 0.85\columnwidth]{TimingDiagram.pdf}\end{overpic}
+\caption{
+\label{fig:TimingDiagram}
+Timing digram
+}
+\end{figure}
+
+One approach to state estimation for systems of this type is to linearize the equations about the current estimate and then apply Kalman's equations using the resulting equations.  
+
+\begin{align}
+\hat{\theta}(k+1|k) &= \hat{\theta}(k|k) + T \hat{\dot{\theta}}(k|k) \nonumber \\
+\hat{\dot{\theta}}(k+1|k) &= \hat{\dot{\theta}}(k|k) +  \frac{T}{J}\left(-b\hat{\dot{\theta}}(k|k)  -\tau_{f}-\tau_{\ell}  \right.\nonumber \\
+& \left. + r \left( F_x(t) \cos(\hat{\theta}(k|k) ) - F_z(t) \sin(\hat{\theta}(k|k) ) \right)\right)
+\label{eq:KalmanPrediction(simple)}
+\end{align}
+Define the state update equation as $g$:
+\begin{align}
+\hat{\bm{\theta}}(k+1|k) = g(\hat{\bm{\theta}}(k|k),\mathbf{F}(k))
+\label{eq:StateUpdate}
+\end{align}
+G(k) = \frac{\partial
+
+
+
+\begin{align}
+\end{align}

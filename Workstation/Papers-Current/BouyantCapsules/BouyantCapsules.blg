@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d (TeX Live 2012)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: BouyantCapsules.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: IEEEabrv.bib
+Database file #2: ../bib/aaronrefs.bib
+-- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty journal in alink2011simulating
+
+Done.
+You've used 9 entries,
+            4039 wiz_defined-function locations,
+            1272 strings with 16969 characters,
+and the built_in function-call counts, 7575 in all, are:
+= -- 598
+> -- 185
+< -- 67
++ -- 104
+- -- 31
+* -- 386
+:= -- 1097
+add.period$ -- 20
+call.type$ -- 9
+change.case$ -- 9
+chr.to.int$ -- 156
+cite$ -- 10
+duplicate$ -- 539
+empty$ -- 607
+format.name$ -- 40
+if$ -- 1748
+int.to.chr$ -- 0
+int.to.str$ -- 9
+missing$ -- 93
+newline$ -- 52
+num.names$ -- 9
+pop$ -- 218
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 573
+stack$ -- 0
+substring$ -- 379
+swap$ -- 450
+text.length$ -- 15
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 9
+warning$ -- 1
+while$ -- 32
+width$ -- 10
+write$ -- 111
+(There was 1 warning)

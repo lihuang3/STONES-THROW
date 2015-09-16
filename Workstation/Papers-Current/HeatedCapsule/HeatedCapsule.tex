@@ -1,0 +1,269 @@
+% to submit https://ras.papercept.net/conferences/scripts-n/start.pl
+% ?http://icra2015.org/
+% DUE DATE: 1 October 2014: Paper Submission deadline
+%
+% TODO: 
+
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}
+\IEEEoverridecommandlockouts
+\usepackage{calc}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb}
+\usepackage{rotating}
+
+\usepackage{nicefrac}
+\usepackage{cite}
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{colortbl}
+\usepackage{overpic}
+\graphicspath{{./pictures/pdf/},{./pictures/ps/},{./pictures/png/},{./pictures/jpg/}}
+\usepackage{breqn} %for breaking equations automatically
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{multirow}
+\usepackage{soul}
+\usepackage{bm}   % boldface math type
+
+
+\newcommand{\topic}[1]{\textcolor{ForestGreen}{\footnotesize \textsf{#1}}}
+\newcommand{\todo}[1]{\textcolor{red}{\footnotesize \textsf{#1}}}
+
+
+%% ABBREVIATIONS
+\newcommand{\qstart}{q_{\text{start}}}
+\newcommand{\qgoal}{q_{\text{goal}}}
+\newcommand{\pstart}{p_{\text{start}}}
+\newcommand{\pgoal}{p_{\text{goal}}}
+\newcommand{\xstart}{x_{\text{start}}}
+\newcommand{\xgoal}{x_{\text{goal}}}
+\newcommand{\ystart}{y_{\text{start}}}
+\newcommand{\ygoal}{y_{\text{goal}}}
+\newcommand{\gammastart}{\gamma_{\text{start}}}
+\newcommand{\gammagoal}{\gamma_{\text{goal}}}
+\providecommand{\proc}[1]{\textsc{#1}}
+
+
+\newcommand{\ARLfull}{Aero\-space Ro\-bot\-ics La\-bora\-tory }
+\newcommand{\ARL}{\textsc{arl}}
+\newcommand{\JPL}{\textsc{jpl}}
+\newcommand{\PRM}{\textsc{prm}}
+\newcommand{\CM}{\textsc{cm}}
+\newcommand{\SVM}{\textsc{svm}}
+\newcommand{\NN}{\textsc{nn}}
+\newcommand{\prm}{\textsc{prm}}
+\newcommand{\lemur}{\textsc{lemur}}
+\newcommand{\Lemur}{\textsc{Lemur}}
+\newcommand{\LP}{\textsc{lp}} 
+\newcommand{\SOCP}{\textsc{socp}}
+\newcommand{\SDP}{\textsc{sdp}}
+\newcommand{\NP}{\textsc{np}}
+\newcommand{\SAT}{\textsc{sat}}
+\newcommand{\LMI}{\textsc{lmi}}
+\newcommand{\hrp}{\textsc{hrp\nobreakdash-2}}
+\newcommand{\DOF}{\textsc{dof}}
+\newcommand{\UIUC}{\textsc{uiuc}}
+%% MACROS
+
+
+\providecommand{\abs}[1]{\left\lvert#1\right\rvert}
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
+\providecommand{\normn}[2]{\left\lVert#1\right\rVert_#2}
+\providecommand{\dualnorm}[1]{\norm{#1}_\ast}
+\providecommand{\dualnormn}[2]{\norm{#1}_{#2\ast}}
+\providecommand{\set}[1]{\lbrace\,#1\,\rbrace}
+\providecommand{\cset}[2]{\lbrace\,{#1}\nobreak\mid\nobreak{#2}\,\rbrace}
+\providecommand{\lscal}{<}
+\providecommand{\gscal}{>}
+\providecommand{\lvect}{\prec}
+\providecommand{\gvect}{\succ}
+\providecommand{\leqscal}{\leq}
+\providecommand{\geqscal}{\geq}
+\providecommand{\leqvect}{\preceq}
+\providecommand{\geqvect}{\succeq}
+\providecommand{\onevect}{\mathbf{1}}
+\providecommand{\zerovect}{\mathbf{0}}
+\providecommand{\field}[1]{\mathbb{#1}}
+\providecommand{\C}{\field{C}}
+\providecommand{\R}{\field{R}}
+\newcommand{\Cspace}{\mathcal{Q}}
+\newcommand{\Uspace}{\mathcal{U}}
+\providecommand{\Fspace}{\Cspace_\text{free}}
+\providecommand{\Hcal}{$\mathcal{H}$}
+\providecommand{\Vcal}{$\mathcal{V}$}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\homog}{homog}
+\DeclareMathOperator{\domain}{dom}
+\DeclareMathOperator{\range}{range}
+\DeclareMathOperator{\sign}{sgn}
+\DeclareMathOperator{\sgn}{sgn}
+\providecommand{\polar}{\triangle}
+\providecommand{\ainner}{\underline{a}}
+\providecommand{\aouter}{\overline{a}}
+\providecommand{\binner}{\underline{b}}
+\providecommand{\bouter}{\overline{b}}
+\newcommand{\D}{\nobreakdash-\textsc{d}}
+%\newcommand{\Fspace}{\mathcal{F}}
+\providecommand{\Fspace}{\Cspace_\text{free}}
+\providecommand{\free}{\text{\{}\mathsf{free}\text{\}}}
+\providecommand{\iff}{\Leftrightarrow}
+\providecommand{\subinner}[1]{#1_{\text{inner}}}
+\providecommand{\subouter}[1]{#1_{\text{outer}}}
+\providecommand{\Ppoly}{\mathcal{X}}
+\providecommand{\Pproj}{\mathcal{Y}}
+\providecommand{\Pinner}{\subinner{\Pproj}}
+\providecommand{\Pouter}{\subouter{\Pproj}}
+\DeclareMathOperator{\argmax}{arg\,max}
+\providecommand{\Aineq}{B}
+\providecommand{\Aeq}{A}
+\providecommand{\bineq}{u}
+\providecommand{\beq}{t}
+\DeclareMathOperator{\area}{area}
+\newcommand{\contact}[1]{\Cspace_{#1}}
+\newcommand{\feasible}[1]{\Fspace_{#1}}
+\newcommand{\dd}{\; \mathrm{d}}
+\newcommand{\figwid}{0.22\columnwidth}
+
+\DeclareMathOperator{\atan2}{atan2}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\begin{document}
+
+
+%%%%%%%%%%%%%% For debugging purposes, I like to display the TOC
+%    \tableofcontents
+%    \setcounter{tocdepth}{4}
+%    \newpage
+%%%%%% END TOC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\LARGE \bf Capsules Navigated and Heated by MRI for Localized Drug Delivery}
+\author{Ouajdi Felfoul, Aaron Becker, and Pierre E.\ Dupont%, 
+\thanks{{O.~Felfoul, A.~Becker, and P.~E.~Dupont are with the Department of Cardiovascular Surgery,  Boston Children's Hospital and Harvard Medical School, Boston, MA, 02115 USA {\tt\small first name.lastname@childrens.harvard.edu}. This work was supported by the National Science Foundation under
+\href{http://nsf.gov/awardsearch/showAward?AWD_ID=1208509}{IIS-1208509} and by the \href{http://wyss.harvard.edu/}{Wyss Institute for Biologically Inspired Engineering}.  
+}
+} %\end thanks
+} % end author block
+\maketitle
+
+\begin{abstract}
+This paper presents a controllable drug delivery vehicle powered, imaged, and controlled by a a medical Magnetic Resonance Imaging (MRI) scanner. An MR scanner can power, image, and control small capsules containing ferrous material.   A tuned coil antenna can be used to heat the capsule. This paper presents designs for imaging, control ,and optimizing heating.  Experiments on capsule control and localized heating demonstrate the viability of this technique. 
+\end{abstract}
+
+%##################################################################    
+\section{Introduction}\label{sec:Intro}
+%##################################################################    
+
+Robots can be powered, imaged, and controlled using Magnetic Resonance Imaging (MRI) scanners  \cite{Vartholomeos2012,Vartholomeos2013,Chanu2008}.     
+
+Goal is to use these capsules to deliver drugs at targeted locations. Current clinical MR scanners have low gradient strength, which dictates that capsules should be deployed in liquid-filled body regions with little to no flow. The cerebrospinal fluid (CSF) in the spinal canal and brain ventricles is a reasonable target.  
+
+[[here are some clinical needs and procedures done in csf space ]]
+
+ [[csf space is convoluted, but the spinal canal is wide enough that a 2mm capsule can be navigated through ]] 
+ 
+ 
+ \begin{figure}\centering
+\begin{overpic}[width =\columnwidth]{SpinalCrossSection}\end{overpic}
+\caption{\label{fig:SpinalCrossSection}Processed MRI scan of the spine of a healthy 31-year-old male. Shown are three vertebrae (pink), connective tissue (grey), and the spinal cord (yellow). The gap around the spinal cord is filled with CSF.}
+\end{figure}
+ 
+ [[ Current techniques that rely on surgery or on endoscopes are risky -- it would be better to use a wireless/tetherless capsule]]
+
+
+ 
+%##################################################################    
+\section{Related Work}
+%##################################################################    
+   
+   \subsection{Clinical Forces}
+       \subsection{Capsule Navigation}
+    moving capsules \cite{Martel2007}
+
+   controlling multiple capsules with MRI\cite{Vartholomeos2012}
+      
+   
+
+
+%##################################################################       
+\section{Theory}
+%##################################################################    
+ 
+ \subsection{Heating model}
+ 
+ \subsection{Gradient coils unable to heat}
+ 
+ \subsection{Coil design}
+ 
+\begin{figure}\centering
+\begin{overpic}[width =0.5\columnwidth]{LCcircuit.pdf}\end{overpic}
+\caption{\label{fig:LCcircuit}A series LC circuit.}
+\end{figure}
+ 
+ A series LC circuit, with inductance $L$ and capacitance $C$ is characterized by its resonant frequency $f_0$:
+ \begin{align}
+ \label{eq:resonantFreqLCCircuit}
+% \omega_0&= \frac{1}{\sqrt{LC}} \nonumber \\
+f_0&= \frac{1}{2\pi\sqrt{LC}} 
+ \end{align}
+ 
+ 
+ The \emph{Q-factor} is the ratio of peak energy stored in the circuit over average energy dissipated in it per radian at renounce.  A high Q circuit is underdamped and resonants well.
+  \begin{align}
+ \label{eq:QfactorLCCircuit}
+Q &=\frac{1}{2\pi f_0 R C} = \frac{2\pi f L}{ R}  
+ \end{align}
+ 
+ The unit less damping factor $\zeta$ is given by
+   \begin{align}
+ \label{eq:dampingfactor}
+Q &=\frac{1}{2\pi f_0 R C} = \frac{2\pi f L}{ R}  
+ \end{align}
+ 
+ A wide range of capacitors can be purchased inexpensively and come in surface-mount configurations ( 1.6 mm$\times$0.8 mm Jameco
+ 603 ASSORTMENT).   %1200 capacitors $19.95 http://www.jameco.com/webapp/wcs/stores/servlet/Product_10001_10001_2169416_-1
+ 
+Inductors can be formed by coiling coated copper wire.  An approximate formula for inductance for a long cylindrical air-core coil is
+  \begin{align}
+ \label{eq:longaircoild}
+L &\approx \frac{1}{\ell} \mu_0 K N^2 A
+ \end{align}
+ for $L$ in henries, $\mu_0$ the permeability of free space ($4\pi\times 10^{-7}$ H/m), $\ell$ the length of coil (m), $K$ a coefficient which approaches 1 if coil is much longer than diameter
+ \cite{Nagaoka, Hantaro (1909-05-06). The Inductance Coefficients of Solenoids 27. Journal of the College of Science, Imperial University, Tokyo, Japan. p. 18. Retrieved 2011-11-10.},  $N$ the number of turns, and $A$ the cross sectional area of the coil (m$^2$).
+ An approximate formula for inductance for a short cylindrical air-core coil is
+  \begin{align}
+ \label{eq:shortaircoil}
+L &\approx \frac{ 25400 r^2 N^2}{9 r +10 \ell}
+ \end{align}
+ for $L$ in henries, $r$ the outer radius of the coil (m), $\ell$ the length of the coil (m), and $N$ the number of turns \cite{ARRL Handbook, 66th Ed. American Radio Relay League (1989).}.
+ 
+ 
+ 
+ 
+%##################################################################    
+\section{Design}
+%##################################################################    
+    
+        
+     
+    
+%##################################################################    
+\section{Experiment}\label{sec:Experiment}
+%##################################################################        
+       
+%\section*{Acknowledgements}
+%This work was supported by the National Science Foundation under
+%\href{http://nsf.gov/awardsearch/showAward?AWD_ID=1208509}{IIS-1208509} and by the \href{http://wyss.harvard.edu/}{Wyss Institute for Biologically Inspired Engineering}.  
+   
+ % \IEEEtriggeratref{3}   %used to manually flush the columns
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,../bib/aaronrefs}%,../aaronrefs}
+\end{document}
+

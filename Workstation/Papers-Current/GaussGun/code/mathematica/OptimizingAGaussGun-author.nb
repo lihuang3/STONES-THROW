@@ -1,0 +1,3705 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[    153532,       3696]
+NotebookOptionsPosition[    146916,       3489]
+NotebookOutlinePosition[    148542,       3540]
+CellTagsIndexPosition[    148206,       3528]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Optimizing a Gauss Gun", "DemoTitle",
+ CellChangeTimes->{{3.619386064767255*^9, 3.61938607631314*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["", "InitializationSection"],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"Drawing", " ", "code"}], "*)"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.620076284084795*^9}},
+ CellID->1726238253],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"DrawMagnet", "[", 
+   RowBox[{"x_", ",", "r_"}], "]"}], ":=", " ", 
+  RowBox[{"{", 
+   RowBox[{"Red", ",", 
+    RowBox[{"Disk", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", "0"}], "}"}], ",", "r"}], "]"}], " ", ",", "Green", 
+    ",", " ", 
+    RowBox[{"Disk", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", "0"}], "}"}], ",", "r", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        FractionBox[
+         RowBox[{"-", "\[Pi]"}], "2"], ",", 
+        FractionBox["\[Pi]", "2"]}], "}"}]}], "]"}]}], "  ", "}"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.620076284084795*^9}},
+ CellID->1427785712],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"DrawBall", "[", 
+   RowBox[{"x_", ",", "r_"}], "]"}], ":=", " ", 
+  RowBox[{"{", 
+   RowBox[{"Gray", ",", 
+    RowBox[{"Disk", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", "0"}], "}"}], ",", "r"}], "]"}]}], "  ", 
+   "}"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.620076268020371*^9}},
+ CellID->1601929535],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"DrawCollision", "[", 
+   RowBox[{"x_", ",", "r_"}], "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{"Yellow", ",", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"kmax", " ", "=", " ", "16"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Polygon", "[", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"\[Theta]", " ", "=", 
+           RowBox[{
+            RowBox[{"2", 
+             FractionBox[
+              RowBox[{"\[Pi]", " ", "k"}], "kmax"]}], "+", 
+            RowBox[{"RandomReal", "[", 
+             FractionBox[
+              RowBox[{"2", "\[Pi]", " "}], "kmax"], "]"}]}]}], ";", " ", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"x", ",", "0"}], "}"}], "+", 
+           RowBox[{"r", ".8", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Sin", "[", "\[Theta]", "]"}], ",", 
+              RowBox[{"2", 
+               RowBox[{"Cos", "[", "\[Theta]", "]"}]}]}], "}"}], 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"EvenQ", "[", "k", "]"}], ",", "1", ",", 
+              RowBox[{"1", "/", "3"}]}], "]"}]}]}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"k", ",", "1", ",", "kmax"}], "}"}]}], "]"}], "]"}]}], 
+     "\[IndentingNewLine]", "]"}]}], "}"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.6200762758619967`*^9}},
+ CellID->1913216466],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"Math", " ", "functions"}], "*)"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.6200762801368513`*^9}},
+ CellID->474106050],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"massCapsule", "[", "rad_", "]"}], ":=", 
+  RowBox[{
+   FractionBox["4", "3"], "\[Pi]", " ", 
+   SuperscriptBox["rad", "3"], "7850", " ", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Density", " ", "steel"}], " ", "=", " ", 
+     RowBox[{"7850", " ", 
+      RowBox[{"kg", "/", 
+       SuperscriptBox["m", "3"]}]}]}], "*)"}]}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.620076295121581*^9}},
+ CellID->348522383],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PosBefore", "[", 
+   RowBox[{"r_", ",", "a_", ",", "Nmag_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "a"}], " ", "-", "2", "+", " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"2", "+", 
+          RowBox[{"2", " ", "n"}], "+", "a"}], ")"}], "k"}]}], ")"}], "r"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"k", ",", "0", ",", "Nmag"}], "}"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.620076302096691*^9}},
+ CellID->2021265122],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MagPos", "[", 
+   RowBox[{"r_", ",", "a_", ",", "Nmag_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", " ", 
+      RowBox[{"2", "+", 
+       RowBox[{"2", "n"}], "+", "a"}], ")"}], "r", " ", "k"}], " ", ",", 
+    RowBox[{"{", 
+     RowBox[{"k", ",", "0", ",", 
+      RowBox[{"Nmag", "-", "1"}]}], "}"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.6200763061802883`*^9}},
+ CellID->1611457005],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PosAfterANIMATE", "[", 
+   RowBox[{
+   "r_", ",", "a_", ",", "Nmag_", ",", "n_", ",", "aStep_", ",", 
+    "interSteps_"}], "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "a"}], " ", "-", "2", "+", " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"2", "+", 
+          RowBox[{"2", " ", "n"}], "+", "a"}], ")"}], "k"}], "+", 
+       RowBox[{"a", " ", 
+        RowBox[{"Max", "[", 
+         RowBox[{"0", ",", " ", 
+          RowBox[{"Min", "[", 
+           RowBox[{
+            RowBox[{"(", 
+             FractionBox[
+              RowBox[{"aStep", "-", 
+               RowBox[{"k", 
+                RowBox[{"(", " ", 
+                 RowBox[{"interSteps", "+", "n"}], ")"}]}]}], "interSteps"], 
+             ")"}], ",", "1"}], "]"}]}], "]"}]}]}], ")"}], "r"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"k", ",", "0", ",", "Nmag"}], "}"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.6200763119516373`*^9}},
+ CellID->1001732982],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PEenergy", "[", 
+   RowBox[{"r_", ",", "d_"}], "]"}], ":=", " ", 
+  FractionBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"6.490602773423956`*^6", " "}], "2"], 
+    SuperscriptBox["r", "6"]}], 
+   SuperscriptBox["d", "3"]], 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"N42", " ", "neodymium", " ", "magnet", " ", "strength"}], ",", 
+    " ", 
+    RowBox[{
+    "measured", " ", "using", " ", "a", " ", "set", " ", "of", " ", "plastic",
+      " ", "feeler", " ", "guages"}]}], "*)"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.620076323786394*^9}},
+ CellID->1326074202],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PEBefore", "[", 
+   RowBox[{"r_", ",", "a_", ",", "Nmag_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"Pb", " ", "=", " ", 
+      RowBox[{"PosBefore", "[", 
+       RowBox[{"r", ",", "a", ",", "Nmag", ",", "n"}], "]"}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Total", "[", 
+     RowBox[{
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"PEenergy", "[", 
+         RowBox[{"r", ",", 
+          RowBox[{"Abs", "[", "   ", 
+           RowBox[{
+            RowBox[{
+            "Pb", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], " ",
+             "-", "  ", 
+            RowBox[{"MagPos", "[", 
+             RowBox[{"r", ",", "a", ",", "Nmag", ",", "n"}], "]"}]}], "]"}]}],
+          "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"j", ",", "1", ",", 
+          RowBox[{"Length", "[", "Pb", "]"}]}], "}"}]}], "]"}], ",", "2"}], 
+     "]"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.620076332876243*^9}},
+ CellID->1410320318],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PEAfterANIMATE", "[", 
+   RowBox[{
+   "r_", ",", "a_", ",", "Nmag_", ",", "n_", ",", "aStep_", ",", 
+    "interSteps_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"PA", " ", "=", 
+      RowBox[{"PosAfterANIMATE", "[", 
+       RowBox[{
+       "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep", ",", 
+        "interSteps"}], "]"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Total", "[", 
+     RowBox[{
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"PEenergy", "[", 
+         RowBox[{"r", ",", 
+          RowBox[{"Abs", "[", "   ", 
+           RowBox[{
+            RowBox[{
+            "PA", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], " ",
+             "-", "  ", 
+            RowBox[{"MagPos", "[", 
+             RowBox[{"r", ",", "a", ",", "Nmag", ",", "n"}], "]"}]}], "]"}]}],
+          "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"j", ",", "1", ",", 
+          RowBox[{"Length", "[", "PA", "]"}]}], "}"}]}], "]"}], ",", "2"}], 
+     "]"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.620076340278673*^9}},
+ CellID->602566128],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PEtoVelocity", "[", 
+   RowBox[{"\[CapitalDelta]PE_", ",", "m_"}], "]"}], ":=", 
+  RowBox[{"Max", "[", 
+   RowBox[{"0", ",", 
+    RowBox[{"Re", "[", 
+     SqrtBox[
+      FractionBox[
+       RowBox[{"2", "\[CapitalDelta]PE"}], "m"]], "]"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.620076346533639*^9}},
+ CellID->625462413],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ballPos", "[", 
+   RowBox[{
+   "r_", ",", "a_", ",", "Nmag_", ",", "n_", ",", "aStep_", ",", 
+    "interSteps_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"ofset", ",", "stage", ",", "collpos"}], "}"}], ",", 
+    "\[IndentingNewLine]", " ", 
+    RowBox[{"If", "[", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"ofset", " ", "=", 
+        RowBox[{
+         RowBox[{"Mod", "[", " ", 
+          RowBox[{
+           RowBox[{"aStep", "-", "1"}], ",", 
+           RowBox[{"(", 
+            RowBox[{"interSteps", "+", "n"}], ")"}]}], "]"}], "-", 
+         "interSteps", "+", "1"}]}], " ", ";", "\[IndentingNewLine]", 
+       RowBox[{"stage", "=", 
+        RowBox[{"Max", "[", 
+         RowBox[{"0", ",", 
+          RowBox[{"Floor", "[", 
+           FractionBox[
+            RowBox[{"aStep", "-", "1"}], 
+            RowBox[{"(", 
+             RowBox[{"interSteps", "+", "n"}], ")"}]], "]"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"collpos", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", "ofset"}], "-", "1", " ", "+", 
+           RowBox[{"2", 
+            RowBox[{"(", " ", 
+             RowBox[{
+              FractionBox["a", "2"], "+", "n", "+", "1"}], ")"}], " ", 
+            "stage"}]}], ")"}], "r"}]}], ";", "\[IndentingNewLine]", " ", 
+       RowBox[{
+        RowBox[{"ofset", " ", "\[GreaterEqual]", " ", "0"}], " ", "&&", 
+        RowBox[{"aStep", ">", "1"}], "&&", " ", 
+        RowBox[{"aStep", "\[LessEqual]", 
+         RowBox[{"Nmag", 
+          RowBox[{"(", 
+           RowBox[{"interSteps", "+", "n"}], ")"}]}]}]}]}], ",", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"collision", "!"}], "*)"}], 
+      RowBox[{"collpos", "-", "r"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"no", " ", "collision"}], "*)"}], "\[IndentingNewLine]", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "a"}], " ", "-", "2", "+", " ", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"2", "+", 
+            RowBox[{"2", " ", "n"}], "+", "a"}], ")"}], "stage"}], "+", 
+         RowBox[{"a", " ", 
+          RowBox[{"Max", "[", 
+           RowBox[{"0", ",", " ", 
+            RowBox[{"Min", "[", 
+             RowBox[{
+              RowBox[{"(", 
+               FractionBox[
+                RowBox[{"aStep", "-", 
+                 RowBox[{"stage", 
+                  RowBox[{"(", " ", 
+                   RowBox[{"interSteps", "+", "n"}], ")"}]}]}], "interSteps"],
+                ")"}], ",", "1"}], "]"}]}], "]"}]}]}], ")"}], "r"}]}], 
+     "\[IndentingNewLine]", "]"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.6200763536998177`*^9}},
+ CellID->205617133],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"veloc", "[", 
+   RowBox[{
+   "r_", ",", "a_", ",", "Nmag_", ",", "n_", ",", "aStep_", ",", 
+    "interSteps_"}], "]"}], ":=", " ", 
+  RowBox[{"PEtoVelocity", "[", 
+   RowBox[{
+    RowBox[{"Chop", "[", 
+     RowBox[{
+      RowBox[{"PEAfterANIMATE", "[", 
+       RowBox[{
+       "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep", ",", 
+        "interSteps"}], "]"}], "-", 
+      RowBox[{"PEBefore", "[", 
+       RowBox[{"r", ",", "a", ",", "Nmag", ",", "n"}], "]"}]}], "]"}], ",", 
+    RowBox[{"massCapsule", "[", "r", "]"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.6193864743080387`*^9, {3.619396360172748*^9, 3.619396402366008*^9}, {
+   3.61939644238693*^9, 3.619396451143346*^9}, {3.619515494366096*^9, 
+   3.619515504234981*^9}, {3.620076253846612*^9, 3.620076357244315*^9}},
+ CellID->62886909]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "ManipulateSection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "ofset", ",", "magposes", ",", "ballposes", ",", "collpos", ",", 
+       "stage", ",", "velocity", ",", "textPos", ",", 
+       RowBox[{"interStepsFine", "=", "20"}], ",", "maxVel"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"interSteps", "=", "4"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", " ", 
+       RowBox[{
+        RowBox[{"a", "<", 
+         RowBox[{"2", 
+          RowBox[{"(", 
+           RowBox[{"n", "-", "1"}], ")"}]}]}], ",", 
+        RowBox[{"a", "=", 
+         RowBox[{"2", 
+          RowBox[{"(", 
+           RowBox[{"n", "-", "1"}], ")"}]}]}]}], "]"}], ";", " ", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"if", " ", "a"}], "<", 
+         RowBox[{"2", 
+          RowBox[{"(", 
+           RowBox[{"n", "-", "1"}], ")"}]}]}], ",", " ", 
+        RowBox[{
+        "the", " ", "starting", " ", "configuration", " ", "is", " ", "not", 
+         " ", "stable"}]}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"aStep", ">", 
+         RowBox[{"interSteps", "+", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"interSteps", "+", "n"}], ")"}], "Nmag"}]}]}], ",", 
+        RowBox[{"aStep", "=", 
+         RowBox[{"interSteps", "+", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"interSteps", "+", "n"}], ")"}], "Nmag"}]}]}]}], "]"}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"Column", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Graphics", "[", 
+          RowBox[{
+           RowBox[{"{", "\[IndentingNewLine]", 
+            RowBox[{"(*", "background", "*)"}], "\[IndentingNewLine]", 
+            RowBox[{"White", ",", " ", 
+             RowBox[{"Rectangle", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", 
+                   RowBox[{"(", 
+                    RowBox[{"8", "+", "a"}], ")"}]}], "r"}], ",", "0"}], 
+                "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"(", "Nmag", ")"}], " ", "2", 
+                   RowBox[{"(", 
+                    RowBox[{
+                    FractionBox["a", "2"], "+", "1", "+", "n"}], ")"}], "r"}],
+                   "-", 
+                  RowBox[{
+                   RowBox[{"(", 
+                    RowBox[{"1", "+", "a"}], ")"}], " ", "r"}], "+", "0.1"}], 
+                 ",", 
+                 RowBox[{"2", "r"}]}], "}"}]}], "]"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{"(*", "Floor", "*)"}], "\[IndentingNewLine]", 
+             RowBox[{"EdgeForm", "[", "Black", "]"}], ",", 
+             "\[IndentingNewLine]", "Brown", ",", " ", 
+             RowBox[{"Rectangle", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", 
+                   RowBox[{"(", 
+                    RowBox[{"4", "+", "a"}], ")"}]}], "r"}], ",", 
+                 RowBox[{
+                  RowBox[{"-", "8"}], "r"}]}], "}"}], ",", " ", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"(", "Nmag", ")"}], "2", 
+                   RowBox[{"(", 
+                    RowBox[{
+                    FractionBox["a", "2"], "+", "1", "+", "n"}], ")"}], "r"}],
+                   "-", 
+                  RowBox[{
+                   RowBox[{"(", 
+                    RowBox[{"1", "+", "a"}], ")"}], "r"}]}], ",", 
+                 RowBox[{"-", "r"}]}], "}"}]}], "]"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"magposes", " ", "=", 
+               RowBox[{"MagPos", "[", 
+                RowBox[{"r", ",", "a", ",", "Nmag", ",", "n"}], "]"}]}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"(*", 
+               RowBox[{
+               "draw", " ", "all", " ", "magnets", " ", "and", " ", 
+                "stationary", " ", "balls"}], "*)"}], "\[IndentingNewLine]", 
+              RowBox[{"Table", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"DrawMagnet", "[", 
+                   RowBox[{
+                    RowBox[{
+                    "magposes", "\[LeftDoubleBracket]", "j", 
+                    "\[RightDoubleBracket]"}], ",", "r"}], "]"}], ",", " ", 
+                  RowBox[{"Table", "[", 
+                   RowBox[{
+                    RowBox[{"DrawBall", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    "magposes", "\[LeftDoubleBracket]", "j", 
+                    "\[RightDoubleBracket]"}], "+", 
+                    RowBox[{"balls", " ", "2", "r"}]}], ",", "r"}], "]"}], 
+                    ",", 
+                    RowBox[{"{", 
+                    RowBox[{"balls", ",", "1", ",", 
+                    RowBox[{"n", "-", "1"}]}], "}"}]}], "]"}]}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"j", ",", "1", ",", 
+                  RowBox[{"Length", "[", "magposes", "]"}]}], "}"}]}], 
+               "]"}]}], ",", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"velocity", " ", "=", " ", 
+               RowBox[{"veloc", "[", 
+                RowBox[{
+                "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep", ",", 
+                 "interSteps"}], "]"}]}], ";", "\[IndentingNewLine]", 
+              RowBox[{"(*", 
+               RowBox[{"Draw", " ", "Moveable", " ", "balls"}], "*)"}], 
+              "\[IndentingNewLine]", 
+              RowBox[{"ballposes", " ", "=", " ", 
+               RowBox[{"PosAfterANIMATE", "[", 
+                RowBox[{
+                "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep", ",", 
+                 "interSteps"}], "]"}]}], ";", "\[IndentingNewLine]", 
+              "\[IndentingNewLine]", 
+              RowBox[{"Table", "[", " ", 
+               RowBox[{
+                RowBox[{"DrawBall", "[", 
+                 RowBox[{
+                  RowBox[{
+                  "ballposes", "\[LeftDoubleBracket]", "j", 
+                   "\[RightDoubleBracket]"}], ",", "r"}], "]"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"j", ",", "1", ",", 
+                  RowBox[{"Length", "[", "ballposes", "]"}]}], "}"}]}], 
+               "]"}]}], " ", ",", "\[IndentingNewLine]", 
+             RowBox[{"(*", 
+              RowBox[{"Draw", " ", 
+               RowBox[{"Collisions", "?"}]}], "*)"}], "\[IndentingNewLine]", 
+             RowBox[{"If", "[", " ", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"ofset", " ", "=", 
+                 RowBox[{
+                  RowBox[{"Mod", "[", " ", 
+                   RowBox[{
+                    RowBox[{"aStep", "-", "1"}], ",", 
+                    RowBox[{"(", 
+                    RowBox[{"interSteps", "+", "n"}], ")"}]}], "]"}], "-", 
+                  "interSteps", "+", "1"}]}], " ", ";", "\[IndentingNewLine]", 
+                RowBox[{"stage", "=", 
+                 RowBox[{"Max", "[", 
+                  RowBox[{"0", ",", 
+                   RowBox[{"Floor", "[", 
+                    FractionBox[
+                    RowBox[{"aStep", "-", "1"}], 
+                    RowBox[{"(", 
+                    RowBox[{"interSteps", "+", "n"}], ")"}]], "]"}]}], 
+                  "]"}]}], ";", "\[IndentingNewLine]", 
+                RowBox[{"collpos", " ", "=", " ", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"2", "ofset"}], "-", "1", " ", "+", 
+                    RowBox[{"2", 
+                    RowBox[{"(", " ", 
+                    RowBox[{
+                    FractionBox["a", "2"], "+", "n", "+", "1"}], ")"}], " ", 
+                    "stage"}]}], ")"}], "r"}]}], ";", "\[IndentingNewLine]", 
+                " ", 
+                RowBox[{
+                 RowBox[{"ofset", " ", "\[GreaterEqual]", " ", "0"}], " ", "&&", 
+                 RowBox[{"aStep", ">", "1"}], "&&", " ", 
+                 RowBox[{"aStep", "\[LessEqual]", 
+                  RowBox[{"Nmag", 
+                   RowBox[{"(", 
+                    RowBox[{"interSteps", "+", "n"}], ")"}]}]}]}]}], ",", 
+               "\[IndentingNewLine]", 
+               RowBox[{"{", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"DrawCollision", "[", 
+                  RowBox[{"collpos", ",", "r"}], "]"}], "\[IndentingNewLine]",
+                  ",", 
+                 RowBox[{"(*", 
+                  RowBox[{
+                  "annotate", " ", "velocity", " ", "if", " ", "collision"}], 
+                  "*)"}], "\[IndentingNewLine]", 
+                 RowBox[{
+                  RowBox[{"textPos", "=", 
+                   RowBox[{"collpos", "+", "r"}]}], ";"}]}], "}"}], ",", 
+               "\[IndentingNewLine]", 
+               RowBox[{"{", 
+                RowBox[{"(*", 
+                 RowBox[{
+                 "annotate", " ", "velocity", " ", "if", " ", "no", " ", 
+                  "collision"}], "*)"}], "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"textPos", "=", " ", 
+                  RowBox[{
+                   RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"-", "a"}], " ", "-", "2", "+", " ", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"2", "+", 
+                    RowBox[{"2", " ", "n"}], "+", "a"}], ")"}], "stage"}], 
+                    "+", 
+                    RowBox[{"a", " ", 
+                    RowBox[{"Max", "[", 
+                    RowBox[{"0", ",", " ", 
+                    RowBox[{"Min", "[", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    FractionBox[
+                    RowBox[{"aStep", "-", 
+                    RowBox[{"stage", 
+                    RowBox[{"(", " ", 
+                    RowBox[{"interSteps", "+", "n"}], ")"}]}]}], 
+                    "interSteps"], ")"}], ",", "1"}], "]"}]}], "]"}]}]}], 
+                    ")"}], "r"}]}], ";"}], "\[IndentingNewLine]", "}"}]}], 
+              "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+             RowBox[{"{", 
+              RowBox[{"Black", ",", 
+               RowBox[{"Text", "[", 
+                RowBox[{
+                 RowBox[{"Style", "[", " ", 
+                  RowBox[{
+                   RowBox[{"StringForm", "[", 
+                    RowBox[{"\"\<`` m/s\>\"", ",", 
+                    RowBox[{"NumberForm", "[", 
+                    RowBox[{
+                    RowBox[{"Chop", "[", "velocity", "]"}], ",", "3"}], 
+                    "]"}]}], "]"}], ",", "20"}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"textPos", ",", "r"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"Center", ",", "Bottom"}], "}"}]}], "]"}]}], "}"}], 
+             ",", "\[IndentingNewLine]", 
+             RowBox[{"(*", 
+              RowBox[{
+               RowBox[{"draw", " ", 
+                RowBox[{"trajectory", "!"}], "   ", "Fgrav"}], " ", "=", " ", 
+               RowBox[{
+                RowBox[{"-", "9.81"}], "*", "mass"}]}], "*)"}], 
+             "\[IndentingNewLine]", 
+             RowBox[{"(*", 
+              RowBox[{
+              "draw", " ", "scale", " ", "bar", " ", "and", " ", "ticks"}], 
+              "*)"}], "\[IndentingNewLine]", ",", 
+             RowBox[{"Darker", "[", "Gray", "]"}], ",", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"Line", "[", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"x", "/", "10"}], ",", 
+                    RowBox[{
+                    RowBox[{"-", "8"}], "r"}]}], "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"x", "/", "10"}], ",", 
+                    RowBox[{"-", "r"}]}], "}"}]}], "}"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"x", ",", "0", ",", 
+                 RowBox[{"Floor", "[", 
+                  RowBox[{
+                   RowBox[{"10", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"(", "Nmag", ")"}], "2", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    FractionBox["a", "2"], "+", "1", "+", "n"}], ")"}], "r"}],
+                     "-", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"1", "+", "a"}], ")"}], "r"}]}], ")"}]}], "+", 
+                   "1"}], "]"}]}], "}"}]}], "]"}], "\[IndentingNewLine]", ",", 
+             RowBox[{"Arrowheads", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", ".03"}], ",", ".03"}], "}"}], "]"}], ",", 
+             RowBox[{"Arrow", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"0", ",", 
+                  RowBox[{
+                   RowBox[{"-", "4"}], "r"}]}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"1", "/", "10"}], ",", 
+                  RowBox[{
+                   RowBox[{"-", "4"}], "r"}]}], "}"}]}], "}"}], "]"}], ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{"\"\<100mm\>\"", ",", "20"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"1", "/", "20"}], ",", 
+                 RowBox[{
+                  RowBox[{"-", "5"}], "r"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"Center", ",", "Top"}], "}"}]}], "]"}]}], 
+            "\[IndentingNewLine]", "}"}], ",", 
+           RowBox[{"ImageSize", "\[Rule]", " ", 
+            RowBox[{"{", 
+             RowBox[{"550", ",", "150"}], "}"}]}]}], "\[IndentingNewLine]", 
+          "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"ListPlot", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"1000", 
+                  RowBox[{"ballPos", "[", 
+                   RowBox[{
+                   "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep2", ",", 
+                    "interStepsFine"}], "]"}]}], ",", 
+                 RowBox[{"veloc", "[", 
+                  RowBox[{
+                  "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep2", ",", 
+                   "interStepsFine"}], "]"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"aStep2", ",", "0", ",", 
+                 RowBox[{"interStepsFine", "+", 
+                  RowBox[{
+                   RowBox[{"(", 
+                    RowBox[{"interStepsFine", "+", "n"}], ")"}], "Nmag"}]}]}],
+                 "}"}]}], "]"}], ",", "\[IndentingNewLine]", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"1000", 
+                  RowBox[{"ballPos", "[", 
+                   RowBox[{
+                   "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep2", ",", 
+                    "1"}], "]"}]}], ",", 
+                 RowBox[{"veloc", "[", 
+                  RowBox[{
+                  "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep2", ",", 
+                   "1"}], "]"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"aStep2", ",", "1", ",", 
+                 RowBox[{"1", "+", 
+                  RowBox[{
+                   RowBox[{"(", 
+                    RowBox[{"1", "+", "n"}], ")"}], "Nmag"}], "-", "1"}]}], 
+                "}"}]}], "]"}]}], "\[IndentingNewLine]", "}"}], ",", 
+           RowBox[{"Joined", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"True", ",", "False"}], "}"}]}], ",", 
+           RowBox[{"PlotRange", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"Automatic", ",", 
+                RowBox[{"1000", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"(", "Nmag", ")"}], " ", "2", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    FractionBox["a", "2"], "+", "1", "+", "n"}], ")"}], "r"}],
+                    "-", 
+                   RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"1", "+", "a"}], ")"}], " ", "r"}], "+", "0.1"}], 
+                  ")"}]}]}], "}"}], ",", "Automatic"}], "}"}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"MeshStyle", "\[Rule]", 
+            RowBox[{"PointSize", "[", "Large", "]"}]}], 
+           RowBox[{"(*", 
+            RowBox[{",", 
+             RowBox[{"PlotMarkers", "\[Rule]", 
+              RowBox[{"{", 
+               RowBox[{"\"\<\>\"", ",", 
+                RowBox[{"{", 
+                 RowBox[{"\[FivePointedStar]", ",", "20"}], "}"}]}], 
+               "}"}]}]}], "*)"}], ",", 
+           RowBox[{"PlotStyle", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"Thick", ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"PointSize", "[", "Large", "]"}], ",", "Blue"}], 
+               "}"}]}], "}"}]}], ",", 
+           RowBox[{"AxesOrigin", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"1000", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "a"}], " ", "r"}], "-", 
+                 RowBox[{"2", "r"}]}], ")"}]}], ",", "0"}], "}"}]}], ",", 
+           RowBox[{"Frame", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"True", ",", "True", ",", "False", ",", "False"}], 
+             "}"}]}], ",", 
+           RowBox[{"FrameLabel", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+             "\"\<moving ball position (mm)\>\"", ",", 
+              "\"\<velocity (m/s)\>\""}], "}"}]}], ",", 
+           RowBox[{"FrameStyle", "\[Rule]", 
+            RowBox[{"Directive", "[", "18", "]"}]}], ",", 
+           RowBox[{"Prolog", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "1000"}], ",", " ", 
+                   RowBox[{"veloc", "[", 
+                    RowBox[{
+                    "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep", ",", 
+                    "interSteps"}], "]"}]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"1000", 
+                    RowBox[{"ballPos", "[", 
+                    RowBox[{
+                    "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep", ",", 
+                    "interSteps"}], "]"}]}], ",", 
+                   RowBox[{"veloc", "[", 
+                    RowBox[{
+                    "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep", ",", 
+                    "interSteps"}], "]"}]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"1000", 
+                    RowBox[{"ballPos", "[", 
+                    RowBox[{
+                    "r", ",", "a", ",", "Nmag", ",", "n", ",", "aStep", ",", 
+                    "interSteps"}], "]"}]}], ",", "0"}], "}"}]}], "}"}], 
+               "]"}]}], "}"}]}], "\[IndentingNewLine]", ",", 
+           RowBox[{"ImageSize", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"550", ",", "200"}], "}"}]}], ",", "\[IndentingNewLine]", 
+           RowBox[{"AspectRatio", "\[Rule]", 
+            RowBox[{"1", "/", "3"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+        "}"}], "]"}]}]}], "]"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"interSteps", ",", " ", 
+     RowBox[{"ControlType", "\[Rule]", " ", "None"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "0.005", ",", "\"\<ball radius (m)\>\""}], "}"}], ",",
+      "0.0005", ",", "0.01", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", "8", ",", "\"\<air gap (ball radii)\>\""}], "}"}], 
+     ",", 
+     RowBox[{"2", 
+      RowBox[{"(", 
+       RowBox[{"n", "-", "1"}], ")"}]}], ",", "20", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Nmag", ",", "2", ",", "\"\<stages\>\""}], "}"}], ",", "1", ",",
+      "10", ",", "1", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", "3", ",", "\"\<balls per stage\>\""}], "}"}], ",", 
+     "2", ",", "10", ",", "1", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"This", " ", "control", " ", "frustrates", " ", 
+      RowBox[{"me", ".", "  ", "Ideally"}]}], ",", " ", 
+     RowBox[{
+     "it", " ", "would", " ", "be", " ", "only", " ", "a", " ", "slider", " ",
+       "and", " ", "an", " ", "\"\<animate\>\"", " ", "button"}], ",", " ", 
+     RowBox[{"no", " ", "\"\<-\>\""}], ",", "\"\<+\>\"", ",", " ", 
+     RowBox[{
+      RowBox[{"etc", ".", "  ", "Using"}], " ", 
+      "\"\<ControlType\[Rule]Trigger\>\"", " ", 
+      RowBox[{"doesn", "'"}], "t", " ", "allow", " ", "the", " ", "user", " ",
+       "to", " ", "skim", " ", "through", " ", "the", " ", "states"}]}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"aStep", ",", "0", ",", "\"\<animate\>\""}], "}"}], ",", "0", 
+     ",", 
+     RowBox[{"interSteps", "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"interSteps", "+", "n"}], ")"}], "Nmag"}]}], ",", "1", ",", 
+     RowBox[{"AnimationDirection", "\[Rule]", "Forward"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"SaveDefinitions", "\[Rule]", " ", "True"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.6193864484578743`*^9, {3.619386544560515*^9, 3.619386544748126*^9}, {
+   3.619506201241446*^9, 3.6195062065078707`*^9}, {3.619515430368021*^9, 
+   3.619515443434745*^9}, {3.619515542493945*^9, 3.619515561889256*^9}, {
+   3.619595354115247*^9, 3.619595476654767*^9}, {3.6198114033048334`*^9, 
+   3.6198114108045835`*^9}, {3.619811503303832*^9, 3.619811563921893*^9}, {
+   3.6198115942499256`*^9, 3.619811625935094*^9}, 3.620076400353475*^9, {
+   3.620138356084332*^9, 3.6201383603449783`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 4, $CellContext`aStep$$ = 
+    8, $CellContext`interSteps$$ = 4, $CellContext`n$$ = 
+    2, $CellContext`Nmag$$ = 2, $CellContext`r$$ = 0.0005, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`interSteps$$]}, {{
+       Hold[$CellContext`r$$], 0.005, "ball radius (m)"}, 0.0005, 0.01}, {{
+       Hold[$CellContext`a$$], 8, "air gap (ball radii)"}, 
+      Dynamic[2 ($CellContext`n$$ - 1)], 20}, {{
+       Hold[$CellContext`Nmag$$], 2, "stages"}, 1, 10, 1}, {{
+       Hold[$CellContext`n$$], 3, "balls per stage"}, 2, 10, 1}, {{
+       Hold[$CellContext`aStep$$], 0, "animate"}, 0, 
+      Dynamic[$CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$], 1}}, Typeset`size$$ = {
+    550., {174.8544921875, 180.1455078125}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`r$65741$$ = 0, $CellContext`a$65742$$ = 
+    0, $CellContext`Nmag$65743$$ = 0, $CellContext`n$65744$$ = 
+    0, $CellContext`aStep$65745$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 8, $CellContext`aStep$$ = 
+        0, $CellContext`interSteps$$ = Null, $CellContext`n$$ = 
+        3, $CellContext`Nmag$$ = 2, $CellContext`r$$ = 0.005}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`r$$, $CellContext`r$65741$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$65742$$, 0], 
+        Hold[$CellContext`Nmag$$, $CellContext`Nmag$65743$$, 0], 
+        Hold[$CellContext`n$$, $CellContext`n$65744$$, 0], 
+        Hold[$CellContext`aStep$$, $CellContext`aStep$65745$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`ofset$, $CellContext`magposes$, \
+$CellContext`ballposes$, $CellContext`collpos$, $CellContext`stage$, \
+$CellContext`velocity$, $CellContext`textPos$, $CellContext`interStepsFine$ = 
+         20, $CellContext`maxVel$}, $CellContext`interSteps$$ = 4; 
+        If[$CellContext`a$$ < 2 ($CellContext`n$$ - 1), $CellContext`a$$ = 
+          2 ($CellContext`n$$ - 1)]; 
+        If[$CellContext`aStep$$ > $CellContext`interSteps$$ + \
+($CellContext`interSteps$$ + $CellContext`n$$) $CellContext`Nmag$$, \
+$CellContext`aStep$$ = $CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$]; Column[{
+           Graphics[{White, 
+             
+             Rectangle[{(-(8 + $CellContext`a$$)) $CellContext`r$$, 
+               0}, {$CellContext`Nmag$$ 
+                2 ($CellContext`a$$/2 + 
+                 1 + $CellContext`n$$) $CellContext`r$$ - (
+                1 + $CellContext`a$$) $CellContext`r$$ + 0.1, 
+               2 $CellContext`r$$}], 
+             EdgeForm[Black], Brown, 
+             
+             Rectangle[{(-(
+                 4 + $CellContext`a$$)) $CellContext`r$$, (-8) \
+$CellContext`r$$}, {$CellContext`Nmag$$ 
+                2 ($CellContext`a$$/2 + 
+                 1 + $CellContext`n$$) $CellContext`r$$ - (
+                1 + $CellContext`a$$) $CellContext`r$$, -$CellContext`r$$}], \
+$CellContext`magposes$ = $CellContext`MagPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$]; Table[{
+                $CellContext`DrawMagnet[
+                 
+                 Part[$CellContext`magposes$, $CellContext`j], \
+$CellContext`r$$], 
+                Table[
+                 $CellContext`DrawBall[
+                 Part[$CellContext`magposes$, $CellContext`j] + \
+$CellContext`balls 2 $CellContext`r$$, $CellContext`r$$], {$CellContext`balls,
+                   1, $CellContext`n$$ - 1}]}, {$CellContext`j, 1, 
+                
+                Length[$CellContext`magposes$]}], $CellContext`velocity$ = \
+$CellContext`veloc[$CellContext`r$$, $CellContext`a$$, $CellContext`Nmag$$, \
+$CellContext`n$$, $CellContext`aStep$$, $CellContext`interSteps$$]; \
+$CellContext`ballposes$ = $CellContext`PosAfterANIMATE[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, \
+$CellContext`aStep$$, $CellContext`interSteps$$]; Table[
+               $CellContext`DrawBall[
+                
+                Part[$CellContext`ballposes$, $CellContext`j], \
+$CellContext`r$$], {$CellContext`j, 1, 
+                Length[$CellContext`ballposes$]}], 
+             
+             If[$CellContext`ofset$ = 
+               Mod[$CellContext`aStep$$ - 
+                  1, $CellContext`interSteps$$ + $CellContext`n$$] - \
+$CellContext`interSteps$$ + 1; $CellContext`stage$ = Max[0, 
+                 
+                 Floor[($CellContext`aStep$$ - 
+                   1)/($CellContext`interSteps$$ + $CellContext`n$$)]]; \
+$CellContext`collpos$ = (2 $CellContext`ofset$ - 1 + 
+                 2 ($CellContext`a$$/2 + $CellContext`n$$ + 
+                   1) $CellContext`stage$) $CellContext`r$$; 
+              And[$CellContext`ofset$ >= 0, $CellContext`aStep$$ > 
+                1, $CellContext`aStep$$ <= $CellContext`Nmag$$ \
+($CellContext`interSteps$$ + $CellContext`n$$)], {
+               $CellContext`DrawCollision[$CellContext`collpos$, \
+$CellContext`r$$], $CellContext`textPos$ = $CellContext`collpos$ + \
+$CellContext`r$$; 
+               Null}, {$CellContext`textPos$ = (-$CellContext`a$$ - 
+                  2 + (2 + 
+                    2 $CellContext`n$$ + $CellContext`a$$) \
+$CellContext`stage$ + $CellContext`a$$ Max[0, 
+                    
+                    Min[($CellContext`aStep$$ - $CellContext`stage$ \
+($CellContext`interSteps$$ + $CellContext`n$$))/$CellContext`interSteps$$, 
+                    1]]) $CellContext`r$$; Null}], {Black, 
+              Text[
+               Style[
+                StringForm["`` m/s", 
+                 NumberForm[
+                  Chop[$CellContext`velocity$], 3]], 
+                20], {$CellContext`textPos$, $CellContext`r$$}, {
+               Center, Bottom}]}, Null, 
+             Darker[Gray], 
+             Table[
+              
+              Line[{{$CellContext`x/
+                 10, (-8) $CellContext`r$$}, {$CellContext`x/
+                 10, -$CellContext`r$$}}], {$CellContext`x, 0, 
+               Floor[
+               10 ($CellContext`Nmag$$ 
+                   2 ($CellContext`a$$/2 + 
+                    1 + $CellContext`n$$) $CellContext`r$$ - (
+                   1 + $CellContext`a$$) $CellContext`r$$) + 1]}], 
+             Arrowheads[{-0.03, 0.03}], 
+             
+             Arrow[{{0, (-4) $CellContext`r$$}, {
+               1/10, (-4) $CellContext`r$$}}], 
+             Text[
+              Style["100mm", 20], {1/20, (-5) $CellContext`r$$}, {
+              Center, Top}]}, ImageSize -> {550, 150}], 
+           ListPlot[{
+             
+             Table[{1000 $CellContext`ballPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, \
+$CellContext`interStepsFine$], 
+               $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, \
+$CellContext`interStepsFine$]}, {$CellContext`aStep2, 
+               0, $CellContext`interStepsFine$ + \
+($CellContext`interStepsFine$ + $CellContext`n$$) $CellContext`Nmag$$}], 
+             
+             Table[{1000 $CellContext`ballPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, 
+                 1], 
+               $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, 
+                1]}, {$CellContext`aStep2, 1, 
+               1 + (1 + $CellContext`n$$) $CellContext`Nmag$$ - 1}]}, 
+            Joined -> {True, False}, 
+            PlotRange -> {{
+              Automatic, 
+               1000 ($CellContext`Nmag$$ 
+                 2 ($CellContext`a$$/2 + 
+                  1 + $CellContext`n$$) $CellContext`r$$ - (
+                 1 + $CellContext`a$$) $CellContext`r$$ + 0.1)}, Automatic}, 
+            MeshStyle -> PointSize[Large], PlotStyle -> {Thick, {
+               PointSize[Large], Blue}}, 
+            AxesOrigin -> {
+             1000 ((-$CellContext`a$$) $CellContext`r$$ - 2 $CellContext`r$$),
+               0}, Frame -> {True, True, False, False}, 
+            FrameLabel -> {"moving ball position (mm)", "velocity (m/s)"}, 
+            FrameStyle -> Directive[18], Prolog -> {Red, 
+              Line[{{-1000, 
+                 $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$]}, {
+                1000 $CellContext`ballPos[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$], 
+                 $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$]}, {
+                1000 $CellContext`ballPos[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$], 0}}]}, ImageSize -> {550, 200}, AspectRatio -> 
+            1/3]}]], 
+      "Specifications" :> {{$CellContext`interSteps$$, ControlType -> 
+         None}, {{$CellContext`r$$, 0.005, "ball radius (m)"}, 0.0005, 0.01, 
+         Appearance -> 
+         "Labeled"}, {{$CellContext`a$$, 8, "air gap (ball radii)"}, 
+         Dynamic[2 ($CellContext`n$$ - 1)], 20, Appearance -> 
+         "Labeled"}, {{$CellContext`Nmag$$, 2, "stages"}, 1, 10, 1, 
+         Appearance -> "Labeled"}, {{$CellContext`n$$, 3, "balls per stage"}, 
+         2, 10, 1, Appearance -> 
+         "Labeled"}, {{$CellContext`aStep$$, 0, "animate"}, 0, 
+         Dynamic[$CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$], 1, AnimationDirection -> Forward}}, 
+      "Options" :> {}, "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{593., {302., 307.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`MagPos[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Table[(2 + 
+          2 $CellContext`n + $CellContext`a) $CellContext`r $CellContext`k, \
+{$CellContext`k, 0, $CellContext`Nmag - 1}], $CellContext`DrawMagnet[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Red, 
+         Disk[{$CellContext`x, 0}, $CellContext`r], Green, 
+         Disk[{$CellContext`x, 0}, $CellContext`r, {-(Pi/2), Pi/
+           2}]}, $CellContext`DrawBall[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Gray, 
+         Disk[{$CellContext`x, 0}, $CellContext`r]}, $CellContext`veloc[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := $CellContext`PEtoVelocity[
+         Chop[$CellContext`PEAfterANIMATE[$CellContext`r, $CellContext`a, \
+$CellContext`Nmag, $CellContext`n, $CellContext`aStep, \
+$CellContext`interSteps] - $CellContext`PEBefore[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n]], 
+         $CellContext`massCapsule[$CellContext`r]], $CellContext`PEtoVelocity[
+         Pattern[$CellContext`\[CapitalDelta]PE, 
+          Blank[]], 
+         Pattern[$CellContext`m, 
+          Blank[]]] := Max[0, 
+         Re[
+          
+          Sqrt[(2 $CellContext`\[CapitalDelta]PE)/$CellContext`m]]], \
+$CellContext`PEAfterANIMATE[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Module[{$CellContext`PA = $CellContext`PosAfterANIMATE[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n, $CellContext`aStep, \
+$CellContext`interSteps]}, 
+         Total[
+          Table[
+           $CellContext`PEenergy[$CellContext`r, 
+            Abs[
+            Part[$CellContext`PA, $CellContext`j] - \
+$CellContext`MagPos[$CellContext`r, $CellContext`a, $CellContext`Nmag, \
+$CellContext`n]]], {$CellContext`j, 1, 
+            Length[$CellContext`PA]}], 2]], $CellContext`PosAfterANIMATE[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Table[(-$CellContext`a - 
+          2 + (2 + 
+            2 $CellContext`n + $CellContext`a) $CellContext`k + \
+$CellContext`a Max[0, 
+             
+             Min[($CellContext`aStep - $CellContext`k \
+($CellContext`interSteps + $CellContext`n))/$CellContext`interSteps, 
+              1]]) $CellContext`r, {$CellContext`k, 
+          0, $CellContext`Nmag}], $CellContext`PEenergy[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`d, 
+          Blank[]]] := ((6.490602773423956*^6/
+          2) $CellContext`r^6)/$CellContext`d^3, $CellContext`PEBefore[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Module[{$CellContext`Pb = $CellContext`PosBefore[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n]}, 
+         Total[
+          Table[
+           $CellContext`PEenergy[$CellContext`r, 
+            Abs[
+            Part[$CellContext`Pb, $CellContext`j] - \
+$CellContext`MagPos[$CellContext`r, $CellContext`a, $CellContext`Nmag, \
+$CellContext`n]]], {$CellContext`j, 1, 
+            Length[$CellContext`Pb]}], 2]], $CellContext`PosBefore[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Table[(-$CellContext`a - 
+          2 + (2 + 
+            2 $CellContext`n + $CellContext`a) $CellContext`k) \
+$CellContext`r, {$CellContext`k, 
+          0, $CellContext`Nmag}], $CellContext`massCapsule[
+         Pattern[$CellContext`rad, 
+          Blank[]]] := (4/3) Pi $CellContext`rad^3 
+        7850, $CellContext`DrawCollision[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Yellow, 
+         Module[{$CellContext`kmax = 16}, 
+          Polygon[
+           
+           Table[$CellContext`\[Theta] = 
+             2 ((Pi $CellContext`k)/$CellContext`kmax) + 
+              RandomReal[(2 Pi)/$CellContext`kmax]; {$CellContext`x, 
+               0} + $CellContext`r 0.8 {
+                Sin[$CellContext`\[Theta]], 2 Cos[$CellContext`\[Theta]]} If[
+                EvenQ[$CellContext`k], 1, 1/3], {$CellContext`k, 
+             1, $CellContext`kmax}]]]}, $CellContext`ballPos[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Module[{$CellContext`ofset, $CellContext`stage, $CellContext`collpos}, 
+         If[$CellContext`ofset = 
+           Mod[$CellContext`aStep - 
+              1, $CellContext`interSteps + $CellContext`n] - \
+$CellContext`interSteps + 1; $CellContext`stage = Max[0, 
+             
+             Floor[($CellContext`aStep - 
+               1)/($CellContext`interSteps + $CellContext`n)]]; \
+$CellContext`collpos = (2 $CellContext`ofset - 1 + 
+             2 ($CellContext`a/2 + $CellContext`n + 
+               1) $CellContext`stage) $CellContext`r; 
+          And[$CellContext`ofset >= 0, $CellContext`aStep > 
+            1, $CellContext`aStep <= $CellContext`Nmag \
+($CellContext`interSteps + $CellContext`n)], $CellContext`collpos - \
+$CellContext`r, (-$CellContext`a - 
+           2 + (2 + 
+             2 $CellContext`n + $CellContext`a) $CellContext`stage + \
+$CellContext`a Max[0, 
+              
+              Min[($CellContext`aStep - $CellContext`stage \
+($CellContext`interSteps + $CellContext`n))/$CellContext`interSteps, 
+               1]]) $CellContext`r]]}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.638642498351021*^9},
+ CellID->1902170897]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "ManipulateCaptionSection"],
+
+Cell["\<\
+A Gauss gun is a type of linear magnetic accelerator in which projectiles \
+(here ball bearings) interact with an array of magnets. The magnets are shown \
+as red/green spheres, fixed in position. A ball bearing introduced on the \
+left is attracted to the first magnet and undergoes a rapid acceleration that \
+increases its kinetic energy. Upon colliding with the magnet, this energy is \
+transferred through the magnet and a chain of stationary ball bearings, \
+releasing the rightmost bearing. See how the final velocity varies as you \
+change the ball radius, air gap, number of stages, and balls per stage.\
+\>", "ManipulateCaption",
+ CellChangeTimes->{{3.619386485341373*^9, 3.619386487068531*^9}, {
+   3.619386566750429*^9, 3.619386580983448*^9}, {3.619395225220314*^9, 
+   3.6193953657993317`*^9}, {3.6193960347004433`*^9, 
+   3.6193960705687313`*^9}, {3.619396109100244*^9, 3.61939616776261*^9}, {
+   3.619515322044464*^9, 3.619515341201868*^9}, 3.619515588164102*^9, {
+   3.619811653913892*^9, 3.619811654357936*^9}, {3.619812777430232*^9, 
+   3.6198127778602753`*^9}, {3.6200761915769587`*^9, 3.620076222123507*^9}, {
+   3.620076687802627*^9, 3.6200767044173603`*^9}, {3.620081000309105*^9, 
+   3.6200810353671713`*^9}, {3.6200812509256983`*^9, 3.620081259980926*^9}, {
+   3.62008132833559*^9, 3.620081419061366*^9}, {3.620081468313499*^9, 
+   3.620081494870874*^9}, {3.620081550906479*^9, 3.620081591031039*^9}, 
+   3.620081626357236*^9, 3.620082024672076*^9, {3.620138384832428*^9, 
+   3.62013840561445*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "ThumbnailSection"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 8, $CellContext`aStep$$ = 
+    4, $CellContext`interSteps$$ = 4, $CellContext`n$$ = 
+    3, $CellContext`Nmag$$ = 2, $CellContext`r$$ = 0.005, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`interSteps$$], 4}}, {{
+       Hold[$CellContext`r$$], 0.005, "ball radius (m)"}, 0.0005, 0.01}, {{
+       Hold[$CellContext`a$$], 8, "air gap (ball radii)"}, 
+      Dynamic[2 ($CellContext`n$$ - 1)], 20}, {{
+       Hold[$CellContext`Nmag$$], 2, "stages"}, 1, 10, 1}, {{
+       Hold[$CellContext`n$$], 3, "balls per stage"}, 2, 10, 1}, {{
+       Hold[$CellContext`aStep$$], 4, "animate"}, 0, 
+      Dynamic[$CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$], 1}}, Typeset`size$$ = {
+    550., {174.8544921875, 180.1455078125}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`r$5368$$ = 0, $CellContext`a$5369$$ = 
+    0, $CellContext`Nmag$5370$$ = 0, $CellContext`n$5371$$ = 
+    0, $CellContext`aStep$5372$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 8, $CellContext`aStep$$ = 
+        4, $CellContext`interSteps$$ = 4, $CellContext`n$$ = 
+        3, $CellContext`Nmag$$ = 2, $CellContext`r$$ = 0.005}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`r$$, $CellContext`r$5368$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$5369$$, 0], 
+        Hold[$CellContext`Nmag$$, $CellContext`Nmag$5370$$, 0], 
+        Hold[$CellContext`n$$, $CellContext`n$5371$$, 0], 
+        Hold[$CellContext`aStep$$, $CellContext`aStep$5372$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`ofset$, $CellContext`magposes$, \
+$CellContext`ballposes$, $CellContext`collpos$, $CellContext`stage$, \
+$CellContext`velocity$, $CellContext`textPos$, $CellContext`interStepsFine$ = 
+         20, $CellContext`maxVel$}, $CellContext`interSteps$$ = 4; 
+        If[$CellContext`a$$ < 2 ($CellContext`n$$ - 1), $CellContext`a$$ = 
+          2 ($CellContext`n$$ - 1)]; 
+        If[$CellContext`aStep$$ > $CellContext`interSteps$$ + \
+($CellContext`interSteps$$ + $CellContext`n$$) $CellContext`Nmag$$, \
+$CellContext`aStep$$ = $CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$]; Column[{
+           Graphics[{White, 
+             
+             Rectangle[{(-(8 + $CellContext`a$$)) $CellContext`r$$, 
+               0}, {(($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                  1 + $CellContext`n$$)) $CellContext`r$$ - (
+                1 + $CellContext`a$$) $CellContext`r$$ + 0.1, 
+               2 $CellContext`r$$}], 
+             EdgeForm[Black], Brown, 
+             
+             Rectangle[{(-(
+                 4 + $CellContext`a$$)) $CellContext`r$$, (-8) \
+$CellContext`r$$}, {(($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                  1 + $CellContext`n$$)) $CellContext`r$$ - (
+                1 + $CellContext`a$$) $CellContext`r$$, -$CellContext`r$$}], \
+$CellContext`magposes$ = $CellContext`MagPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$]; Table[{
+                $CellContext`DrawMagnet[
+                 
+                 Part[$CellContext`magposes$, $CellContext`j], \
+$CellContext`r$$], 
+                Table[
+                 $CellContext`DrawBall[
+                 Part[$CellContext`magposes$, $CellContext`j] + \
+($CellContext`balls 
+                    2) $CellContext`r$$, $CellContext`r$$], \
+{$CellContext`balls, 1, $CellContext`n$$ - 1}]}, {$CellContext`j, 1, 
+                
+                Length[$CellContext`magposes$]}], $CellContext`velocity$ = \
+$CellContext`veloc[$CellContext`r$$, $CellContext`a$$, $CellContext`Nmag$$, \
+$CellContext`n$$, $CellContext`aStep$$, $CellContext`interSteps$$]; \
+$CellContext`ballposes$ = $CellContext`PosAfterANIMATE[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, \
+$CellContext`aStep$$, $CellContext`interSteps$$]; Table[
+               $CellContext`DrawBall[
+                
+                Part[$CellContext`ballposes$, $CellContext`j], \
+$CellContext`r$$], {$CellContext`j, 1, 
+                Length[$CellContext`ballposes$]}], 
+             
+             If[$CellContext`ofset$ = 
+               Mod[$CellContext`aStep$$ - 
+                  1, $CellContext`interSteps$$ + $CellContext`n$$] - \
+$CellContext`interSteps$$ + 1; $CellContext`stage$ = Max[0, 
+                 
+                 Floor[($CellContext`aStep$$ - 
+                   1)/($CellContext`interSteps$$ + $CellContext`n$$)]]; \
+$CellContext`collpos$ = (2 $CellContext`ofset$ - 
+                 1 + (2 ($CellContext`a$$/2 + $CellContext`n$$ + 
+                    1)) $CellContext`stage$) $CellContext`r$$; 
+              And[$CellContext`ofset$ >= 0, $CellContext`aStep$$ > 
+                1, $CellContext`aStep$$ <= $CellContext`Nmag$$ \
+($CellContext`interSteps$$ + $CellContext`n$$)], {
+               $CellContext`DrawCollision[$CellContext`collpos$, \
+$CellContext`r$$], $CellContext`textPos$ = $CellContext`collpos$ + \
+$CellContext`r$$; 
+               Null}, {$CellContext`textPos$ = (-$CellContext`a$$ - 
+                  2 + (2 + 
+                    2 $CellContext`n$$ + $CellContext`a$$) \
+$CellContext`stage$ + $CellContext`a$$ Max[0, 
+                    
+                    Min[($CellContext`aStep$$ - $CellContext`stage$ \
+($CellContext`interSteps$$ + $CellContext`n$$))/$CellContext`interSteps$$, 
+                    1]]) $CellContext`r$$; Null}], {Black, 
+              Text[
+               Style[
+                StringForm["`` m/s", 
+                 NumberForm[
+                  Chop[$CellContext`velocity$], 3]], 
+                20], {$CellContext`textPos$, $CellContext`r$$}, {
+               Center, Bottom}]}, Null, 
+             Darker[Gray], 
+             Table[
+              
+              Line[{{$CellContext`x/
+                 10, (-8) $CellContext`r$$}, {$CellContext`x/
+                 10, -$CellContext`r$$}}], {$CellContext`x, 0, 
+               Floor[
+               10 ((($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                    1 + $CellContext`n$$)) $CellContext`r$$ - (
+                   1 + $CellContext`a$$) $CellContext`r$$) + 1]}], 
+             Arrowheads[{-0.03, 0.03}], 
+             
+             Arrow[{{0, (-4) $CellContext`r$$}, {
+               1/10, (-4) $CellContext`r$$}}], 
+             Text[
+              Style["100mm", 20], {1/20, (-5) $CellContext`r$$}, {
+              Center, Top}]}, ImageSize -> {550, 150}], 
+           ListPlot[{
+             
+             Table[{1000 $CellContext`ballPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, \
+$CellContext`interStepsFine$], 
+               $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, \
+$CellContext`interStepsFine$]}, {$CellContext`aStep2, 
+               0, $CellContext`interStepsFine$ + \
+($CellContext`interStepsFine$ + $CellContext`n$$) $CellContext`Nmag$$}], 
+             
+             Table[{1000 $CellContext`ballPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, 
+                 1], 
+               $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, 
+                1]}, {$CellContext`aStep2, 1, 
+               1 + (1 + $CellContext`n$$) $CellContext`Nmag$$ - 1}]}, 
+            Joined -> {True, False}, 
+            PlotRange -> {{
+              Automatic, 
+               1000 ((($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                   1 + $CellContext`n$$)) $CellContext`r$$ - (
+                 1 + $CellContext`a$$) $CellContext`r$$ + 0.1)}, Automatic}, 
+            MeshStyle -> PointSize[Large], PlotStyle -> {Thick, {
+               PointSize[Large], Blue}}, 
+            AxesOrigin -> {
+             1000 ((-$CellContext`a$$) $CellContext`r$$ - 2 $CellContext`r$$),
+               0}, Frame -> {True, True, False, False}, 
+            FrameLabel -> {"moving ball position (mm)", "velocity (m/s)"}, 
+            FrameStyle -> Directive[18], Prolog -> {Red, 
+              Line[{{-1000, 
+                 $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$]}, {
+                1000 $CellContext`ballPos[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$], 
+                 $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$]}, {
+                1000 $CellContext`ballPos[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$], 0}}]}, ImageSize -> {550, 200}, AspectRatio -> 
+            1/3]}]], 
+      "Specifications" :> {{{$CellContext`interSteps$$, 4}, ControlType -> 
+         None}, {{$CellContext`r$$, 0.005, "ball radius (m)"}, 0.0005, 0.01, 
+         Appearance -> 
+         "Labeled"}, {{$CellContext`a$$, 8, "air gap (ball radii)"}, 
+         Dynamic[2 ($CellContext`n$$ - 1)], 20, Appearance -> 
+         "Labeled"}, {{$CellContext`Nmag$$, 2, "stages"}, 1, 10, 1, 
+         Appearance -> "Labeled"}, {{$CellContext`n$$, 3, "balls per stage"}, 
+         2, 10, 1, Appearance -> 
+         "Labeled"}, {{$CellContext`aStep$$, 4, "animate"}, 0, 
+         Dynamic[$CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$], 1, AnimationDirection -> Forward}}, 
+      "Options" :> {}, "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{593., {275., 280.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`MagPos[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Table[((2 + 
+           2 $CellContext`n + $CellContext`a) $CellContext`r) $CellContext`k, \
+{$CellContext`k, 0, $CellContext`Nmag - 1}], $CellContext`DrawMagnet[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Red, 
+         Disk[{$CellContext`x, 0}, $CellContext`r], Green, 
+         Disk[{$CellContext`x, 0}, $CellContext`r, {-(Pi/2), Pi/
+           2}]}, $CellContext`DrawBall[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Gray, 
+         Disk[{$CellContext`x, 0}, $CellContext`r]}, $CellContext`veloc[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := $CellContext`PEtoVelocity[
+         Chop[$CellContext`PEAfterANIMATE[$CellContext`r, $CellContext`a, \
+$CellContext`Nmag, $CellContext`n, $CellContext`aStep, \
+$CellContext`interSteps] - $CellContext`PEBefore[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n]], 
+         $CellContext`massCapsule[$CellContext`r]], $CellContext`PEtoVelocity[
+         Pattern[$CellContext`\[CapitalDelta]PE, 
+          Blank[]], 
+         Pattern[$CellContext`m, 
+          Blank[]]] := Max[0, 
+         Re[
+          
+          Sqrt[(2 $CellContext`\[CapitalDelta]PE)/$CellContext`m]]], \
+$CellContext`PEAfterANIMATE[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Module[{$CellContext`PA = $CellContext`PosAfterANIMATE[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n, $CellContext`aStep, \
+$CellContext`interSteps]}, 
+         Total[
+          Table[
+           $CellContext`PEenergy[$CellContext`r, 
+            Abs[
+            Part[$CellContext`PA, $CellContext`j] - \
+$CellContext`MagPos[$CellContext`r, $CellContext`a, $CellContext`Nmag, \
+$CellContext`n]]], {$CellContext`j, 1, 
+            Length[$CellContext`PA]}], 2]], $CellContext`PosAfterANIMATE[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Table[(-$CellContext`a - 
+          2 + (2 + 
+            2 $CellContext`n + $CellContext`a) $CellContext`k + \
+$CellContext`a Max[0, 
+             
+             Min[($CellContext`aStep - $CellContext`k \
+($CellContext`interSteps + $CellContext`n))/$CellContext`interSteps, 
+              1]]) $CellContext`r, {$CellContext`k, 
+          0, $CellContext`Nmag}], $CellContext`PEenergy[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`d, 
+          Blank[]]] := ((6.490602773423956*^6/
+          2) $CellContext`r^6)/$CellContext`d^3, $CellContext`PEBefore[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Module[{$CellContext`Pb = $CellContext`PosBefore[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n]}, 
+         Total[
+          Table[
+           $CellContext`PEenergy[$CellContext`r, 
+            Abs[
+            Part[$CellContext`Pb, $CellContext`j] - \
+$CellContext`MagPos[$CellContext`r, $CellContext`a, $CellContext`Nmag, \
+$CellContext`n]]], {$CellContext`j, 1, 
+            Length[$CellContext`Pb]}], 2]], $CellContext`PosBefore[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Table[(-$CellContext`a - 
+          2 + (2 + 
+            2 $CellContext`n + $CellContext`a) $CellContext`k) \
+$CellContext`r, {$CellContext`k, 
+          0, $CellContext`Nmag}], $CellContext`massCapsule[
+         Pattern[$CellContext`rad, 
+          Blank[]]] := (((4/3) Pi) $CellContext`rad^3) 
+        7850, $CellContext`DrawCollision[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Yellow, 
+         Module[{$CellContext`kmax = 16}, 
+          Polygon[
+           
+           Table[$CellContext`\[Theta] = 
+             2 ((Pi $CellContext`k)/$CellContext`kmax) + 
+              RandomReal[(2 Pi)/$CellContext`kmax]; {$CellContext`x, 
+               0} + (($CellContext`r 0.8) {
+                 Sin[$CellContext`\[Theta]], 2 Cos[$CellContext`\[Theta]]}) If[
+                EvenQ[$CellContext`k], 1, 1/3], {$CellContext`k, 
+             1, $CellContext`kmax}]]]}, $CellContext`\[Theta] = 
+       6.586822347421977, $CellContext`ballPos[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Module[{$CellContext`ofset, $CellContext`stage, $CellContext`collpos}, 
+         If[$CellContext`ofset = 
+           Mod[$CellContext`aStep - 
+              1, $CellContext`interSteps + $CellContext`n] - \
+$CellContext`interSteps + 1; $CellContext`stage = Max[0, 
+             
+             Floor[($CellContext`aStep - 
+               1)/($CellContext`interSteps + $CellContext`n)]]; \
+$CellContext`collpos = (2 $CellContext`ofset - 
+             1 + (2 ($CellContext`a/2 + $CellContext`n + 
+                1)) $CellContext`stage) $CellContext`r; 
+          And[$CellContext`ofset >= 0, $CellContext`aStep > 
+            1, $CellContext`aStep <= $CellContext`Nmag \
+($CellContext`interSteps + $CellContext`n)], $CellContext`collpos - \
+$CellContext`r, (-$CellContext`a - 
+           2 + (2 + 
+             2 $CellContext`n + $CellContext`a) $CellContext`stage + \
+$CellContext`a Max[0, 
+              
+              Min[($CellContext`aStep - $CellContext`stage \
+($CellContext`interSteps + $CellContext`n))/$CellContext`interSteps, 
+               1]]) $CellContext`r]]}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->170427315]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "SnapshotsSection"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 8, $CellContext`aStep$$ = 
+    7, $CellContext`interSteps$$ = 4, $CellContext`n$$ = 
+    3, $CellContext`Nmag$$ = 2, $CellContext`r$$ = 0.005, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`interSteps$$], 4}}, {{
+       Hold[$CellContext`r$$], 0.005, "ball radius (m)"}, 0.0005, 0.01}, {{
+       Hold[$CellContext`a$$], 8, "air gap (ball radii)"}, 
+      Dynamic[2 ($CellContext`n$$ - 1)], 20}, {{
+       Hold[$CellContext`Nmag$$], 2, "stages"}, 1, 10, 1}, {{
+       Hold[$CellContext`n$$], 3, "balls per stage"}, 2, 10, 1}, {{
+       Hold[$CellContext`aStep$$], 7, "animate"}, 0, 
+      Dynamic[$CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$], 1}}, Typeset`size$$ = {
+    550., {174.84375, 180.15625}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = False, $CellContext`r$5448$$ = 
+    0, $CellContext`a$5449$$ = 0, $CellContext`Nmag$5450$$ = 
+    0, $CellContext`n$5451$$ = 0, $CellContext`aStep$5452$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 8, $CellContext`aStep$$ = 
+        7, $CellContext`interSteps$$ = 4, $CellContext`n$$ = 
+        3, $CellContext`Nmag$$ = 2, $CellContext`r$$ = 0.005}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`r$$, $CellContext`r$5448$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$5449$$, 0], 
+        Hold[$CellContext`Nmag$$, $CellContext`Nmag$5450$$, 0], 
+        Hold[$CellContext`n$$, $CellContext`n$5451$$, 0], 
+        Hold[$CellContext`aStep$$, $CellContext`aStep$5452$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`ofset$, $CellContext`magposes$, \
+$CellContext`ballposes$, $CellContext`collpos$, $CellContext`stage$, \
+$CellContext`velocity$, $CellContext`textPos$, $CellContext`interStepsFine$ = 
+         20, $CellContext`maxVel$}, $CellContext`interSteps$$ = 4; 
+        If[$CellContext`a$$ < 2 ($CellContext`n$$ - 1), $CellContext`a$$ = 
+          2 ($CellContext`n$$ - 1)]; 
+        If[$CellContext`aStep$$ > $CellContext`interSteps$$ + \
+($CellContext`interSteps$$ + $CellContext`n$$) $CellContext`Nmag$$, \
+$CellContext`aStep$$ = $CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$]; Column[{
+           Graphics[{White, 
+             
+             Rectangle[{(-(8 + $CellContext`a$$)) $CellContext`r$$, 
+               0}, {(($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                  1 + $CellContext`n$$)) $CellContext`r$$ - (
+                1 + $CellContext`a$$) $CellContext`r$$ + 0.1, 
+               2 $CellContext`r$$}], 
+             EdgeForm[Black], Brown, 
+             
+             Rectangle[{(-(
+                 4 + $CellContext`a$$)) $CellContext`r$$, (-8) \
+$CellContext`r$$}, {(($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                  1 + $CellContext`n$$)) $CellContext`r$$ - (
+                1 + $CellContext`a$$) $CellContext`r$$, -$CellContext`r$$}], \
+$CellContext`magposes$ = $CellContext`MagPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$]; Table[{
+                $CellContext`DrawMagnet[
+                 
+                 Part[$CellContext`magposes$, $CellContext`j], \
+$CellContext`r$$], 
+                Table[
+                 $CellContext`DrawBall[
+                 Part[$CellContext`magposes$, $CellContext`j] + \
+($CellContext`balls 
+                    2) $CellContext`r$$, $CellContext`r$$], \
+{$CellContext`balls, 1, $CellContext`n$$ - 1}]}, {$CellContext`j, 1, 
+                
+                Length[$CellContext`magposes$]}], $CellContext`velocity$ = \
+$CellContext`veloc[$CellContext`r$$, $CellContext`a$$, $CellContext`Nmag$$, \
+$CellContext`n$$, $CellContext`aStep$$, $CellContext`interSteps$$]; \
+$CellContext`ballposes$ = $CellContext`PosAfterANIMATE[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, \
+$CellContext`aStep$$, $CellContext`interSteps$$]; Table[
+               $CellContext`DrawBall[
+                
+                Part[$CellContext`ballposes$, $CellContext`j], \
+$CellContext`r$$], {$CellContext`j, 1, 
+                Length[$CellContext`ballposes$]}], 
+             
+             If[$CellContext`ofset$ = 
+               Mod[$CellContext`aStep$$ - 
+                  1, $CellContext`interSteps$$ + $CellContext`n$$] - \
+$CellContext`interSteps$$ + 1; $CellContext`stage$ = Max[0, 
+                 
+                 Floor[($CellContext`aStep$$ - 
+                   1)/($CellContext`interSteps$$ + $CellContext`n$$)]]; \
+$CellContext`collpos$ = (2 $CellContext`ofset$ - 
+                 1 + (2 ($CellContext`a$$/2 + $CellContext`n$$ + 
+                    1)) $CellContext`stage$) $CellContext`r$$; 
+              And[$CellContext`ofset$ >= 0, $CellContext`aStep$$ > 
+                1, $CellContext`aStep$$ <= $CellContext`Nmag$$ \
+($CellContext`interSteps$$ + $CellContext`n$$)], {
+               $CellContext`DrawCollision[$CellContext`collpos$, \
+$CellContext`r$$], $CellContext`textPos$ = $CellContext`collpos$ + \
+$CellContext`r$$; 
+               Null}, {$CellContext`textPos$ = (-$CellContext`a$$ - 
+                  2 + (2 + 
+                    2 $CellContext`n$$ + $CellContext`a$$) \
+$CellContext`stage$ + $CellContext`a$$ Max[0, 
+                    
+                    Min[($CellContext`aStep$$ - $CellContext`stage$ \
+($CellContext`interSteps$$ + $CellContext`n$$))/$CellContext`interSteps$$, 
+                    1]]) $CellContext`r$$; Null}], {Black, 
+              Text[
+               Style[
+                StringForm["`` m/s", 
+                 NumberForm[
+                  Chop[$CellContext`velocity$], 3]], 
+                20], {$CellContext`textPos$, $CellContext`r$$}, {
+               Center, Bottom}]}, Null, 
+             Darker[Gray], 
+             Table[
+              
+              Line[{{$CellContext`x/
+                 10, (-8) $CellContext`r$$}, {$CellContext`x/
+                 10, -$CellContext`r$$}}], {$CellContext`x, 0, 
+               Floor[
+               10 ((($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                    1 + $CellContext`n$$)) $CellContext`r$$ - (
+                   1 + $CellContext`a$$) $CellContext`r$$) + 1]}], 
+             Arrowheads[{-0.03, 0.03}], 
+             
+             Arrow[{{0, (-4) $CellContext`r$$}, {
+               1/10, (-4) $CellContext`r$$}}], 
+             Text[
+              Style["100mm", 20], {1/20, (-5) $CellContext`r$$}, {
+              Center, Top}]}, ImageSize -> {550, 150}], 
+           ListPlot[{
+             
+             Table[{1000 $CellContext`ballPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, \
+$CellContext`interStepsFine$], 
+               $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, \
+$CellContext`interStepsFine$]}, {$CellContext`aStep2, 
+               0, $CellContext`interStepsFine$ + \
+($CellContext`interStepsFine$ + $CellContext`n$$) $CellContext`Nmag$$}], 
+             
+             Table[{1000 $CellContext`ballPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, 
+                 1], 
+               $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, 
+                1]}, {$CellContext`aStep2, 1, 
+               1 + (1 + $CellContext`n$$) $CellContext`Nmag$$ - 1}]}, 
+            Joined -> {True, False}, 
+            PlotRange -> {{
+              Automatic, 
+               1000 ((($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                   1 + $CellContext`n$$)) $CellContext`r$$ - (
+                 1 + $CellContext`a$$) $CellContext`r$$ + 0.1)}, Automatic}, 
+            MeshStyle -> PointSize[Large], PlotStyle -> {Thick, {
+               PointSize[Large], Blue}}, 
+            AxesOrigin -> {
+             1000 ((-$CellContext`a$$) $CellContext`r$$ - 2 $CellContext`r$$),
+               0}, Frame -> {True, True, False, False}, 
+            FrameLabel -> {"moving ball position (mm)", "velocity (m/s)"}, 
+            FrameStyle -> Directive[18], Prolog -> {Red, 
+              Line[{{-1000, 
+                 $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$]}, {
+                1000 $CellContext`ballPos[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$], 
+                 $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$]}, {
+                1000 $CellContext`ballPos[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$], 0}}]}, ImageSize -> {550, 200}, AspectRatio -> 
+            1/3]}]], 
+      "Specifications" :> {{{$CellContext`interSteps$$, 4}, ControlType -> 
+         None}, {{$CellContext`r$$, 0.005, "ball radius (m)"}, 0.0005, 0.01, 
+         Appearance -> 
+         "Labeled"}, {{$CellContext`a$$, 8, "air gap (ball radii)"}, 
+         Dynamic[2 ($CellContext`n$$ - 1)], 20, Appearance -> 
+         "Labeled"}, {{$CellContext`Nmag$$, 2, "stages"}, 1, 10, 1, 
+         Appearance -> "Labeled"}, {{$CellContext`n$$, 3, "balls per stage"}, 
+         2, 10, 1, Appearance -> 
+         "Labeled"}, {{$CellContext`aStep$$, 7, "animate"}, 0, 
+         Dynamic[$CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$], 1, AnimationDirection -> Forward}}, 
+      "Options" :> {}, "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{593., {275., 280.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`MagPos[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Table[((2 + 
+           2 $CellContext`n + $CellContext`a) $CellContext`r) $CellContext`k, \
+{$CellContext`k, 0, $CellContext`Nmag - 1}], $CellContext`DrawMagnet[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Red, 
+         Disk[{$CellContext`x, 0}, $CellContext`r], Green, 
+         Disk[{$CellContext`x, 0}, $CellContext`r, {-(Pi/2), Pi/
+           2}]}, $CellContext`DrawBall[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Gray, 
+         Disk[{$CellContext`x, 0}, $CellContext`r]}, $CellContext`veloc[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := $CellContext`PEtoVelocity[
+         Chop[$CellContext`PEAfterANIMATE[$CellContext`r, $CellContext`a, \
+$CellContext`Nmag, $CellContext`n, $CellContext`aStep, \
+$CellContext`interSteps] - $CellContext`PEBefore[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n]], 
+         $CellContext`massCapsule[$CellContext`r]], $CellContext`PEtoVelocity[
+         Pattern[$CellContext`\[CapitalDelta]PE, 
+          Blank[]], 
+         Pattern[$CellContext`m, 
+          Blank[]]] := Max[0, 
+         Re[
+          
+          Sqrt[(2 $CellContext`\[CapitalDelta]PE)/$CellContext`m]]], \
+$CellContext`PEAfterANIMATE[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Module[{$CellContext`PA = $CellContext`PosAfterANIMATE[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n, $CellContext`aStep, \
+$CellContext`interSteps]}, 
+         Total[
+          Table[
+           $CellContext`PEenergy[$CellContext`r, 
+            Abs[
+            Part[$CellContext`PA, $CellContext`j] - \
+$CellContext`MagPos[$CellContext`r, $CellContext`a, $CellContext`Nmag, \
+$CellContext`n]]], {$CellContext`j, 1, 
+            Length[$CellContext`PA]}], 2]], $CellContext`PosAfterANIMATE[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Table[(-$CellContext`a - 
+          2 + (2 + 
+            2 $CellContext`n + $CellContext`a) $CellContext`k + \
+$CellContext`a Max[0, 
+             
+             Min[($CellContext`aStep - $CellContext`k \
+($CellContext`interSteps + $CellContext`n))/$CellContext`interSteps, 
+              1]]) $CellContext`r, {$CellContext`k, 
+          0, $CellContext`Nmag}], $CellContext`PEenergy[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`d, 
+          Blank[]]] := ((6.490602773423956*^6/
+          2) $CellContext`r^6)/$CellContext`d^3, $CellContext`PEBefore[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Module[{$CellContext`Pb = $CellContext`PosBefore[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n]}, 
+         Total[
+          Table[
+           $CellContext`PEenergy[$CellContext`r, 
+            Abs[
+            Part[$CellContext`Pb, $CellContext`j] - \
+$CellContext`MagPos[$CellContext`r, $CellContext`a, $CellContext`Nmag, \
+$CellContext`n]]], {$CellContext`j, 1, 
+            Length[$CellContext`Pb]}], 2]], $CellContext`PosBefore[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Table[(-$CellContext`a - 
+          2 + (2 + 
+            2 $CellContext`n + $CellContext`a) $CellContext`k) \
+$CellContext`r, {$CellContext`k, 
+          0, $CellContext`Nmag}], $CellContext`massCapsule[
+         Pattern[$CellContext`rad, 
+          Blank[]]] := (((4/3) Pi) $CellContext`rad^3) 
+        7850, $CellContext`DrawCollision[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Yellow, 
+         Module[{$CellContext`kmax = 16}, 
+          Polygon[
+           
+           Table[$CellContext`\[Theta] = 
+             2 ((Pi $CellContext`k)/$CellContext`kmax) + 
+              RandomReal[(2 Pi)/$CellContext`kmax]; {$CellContext`x, 
+               0} + (($CellContext`r 0.8) {
+                 Sin[$CellContext`\[Theta]], 2 Cos[$CellContext`\[Theta]]}) If[
+                EvenQ[$CellContext`k], 1, 1/3], {$CellContext`k, 
+             1, $CellContext`kmax}]]]}, $CellContext`\[Theta] = 
+       6.586822347421977, $CellContext`ballPos[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Module[{$CellContext`ofset, $CellContext`stage, $CellContext`collpos}, 
+         If[$CellContext`ofset = 
+           Mod[$CellContext`aStep - 
+              1, $CellContext`interSteps + $CellContext`n] - \
+$CellContext`interSteps + 1; $CellContext`stage = Max[0, 
+             
+             Floor[($CellContext`aStep - 
+               1)/($CellContext`interSteps + $CellContext`n)]]; \
+$CellContext`collpos = (2 $CellContext`ofset - 
+             1 + (2 ($CellContext`a/2 + $CellContext`n + 
+                1)) $CellContext`stage) $CellContext`r; 
+          And[$CellContext`ofset >= 0, $CellContext`aStep > 
+            1, $CellContext`aStep <= $CellContext`Nmag \
+($CellContext`interSteps + $CellContext`n)], $CellContext`collpos - \
+$CellContext`r, (-$CellContext`a - 
+           2 + (2 + 
+             2 $CellContext`n + $CellContext`a) $CellContext`stage + \
+$CellContext`a Max[0, 
+              
+              Min[($CellContext`aStep - $CellContext`stage \
+($CellContext`interSteps + $CellContext`n))/$CellContext`interSteps, 
+               1]]) $CellContext`r]]}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->1776181754],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 8, $CellContext`aStep$$ = 
+    17, $CellContext`interSteps$$ = 4, $CellContext`n$$ = 
+    3, $CellContext`Nmag$$ = 2, $CellContext`r$$ = 0.005, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`interSteps$$], 4}}, {{
+       Hold[$CellContext`r$$], 0.005, "ball radius (m)"}, 0.0005, 0.01}, {{
+       Hold[$CellContext`a$$], 8, "air gap (ball radii)"}, 
+      Dynamic[2 ($CellContext`n$$ - 1)], 20}, {{
+       Hold[$CellContext`Nmag$$], 2, "stages"}, 1, 10, 1}, {{
+       Hold[$CellContext`n$$], 3, "balls per stage"}, 2, 10, 1}, {{
+       Hold[$CellContext`aStep$$], 17, "animate"}, 0, 
+      Dynamic[$CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$], 1}}, Typeset`size$$ = {
+    550., {174.84375, 180.15625}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = False, $CellContext`r$5528$$ = 
+    0, $CellContext`a$5529$$ = 0, $CellContext`Nmag$5530$$ = 
+    0, $CellContext`n$5531$$ = 0, $CellContext`aStep$5532$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 8, $CellContext`aStep$$ = 
+        17, $CellContext`interSteps$$ = 4, $CellContext`n$$ = 
+        3, $CellContext`Nmag$$ = 2, $CellContext`r$$ = 0.005}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`r$$, $CellContext`r$5528$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$5529$$, 0], 
+        Hold[$CellContext`Nmag$$, $CellContext`Nmag$5530$$, 0], 
+        Hold[$CellContext`n$$, $CellContext`n$5531$$, 0], 
+        Hold[$CellContext`aStep$$, $CellContext`aStep$5532$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`ofset$, $CellContext`magposes$, \
+$CellContext`ballposes$, $CellContext`collpos$, $CellContext`stage$, \
+$CellContext`velocity$, $CellContext`textPos$, $CellContext`interStepsFine$ = 
+         20, $CellContext`maxVel$}, $CellContext`interSteps$$ = 4; 
+        If[$CellContext`a$$ < 2 ($CellContext`n$$ - 1), $CellContext`a$$ = 
+          2 ($CellContext`n$$ - 1)]; 
+        If[$CellContext`aStep$$ > $CellContext`interSteps$$ + \
+($CellContext`interSteps$$ + $CellContext`n$$) $CellContext`Nmag$$, \
+$CellContext`aStep$$ = $CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$]; Column[{
+           Graphics[{White, 
+             
+             Rectangle[{(-(8 + $CellContext`a$$)) $CellContext`r$$, 
+               0}, {(($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                  1 + $CellContext`n$$)) $CellContext`r$$ - (
+                1 + $CellContext`a$$) $CellContext`r$$ + 0.1, 
+               2 $CellContext`r$$}], 
+             EdgeForm[Black], Brown, 
+             
+             Rectangle[{(-(
+                 4 + $CellContext`a$$)) $CellContext`r$$, (-8) \
+$CellContext`r$$}, {(($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                  1 + $CellContext`n$$)) $CellContext`r$$ - (
+                1 + $CellContext`a$$) $CellContext`r$$, -$CellContext`r$$}], \
+$CellContext`magposes$ = $CellContext`MagPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$]; Table[{
+                $CellContext`DrawMagnet[
+                 
+                 Part[$CellContext`magposes$, $CellContext`j], \
+$CellContext`r$$], 
+                Table[
+                 $CellContext`DrawBall[
+                 Part[$CellContext`magposes$, $CellContext`j] + \
+($CellContext`balls 
+                    2) $CellContext`r$$, $CellContext`r$$], \
+{$CellContext`balls, 1, $CellContext`n$$ - 1}]}, {$CellContext`j, 1, 
+                
+                Length[$CellContext`magposes$]}], $CellContext`velocity$ = \
+$CellContext`veloc[$CellContext`r$$, $CellContext`a$$, $CellContext`Nmag$$, \
+$CellContext`n$$, $CellContext`aStep$$, $CellContext`interSteps$$]; \
+$CellContext`ballposes$ = $CellContext`PosAfterANIMATE[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, \
+$CellContext`aStep$$, $CellContext`interSteps$$]; Table[
+               $CellContext`DrawBall[
+                
+                Part[$CellContext`ballposes$, $CellContext`j], \
+$CellContext`r$$], {$CellContext`j, 1, 
+                Length[$CellContext`ballposes$]}], 
+             
+             If[$CellContext`ofset$ = 
+               Mod[$CellContext`aStep$$ - 
+                  1, $CellContext`interSteps$$ + $CellContext`n$$] - \
+$CellContext`interSteps$$ + 1; $CellContext`stage$ = Max[0, 
+                 
+                 Floor[($CellContext`aStep$$ - 
+                   1)/($CellContext`interSteps$$ + $CellContext`n$$)]]; \
+$CellContext`collpos$ = (2 $CellContext`ofset$ - 
+                 1 + (2 ($CellContext`a$$/2 + $CellContext`n$$ + 
+                    1)) $CellContext`stage$) $CellContext`r$$; 
+              And[$CellContext`ofset$ >= 0, $CellContext`aStep$$ > 
+                1, $CellContext`aStep$$ <= $CellContext`Nmag$$ \
+($CellContext`interSteps$$ + $CellContext`n$$)], {
+               $CellContext`DrawCollision[$CellContext`collpos$, \
+$CellContext`r$$], $CellContext`textPos$ = $CellContext`collpos$ + \
+$CellContext`r$$; 
+               Null}, {$CellContext`textPos$ = (-$CellContext`a$$ - 
+                  2 + (2 + 
+                    2 $CellContext`n$$ + $CellContext`a$$) \
+$CellContext`stage$ + $CellContext`a$$ Max[0, 
+                    
+                    Min[($CellContext`aStep$$ - $CellContext`stage$ \
+($CellContext`interSteps$$ + $CellContext`n$$))/$CellContext`interSteps$$, 
+                    1]]) $CellContext`r$$; Null}], {Black, 
+              Text[
+               Style[
+                StringForm["`` m/s", 
+                 NumberForm[
+                  Chop[$CellContext`velocity$], 3]], 
+                20], {$CellContext`textPos$, $CellContext`r$$}, {
+               Center, Bottom}]}, Null, 
+             Darker[Gray], 
+             Table[
+              
+              Line[{{$CellContext`x/
+                 10, (-8) $CellContext`r$$}, {$CellContext`x/
+                 10, -$CellContext`r$$}}], {$CellContext`x, 0, 
+               Floor[
+               10 ((($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                    1 + $CellContext`n$$)) $CellContext`r$$ - (
+                   1 + $CellContext`a$$) $CellContext`r$$) + 1]}], 
+             Arrowheads[{-0.03, 0.03}], 
+             
+             Arrow[{{0, (-4) $CellContext`r$$}, {
+               1/10, (-4) $CellContext`r$$}}], 
+             Text[
+              Style["100mm", 20], {1/20, (-5) $CellContext`r$$}, {
+              Center, Top}]}, ImageSize -> {550, 150}], 
+           ListPlot[{
+             
+             Table[{1000 $CellContext`ballPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, \
+$CellContext`interStepsFine$], 
+               $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, \
+$CellContext`interStepsFine$]}, {$CellContext`aStep2, 
+               0, $CellContext`interStepsFine$ + \
+($CellContext`interStepsFine$ + $CellContext`n$$) $CellContext`Nmag$$}], 
+             
+             Table[{1000 $CellContext`ballPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, 
+                 1], 
+               $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, 
+                1]}, {$CellContext`aStep2, 1, 
+               1 + (1 + $CellContext`n$$) $CellContext`Nmag$$ - 1}]}, 
+            Joined -> {True, False}, 
+            PlotRange -> {{
+              Automatic, 
+               1000 ((($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                   1 + $CellContext`n$$)) $CellContext`r$$ - (
+                 1 + $CellContext`a$$) $CellContext`r$$ + 0.1)}, Automatic}, 
+            MeshStyle -> PointSize[Large], PlotStyle -> {Thick, {
+               PointSize[Large], Blue}}, 
+            AxesOrigin -> {
+             1000 ((-$CellContext`a$$) $CellContext`r$$ - 2 $CellContext`r$$),
+               0}, Frame -> {True, True, False, False}, 
+            FrameLabel -> {"moving ball position (mm)", "velocity (m/s)"}, 
+            FrameStyle -> Directive[18], Prolog -> {Red, 
+              Line[{{-1000, 
+                 $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$]}, {
+                1000 $CellContext`ballPos[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$], 
+                 $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$]}, {
+                1000 $CellContext`ballPos[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$], 0}}]}, ImageSize -> {550, 200}, AspectRatio -> 
+            1/3]}]], 
+      "Specifications" :> {{{$CellContext`interSteps$$, 4}, ControlType -> 
+         None}, {{$CellContext`r$$, 0.005, "ball radius (m)"}, 0.0005, 0.01, 
+         Appearance -> 
+         "Labeled"}, {{$CellContext`a$$, 8, "air gap (ball radii)"}, 
+         Dynamic[2 ($CellContext`n$$ - 1)], 20, Appearance -> 
+         "Labeled"}, {{$CellContext`Nmag$$, 2, "stages"}, 1, 10, 1, 
+         Appearance -> "Labeled"}, {{$CellContext`n$$, 3, "balls per stage"}, 
+         2, 10, 1, Appearance -> 
+         "Labeled"}, {{$CellContext`aStep$$, 17, "animate"}, 0, 
+         Dynamic[$CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$], 1, AnimationDirection -> Forward}}, 
+      "Options" :> {}, "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{593., {275., 280.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`MagPos[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Table[((2 + 
+           2 $CellContext`n + $CellContext`a) $CellContext`r) $CellContext`k, \
+{$CellContext`k, 0, $CellContext`Nmag - 1}], $CellContext`DrawMagnet[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Red, 
+         Disk[{$CellContext`x, 0}, $CellContext`r], Green, 
+         Disk[{$CellContext`x, 0}, $CellContext`r, {-(Pi/2), Pi/
+           2}]}, $CellContext`DrawBall[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Gray, 
+         Disk[{$CellContext`x, 0}, $CellContext`r]}, $CellContext`veloc[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := $CellContext`PEtoVelocity[
+         Chop[$CellContext`PEAfterANIMATE[$CellContext`r, $CellContext`a, \
+$CellContext`Nmag, $CellContext`n, $CellContext`aStep, \
+$CellContext`interSteps] - $CellContext`PEBefore[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n]], 
+         $CellContext`massCapsule[$CellContext`r]], $CellContext`PEtoVelocity[
+         Pattern[$CellContext`\[CapitalDelta]PE, 
+          Blank[]], 
+         Pattern[$CellContext`m, 
+          Blank[]]] := Max[0, 
+         Re[
+          
+          Sqrt[(2 $CellContext`\[CapitalDelta]PE)/$CellContext`m]]], \
+$CellContext`PEAfterANIMATE[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Module[{$CellContext`PA = $CellContext`PosAfterANIMATE[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n, $CellContext`aStep, \
+$CellContext`interSteps]}, 
+         Total[
+          Table[
+           $CellContext`PEenergy[$CellContext`r, 
+            Abs[
+            Part[$CellContext`PA, $CellContext`j] - \
+$CellContext`MagPos[$CellContext`r, $CellContext`a, $CellContext`Nmag, \
+$CellContext`n]]], {$CellContext`j, 1, 
+            Length[$CellContext`PA]}], 2]], $CellContext`PosAfterANIMATE[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Table[(-$CellContext`a - 
+          2 + (2 + 
+            2 $CellContext`n + $CellContext`a) $CellContext`k + \
+$CellContext`a Max[0, 
+             
+             Min[($CellContext`aStep - $CellContext`k \
+($CellContext`interSteps + $CellContext`n))/$CellContext`interSteps, 
+              1]]) $CellContext`r, {$CellContext`k, 
+          0, $CellContext`Nmag}], $CellContext`PEenergy[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`d, 
+          Blank[]]] := ((6.490602773423956*^6/
+          2) $CellContext`r^6)/$CellContext`d^3, $CellContext`PEBefore[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Module[{$CellContext`Pb = $CellContext`PosBefore[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n]}, 
+         Total[
+          Table[
+           $CellContext`PEenergy[$CellContext`r, 
+            Abs[
+            Part[$CellContext`Pb, $CellContext`j] - \
+$CellContext`MagPos[$CellContext`r, $CellContext`a, $CellContext`Nmag, \
+$CellContext`n]]], {$CellContext`j, 1, 
+            Length[$CellContext`Pb]}], 2]], $CellContext`PosBefore[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Table[(-$CellContext`a - 
+          2 + (2 + 
+            2 $CellContext`n + $CellContext`a) $CellContext`k) \
+$CellContext`r, {$CellContext`k, 
+          0, $CellContext`Nmag}], $CellContext`massCapsule[
+         Pattern[$CellContext`rad, 
+          Blank[]]] := (((4/3) Pi) $CellContext`rad^3) 
+        7850, $CellContext`DrawCollision[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Yellow, 
+         Module[{$CellContext`kmax = 16}, 
+          Polygon[
+           
+           Table[$CellContext`\[Theta] = 
+             2 ((Pi $CellContext`k)/$CellContext`kmax) + 
+              RandomReal[(2 Pi)/$CellContext`kmax]; {$CellContext`x, 
+               0} + (($CellContext`r 0.8) {
+                 Sin[$CellContext`\[Theta]], 2 Cos[$CellContext`\[Theta]]}) If[
+                EvenQ[$CellContext`k], 1, 1/3], {$CellContext`k, 
+             1, $CellContext`kmax}]]]}, $CellContext`\[Theta] = 
+       6.586822347421977, $CellContext`ballPos[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Module[{$CellContext`ofset, $CellContext`stage, $CellContext`collpos}, 
+         If[$CellContext`ofset = 
+           Mod[$CellContext`aStep - 
+              1, $CellContext`interSteps + $CellContext`n] - \
+$CellContext`interSteps + 1; $CellContext`stage = Max[0, 
+             
+             Floor[($CellContext`aStep - 
+               1)/($CellContext`interSteps + $CellContext`n)]]; \
+$CellContext`collpos = (2 $CellContext`ofset - 
+             1 + (2 ($CellContext`a/2 + $CellContext`n + 
+                1)) $CellContext`stage) $CellContext`r; 
+          And[$CellContext`ofset >= 0, $CellContext`aStep > 
+            1, $CellContext`aStep <= $CellContext`Nmag \
+($CellContext`interSteps + $CellContext`n)], $CellContext`collpos - \
+$CellContext`r, (-$CellContext`a - 
+           2 + (2 + 
+             2 $CellContext`n + $CellContext`a) $CellContext`stage + \
+$CellContext`a Max[0, 
+              
+              Min[($CellContext`aStep - $CellContext`stage \
+($CellContext`interSteps + $CellContext`n))/$CellContext`interSteps, 
+               1]]) $CellContext`r]]}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->116562531],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 8, $CellContext`aStep$$ = 
+    39, $CellContext`interSteps$$ = 4, $CellContext`n$$ = 
+    3, $CellContext`Nmag$$ = 5, $CellContext`r$$ = 0.005, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`interSteps$$], 4}}, {{
+       Hold[$CellContext`r$$], 0.005, "ball radius (m)"}, 0.0005, 0.01}, {{
+       Hold[$CellContext`a$$], 8, "air gap (ball radii)"}, 
+      Dynamic[2 ($CellContext`n$$ - 1)], 20}, {{
+       Hold[$CellContext`Nmag$$], 5, "stages"}, 1, 10, 1}, {{
+       Hold[$CellContext`n$$], 3, "balls per stage"}, 2, 10, 1}, {{
+       Hold[$CellContext`aStep$$], 39, "animate"}, 0, 
+      Dynamic[$CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$], 1}}, Typeset`size$$ = {
+    550., {174.84375, 180.15625}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = False, $CellContext`r$5608$$ = 
+    0, $CellContext`a$5609$$ = 0, $CellContext`Nmag$5610$$ = 
+    0, $CellContext`n$5611$$ = 0, $CellContext`aStep$5612$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 8, $CellContext`aStep$$ = 
+        39, $CellContext`interSteps$$ = 4, $CellContext`n$$ = 
+        3, $CellContext`Nmag$$ = 5, $CellContext`r$$ = 0.005}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`r$$, $CellContext`r$5608$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$5609$$, 0], 
+        Hold[$CellContext`Nmag$$, $CellContext`Nmag$5610$$, 0], 
+        Hold[$CellContext`n$$, $CellContext`n$5611$$, 0], 
+        Hold[$CellContext`aStep$$, $CellContext`aStep$5612$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`ofset$, $CellContext`magposes$, \
+$CellContext`ballposes$, $CellContext`collpos$, $CellContext`stage$, \
+$CellContext`velocity$, $CellContext`textPos$, $CellContext`interStepsFine$ = 
+         20, $CellContext`maxVel$}, $CellContext`interSteps$$ = 4; 
+        If[$CellContext`a$$ < 2 ($CellContext`n$$ - 1), $CellContext`a$$ = 
+          2 ($CellContext`n$$ - 1)]; 
+        If[$CellContext`aStep$$ > $CellContext`interSteps$$ + \
+($CellContext`interSteps$$ + $CellContext`n$$) $CellContext`Nmag$$, \
+$CellContext`aStep$$ = $CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$]; Column[{
+           Graphics[{White, 
+             
+             Rectangle[{(-(8 + $CellContext`a$$)) $CellContext`r$$, 
+               0}, {(($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                  1 + $CellContext`n$$)) $CellContext`r$$ - (
+                1 + $CellContext`a$$) $CellContext`r$$ + 0.1, 
+               2 $CellContext`r$$}], 
+             EdgeForm[Black], Brown, 
+             
+             Rectangle[{(-(
+                 4 + $CellContext`a$$)) $CellContext`r$$, (-8) \
+$CellContext`r$$}, {(($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                  1 + $CellContext`n$$)) $CellContext`r$$ - (
+                1 + $CellContext`a$$) $CellContext`r$$, -$CellContext`r$$}], \
+$CellContext`magposes$ = $CellContext`MagPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$]; Table[{
+                $CellContext`DrawMagnet[
+                 
+                 Part[$CellContext`magposes$, $CellContext`j], \
+$CellContext`r$$], 
+                Table[
+                 $CellContext`DrawBall[
+                 Part[$CellContext`magposes$, $CellContext`j] + \
+($CellContext`balls 
+                    2) $CellContext`r$$, $CellContext`r$$], \
+{$CellContext`balls, 1, $CellContext`n$$ - 1}]}, {$CellContext`j, 1, 
+                
+                Length[$CellContext`magposes$]}], $CellContext`velocity$ = \
+$CellContext`veloc[$CellContext`r$$, $CellContext`a$$, $CellContext`Nmag$$, \
+$CellContext`n$$, $CellContext`aStep$$, $CellContext`interSteps$$]; \
+$CellContext`ballposes$ = $CellContext`PosAfterANIMATE[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, \
+$CellContext`aStep$$, $CellContext`interSteps$$]; Table[
+               $CellContext`DrawBall[
+                
+                Part[$CellContext`ballposes$, $CellContext`j], \
+$CellContext`r$$], {$CellContext`j, 1, 
+                Length[$CellContext`ballposes$]}], 
+             
+             If[$CellContext`ofset$ = 
+               Mod[$CellContext`aStep$$ - 
+                  1, $CellContext`interSteps$$ + $CellContext`n$$] - \
+$CellContext`interSteps$$ + 1; $CellContext`stage$ = Max[0, 
+                 
+                 Floor[($CellContext`aStep$$ - 
+                   1)/($CellContext`interSteps$$ + $CellContext`n$$)]]; \
+$CellContext`collpos$ = (2 $CellContext`ofset$ - 
+                 1 + (2 ($CellContext`a$$/2 + $CellContext`n$$ + 
+                    1)) $CellContext`stage$) $CellContext`r$$; 
+              And[$CellContext`ofset$ >= 0, $CellContext`aStep$$ > 
+                1, $CellContext`aStep$$ <= $CellContext`Nmag$$ \
+($CellContext`interSteps$$ + $CellContext`n$$)], {
+               $CellContext`DrawCollision[$CellContext`collpos$, \
+$CellContext`r$$], $CellContext`textPos$ = $CellContext`collpos$ + \
+$CellContext`r$$; 
+               Null}, {$CellContext`textPos$ = (-$CellContext`a$$ - 
+                  2 + (2 + 
+                    2 $CellContext`n$$ + $CellContext`a$$) \
+$CellContext`stage$ + $CellContext`a$$ Max[0, 
+                    
+                    Min[($CellContext`aStep$$ - $CellContext`stage$ \
+($CellContext`interSteps$$ + $CellContext`n$$))/$CellContext`interSteps$$, 
+                    1]]) $CellContext`r$$; Null}], {Black, 
+              Text[
+               Style[
+                StringForm["`` m/s", 
+                 NumberForm[
+                  Chop[$CellContext`velocity$], 3]], 
+                20], {$CellContext`textPos$, $CellContext`r$$}, {
+               Center, Bottom}]}, Null, 
+             Darker[Gray], 
+             Table[
+              
+              Line[{{$CellContext`x/
+                 10, (-8) $CellContext`r$$}, {$CellContext`x/
+                 10, -$CellContext`r$$}}], {$CellContext`x, 0, 
+               Floor[
+               10 ((($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                    1 + $CellContext`n$$)) $CellContext`r$$ - (
+                   1 + $CellContext`a$$) $CellContext`r$$) + 1]}], 
+             Arrowheads[{-0.03, 0.03}], 
+             
+             Arrow[{{0, (-4) $CellContext`r$$}, {
+               1/10, (-4) $CellContext`r$$}}], 
+             Text[
+              Style["100mm", 20], {1/20, (-5) $CellContext`r$$}, {
+              Center, Top}]}, ImageSize -> {550, 150}], 
+           ListPlot[{
+             
+             Table[{1000 $CellContext`ballPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, \
+$CellContext`interStepsFine$], 
+               $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, \
+$CellContext`interStepsFine$]}, {$CellContext`aStep2, 
+               0, $CellContext`interStepsFine$ + \
+($CellContext`interStepsFine$ + $CellContext`n$$) $CellContext`Nmag$$}], 
+             
+             Table[{1000 $CellContext`ballPos[$CellContext`r$$, \
+$CellContext`a$$, $CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, 
+                 1], 
+               $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep2, 
+                1]}, {$CellContext`aStep2, 1, 
+               1 + (1 + $CellContext`n$$) $CellContext`Nmag$$ - 1}]}, 
+            Joined -> {True, False}, 
+            PlotRange -> {{
+              Automatic, 
+               1000 ((($CellContext`Nmag$$ 2) ($CellContext`a$$/2 + 
+                   1 + $CellContext`n$$)) $CellContext`r$$ - (
+                 1 + $CellContext`a$$) $CellContext`r$$ + 0.1)}, Automatic}, 
+            MeshStyle -> PointSize[Large], PlotStyle -> {Thick, {
+               PointSize[Large], Blue}}, 
+            AxesOrigin -> {
+             1000 ((-$CellContext`a$$) $CellContext`r$$ - 2 $CellContext`r$$),
+               0}, Frame -> {True, True, False, False}, 
+            FrameLabel -> {"moving ball position (mm)", "velocity (m/s)"}, 
+            FrameStyle -> Directive[18], Prolog -> {Red, 
+              Line[{{-1000, 
+                 $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$]}, {
+                1000 $CellContext`ballPos[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$], 
+                 $CellContext`veloc[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$]}, {
+                1000 $CellContext`ballPos[$CellContext`r$$, $CellContext`a$$, \
+$CellContext`Nmag$$, $CellContext`n$$, $CellContext`aStep$$, \
+$CellContext`interSteps$$], 0}}]}, ImageSize -> {550, 200}, AspectRatio -> 
+            1/3]}]], 
+      "Specifications" :> {{{$CellContext`interSteps$$, 4}, ControlType -> 
+         None}, {{$CellContext`r$$, 0.005, "ball radius (m)"}, 0.0005, 0.01, 
+         Appearance -> 
+         "Labeled"}, {{$CellContext`a$$, 8, "air gap (ball radii)"}, 
+         Dynamic[2 ($CellContext`n$$ - 1)], 20, Appearance -> 
+         "Labeled"}, {{$CellContext`Nmag$$, 5, "stages"}, 1, 10, 1, 
+         Appearance -> "Labeled"}, {{$CellContext`n$$, 3, "balls per stage"}, 
+         2, 10, 1, Appearance -> 
+         "Labeled"}, {{$CellContext`aStep$$, 39, "animate"}, 0, 
+         Dynamic[$CellContext`interSteps$$ + ($CellContext`interSteps$$ + \
+$CellContext`n$$) $CellContext`Nmag$$], 1, AnimationDirection -> Forward}}, 
+      "Options" :> {}, "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{593., {275., 280.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`MagPos[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Table[((2 + 
+           2 $CellContext`n + $CellContext`a) $CellContext`r) $CellContext`k, \
+{$CellContext`k, 0, $CellContext`Nmag - 1}], $CellContext`DrawMagnet[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Red, 
+         Disk[{$CellContext`x, 0}, $CellContext`r], Green, 
+         Disk[{$CellContext`x, 0}, $CellContext`r, {-(Pi/2), Pi/
+           2}]}, $CellContext`DrawBall[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Gray, 
+         Disk[{$CellContext`x, 0}, $CellContext`r]}, $CellContext`veloc[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := $CellContext`PEtoVelocity[
+         Chop[$CellContext`PEAfterANIMATE[$CellContext`r, $CellContext`a, \
+$CellContext`Nmag, $CellContext`n, $CellContext`aStep, \
+$CellContext`interSteps] - $CellContext`PEBefore[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n]], 
+         $CellContext`massCapsule[$CellContext`r]], $CellContext`PEtoVelocity[
+         Pattern[$CellContext`\[CapitalDelta]PE, 
+          Blank[]], 
+         Pattern[$CellContext`m, 
+          Blank[]]] := Max[0, 
+         Re[
+          
+          Sqrt[(2 $CellContext`\[CapitalDelta]PE)/$CellContext`m]]], \
+$CellContext`PEAfterANIMATE[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Module[{$CellContext`PA = $CellContext`PosAfterANIMATE[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n, $CellContext`aStep, \
+$CellContext`interSteps]}, 
+         Total[
+          Table[
+           $CellContext`PEenergy[$CellContext`r, 
+            Abs[
+            Part[$CellContext`PA, $CellContext`j] - \
+$CellContext`MagPos[$CellContext`r, $CellContext`a, $CellContext`Nmag, \
+$CellContext`n]]], {$CellContext`j, 1, 
+            Length[$CellContext`PA]}], 2]], $CellContext`PosAfterANIMATE[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Table[(-$CellContext`a - 
+          2 + (2 + 
+            2 $CellContext`n + $CellContext`a) $CellContext`k + \
+$CellContext`a Max[0, 
+             
+             Min[($CellContext`aStep - $CellContext`k \
+($CellContext`interSteps + $CellContext`n))/$CellContext`interSteps, 
+              1]]) $CellContext`r, {$CellContext`k, 
+          0, $CellContext`Nmag}], $CellContext`PEenergy[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`d, 
+          Blank[]]] := ((6.490602773423956*^6/
+          2) $CellContext`r^6)/$CellContext`d^3, $CellContext`PEBefore[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Module[{$CellContext`Pb = $CellContext`PosBefore[$CellContext`r, \
+$CellContext`a, $CellContext`Nmag, $CellContext`n]}, 
+         Total[
+          Table[
+           $CellContext`PEenergy[$CellContext`r, 
+            Abs[
+            Part[$CellContext`Pb, $CellContext`j] - \
+$CellContext`MagPos[$CellContext`r, $CellContext`a, $CellContext`Nmag, \
+$CellContext`n]]], {$CellContext`j, 1, 
+            Length[$CellContext`Pb]}], 2]], $CellContext`PosBefore[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Table[(-$CellContext`a - 
+          2 + (2 + 
+            2 $CellContext`n + $CellContext`a) $CellContext`k) \
+$CellContext`r, {$CellContext`k, 
+          0, $CellContext`Nmag}], $CellContext`massCapsule[
+         Pattern[$CellContext`rad, 
+          Blank[]]] := (((4/3) Pi) $CellContext`rad^3) 
+        7850, $CellContext`DrawCollision[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`r, 
+          Blank[]]] := {Yellow, 
+         Module[{$CellContext`kmax = 16}, 
+          Polygon[
+           
+           Table[$CellContext`\[Theta] = 
+             2 ((Pi $CellContext`k)/$CellContext`kmax) + 
+              RandomReal[(2 Pi)/$CellContext`kmax]; {$CellContext`x, 
+               0} + (($CellContext`r 0.8) {
+                 Sin[$CellContext`\[Theta]], 2 Cos[$CellContext`\[Theta]]}) If[
+                EvenQ[$CellContext`k], 1, 1/3], {$CellContext`k, 
+             1, $CellContext`kmax}]]]}, $CellContext`\[Theta] = 
+       6.586822347421977, $CellContext`ballPos[
+         Pattern[$CellContext`r, 
+          Blank[]], 
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`Nmag, 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]], 
+         Pattern[$CellContext`aStep, 
+          Blank[]], 
+         Pattern[$CellContext`interSteps, 
+          Blank[]]] := 
+       Module[{$CellContext`ofset, $CellContext`stage, $CellContext`collpos}, 
+         If[$CellContext`ofset = 
+           Mod[$CellContext`aStep - 
+              1, $CellContext`interSteps + $CellContext`n] - \
+$CellContext`interSteps + 1; $CellContext`stage = Max[0, 
+             
+             Floor[($CellContext`aStep - 
+               1)/($CellContext`interSteps + $CellContext`n)]]; \
+$CellContext`collpos = (2 $CellContext`ofset - 
+             1 + (2 ($CellContext`a/2 + $CellContext`n + 
+                1)) $CellContext`stage) $CellContext`r; 
+          And[$CellContext`ofset >= 0, $CellContext`aStep > 
+            1, $CellContext`aStep <= $CellContext`Nmag \
+($CellContext`interSteps + $CellContext`n)], $CellContext`collpos - \
+$CellContext`r, (-$CellContext`a - 
+           2 + (2 + 
+             2 $CellContext`n + $CellContext`a) $CellContext`stage + \
+$CellContext`a Max[0, 
+              
+              Min[($CellContext`aStep - $CellContext`stage \
+($CellContext`interSteps + $CellContext`n))/$CellContext`interSteps, 
+               1]]) $CellContext`r]]}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->561372453]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "DetailsSection"],
+
+Cell["\<\
+The force between a spherical magnet and a steel ball bearing can be \
+approximated as the force between two aligned dipoles\
+\>", "DetailNotes",
+ CellChangeTimes->{{3.6193982011884947`*^9, 3.619398260181612*^9}, {
+  3.6194616943238993`*^9, 3.619461698731763*^9}, {3.6195131329432096`*^9, 
+  3.6195131344435177`*^9}, {3.6195132486465673`*^9, 3.6195132614898977`*^9}, {
+  3.619514176024129*^9, 3.61951417626392*^9}, {3.620076644601253*^9, 
+  3.62007664470251*^9}},
+ CellID->1868539560],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     FractionBox[
+      RowBox[{"-", "8"}], 
+      RowBox[{"3", " ", 
+       SuperscriptBox["x", "4"]}]], "\[Pi]", " ", 
+     SuperscriptBox[
+      SubscriptBox["M", "saturation"], "2"], 
+     SubscriptBox["\[Mu]", "0"], 
+     SuperscriptBox[
+      SubscriptBox["r", "1"], "3"], 
+     SuperscriptBox[
+      SubscriptBox["r", "2"], "3"]}], "=", 
+    RowBox[{"-", 
+     FractionBox["C", 
+      RowBox[{" ", 
+       SuperscriptBox["x", "4"]}]]}]}], TraditionalForm]], "InlineMath"],
+ "."
+}], "DetailNotes",
+ CellChangeTimes->{{3.619513139900524*^9, 3.619513239104027*^9}, {
+  3.619513880950461*^9, 3.619513916400429*^9}, {3.619513965722625*^9, 
+  3.6195139680461407`*^9}, {3.62007646185806*^9, 3.62007646613278*^9}},
+ CellID->2021055790],
+
+Cell[TextData[{
+ "Here the magnet radius is ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["r", "1"], TraditionalForm]], "InlineMath"],
+ "and ball bearing radius is ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["r", "2"], TraditionalForm]], "InlineMath"],
+ ", the center-to-center separation is ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]], "InlineMath"],
+ ", the magnetic separation is ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["M", "saturation"], TraditionalForm]], "InlineMath"],
+ ", and the vacuum permeability is ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[Mu]", "0"], TraditionalForm]], "InlineMath"],
+ ". For simplicity, replace other parameters with the constant ",
+ Cell[BoxData[
+  FormBox["C", TraditionalForm]], "InlineMath"],
+ ", which is constant for a given magnet and ball bearing. This constant is \
+easily measured by suspending the magnet from a string, attaching a light \
+bucket to the ball bearing, and adding weights to the bucket until the ball \
+bearing separates. "
+}], "DetailNotes",
+ CellChangeTimes->{{3.6195132699158154`*^9, 3.619513400804008*^9}, {
+  3.619513973327715*^9, 3.6195139740588408`*^9}, {3.619514090176982*^9, 
+  3.6195143109428043`*^9}, {3.619514382101405*^9, 3.619514454724957*^9}, {
+  3.6200762237950487`*^9, 3.6200762248516893`*^9}, {3.6200764825672398`*^9, 
+  3.620076640022253*^9}, {3.620076736108721*^9, 3.620076736232154*^9}, {
+  3.6201384490548563`*^9, 3.620138449158745*^9}},
+ CellID->1675907120],
+
+Cell[TextData[{
+ "Moving a magnet and ball bearing from distance ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["d", "1"], TraditionalForm]], "InlineMath"],
+ " to ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["d", "2"], TraditionalForm]], "InlineMath"],
+ " generates potential energy "
+}], "DetailNotes",
+ CellChangeTimes->{{3.6195139283483*^9, 3.619514067098358*^9}, {
+  3.619514735729533*^9, 3.619514739882416*^9}, {3.619514775736746*^9, 
+  3.619514780634547*^9}, {3.6198127174302325`*^9, 3.6198127196084504`*^9}, {
+  3.620076742206233*^9, 3.620076742397468*^9}},
+ CellID->709828134],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"\[CapitalDelta]", "\[InvisibleSpace]", 
+     RowBox[{"PE", "(", 
+      RowBox[{
+       SubscriptBox["d", "1"], ",", 
+       SubscriptBox["d", "2"]}], ")"}]}], "=", 
+    RowBox[{
+     RowBox[{"-", 
+      RowBox[{
+       SubsuperscriptBox["\[Integral]", 
+        SubscriptBox["d", "1"], 
+        SubscriptBox["d", "2"]], 
+       RowBox[{
+        FractionBox["C", 
+         RowBox[{" ", 
+          SuperscriptBox["x", "4"]}]], "d", "\[InvisibleSpace]", "x"}]}]}], 
+     "=", 
+     RowBox[{
+      FractionBox["C", "3"], 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox["1", 
+         SuperscriptBox[
+          SubscriptBox["d", "1"], "3"]], "-", 
+        FractionBox["1", 
+         SuperscriptBox[
+          SubscriptBox["d", "2"], "3"]]}], ")"}]}]}]}], TraditionalForm]], 
+  "InlineMath"],
+ "."
+}], "DetailNotes",
+ CellChangeTimes->{{3.6195139283483*^9, 3.619514067098358*^9}, {
+  3.619514735729533*^9, 3.619514739882416*^9}, {3.619514775736746*^9, 
+  3.619514780634547*^9}, {3.6198127174302325`*^9, 3.6198127218406734`*^9}, {
+  3.620076751496435*^9, 3.6200768060962954`*^9}, {3.620081770138554*^9, 
+  3.620081775552332*^9}},
+ CellID->727313440],
+
+Cell[TextData[{
+ "Under frictionless conditions, this potential energy is converted to \
+kinetic energy as the ball bearing is attracted to the magnet. If the initial \
+velocity at distance ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["d", "1"], TraditionalForm]], "InlineMath"],
+ " is 0 m/s, at distance ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["d", "2"], TraditionalForm]], "InlineMath"],
+ " the velocity is"
+}], "DetailNotes",
+ CellChangeTimes->{{3.619514727678857*^9, 3.619514789622388*^9}, {
+   3.6198127276202517`*^9, 3.619812750116501*^9}, 3.620076225923616*^9, {
+   3.620076811674891*^9, 3.620076811787274*^9}},
+ CellID->1520742732],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"v", "(", 
+     SubscriptBox["d", "2"], ")"}], " ", "=", " ", 
+    SqrtBox[
+     FractionBox[
+      RowBox[{"2", "\[CapitalDelta]", "\[InvisibleSpace]", 
+       RowBox[{"PE", "(", 
+        RowBox[{
+         SubscriptBox["d", 
+          RowBox[{"1", ","}]], ",", 
+         SubscriptBox["d", "2"]}], ")"}]}], "m"]]}], TraditionalForm]], 
+  "InlineMath"],
+ "."
+}], "DetailNotes",
+ CellChangeTimes->{{3.619514727678857*^9, 3.619514789622388*^9}, {
+  3.6198127276202517`*^9, 3.61981273150564*^9}, {3.620076826167892*^9, 
+  3.6200768348159533`*^9}, {3.6200819198119297`*^9, 3.6200819310974503`*^9}},
+ CellID->36836],
+
+Cell["\<\
+When the ball bearing collides with the magnet, the momentum of the ball \
+bearing is transferred through the magnet and then transferred to any ball \
+bearings attached to the other side of the magnet. The final ball bearing \
+rolls freely. Multiple stages of magnets and ball bearings can be coupled \
+together, with each stage adding energy to the system.\
+\>", "DetailNotes",
+ CellChangeTimes->{{3.619515070144944*^9, 3.6195152905323563`*^9}, 
+   3.6200762268880453`*^9, {3.620076841498461*^9, 3.620076860308344*^9}, {
+   3.6200818081677094`*^9, 3.620081850153674*^9}, 3.620138469556842*^9},
+ CellID->1920213777],
+
+Cell["References", "DetailNotes",
+ CellChangeTimes->{{3.620076866121748*^9, 3.6200768682847223`*^9}},
+ CellID->2063102884],
+
+Cell[TextData[{
+ "[1] J. A. Rabchuk, \"The Gauss Rifle and Magnetic Energy,\" ",
+ StyleBox["The Physics Teacher, ",
+  FontSlant->"Italic"],
+ StyleBox["41",
+  FontWeight->"Bold"],
+ "(3), 2003 pp. 158\[Dash]161."
+}], "DetailNotes",
+ CellChangeTimes->{{3.6193980466654797`*^9, 3.6193981277749*^9}, {
+   3.619398158715418*^9, 3.6193981632064123`*^9}, {3.620076870624729*^9, 
+   3.620076886262006*^9}, 3.6201384833563957`*^9},
+ CellID->612686035],
+
+Cell[TextData[{
+ "[2] D. Kagan, \"Energy and Momentum in the Gauss Accelerator,\" ",
+ StyleBox["The Physics Teacher, ",
+  FontSlant->"Italic"],
+ StyleBox["42",
+  FontWeight->"Bold"],
+ "(1), 2004 pp. 24\[Dash]26."
+}], "DetailNotes",
+ CellChangeTimes->{{3.619398128469317*^9, 3.619398197078998*^9}, {
+   3.62007687327979*^9, 3.6200769032722197`*^9}, 3.620138488524211*^9},
+ CellID->230102880]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "ControlSuggestionsSection"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[True], Cell[" Resize Images"]}],
+  "\"Click inside an image to reveal its orange resize frame.\\nDrag any of \
+the orange resize handles to resize the image.\""]], "ControlSuggestions",
+ CellChangeTimes->{3.620076909344606*^9},
+ FontFamily->"Verdana",
+ CellTags->"ResizeImages"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Rotate and Zoom in 3D"]}],
+  RowBox[{
+   "\"Drag a 3D graphic to rotate it. Starting the drag near the center \
+tumbles\\nthe graphic; starting near a corner turns it parallel to the plane \
+of the screen.\\nHold down \"", 
+    FrameBox[
+    "Ctrl", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" (or \"", 
+    FrameBox[
+    "Cmd", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], 
+    "\" on Mac) and drag up and down to zoom.\""}]]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"RotateAndZoomIn3D"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Drag Locators"]}],
+  RowBox[{"\"Drag any locator (\"", 
+    GraphicsBox[
+     LocatorBox[
+      Scaled[{0.5, 0.5}]], ImageSize -> 20], 
+    "\", etc.) to move it around.\""}]]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"DragLocators"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Create and Delete Locators"]}],
+  RowBox[{"\"Insert a new locator in the graphic by holding down the \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], 
+    "\" key\\nand clicking where you want it to be. Delete a locator by \
+clicking it\\nwhile holding down the \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" key.\""}]]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"CreateAndDeleteLocators"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[True], Cell[" Slider Zoom"]}],
+  RowBox[{"\"Hold down the \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], 
+    "\" key while moving a slider to make fine adjustments in the slider \
+value.\\nHold \"", 
+    FrameBox[
+    "Ctrl", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" and/or \"", 
+    FrameBox[
+    "Shift", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], "\" at the same time as \"", 
+    FrameBox[
+    "Alt", Background -> GrayLevel[0.9], FrameMargins -> 2, FrameStyle -> 
+     GrayLevel[0.9]], 
+    "\" to make ever finer adjustments.\""}]]], "ControlSuggestions",
+ CellChangeTimes->{3.6200769121344233`*^9},
+ FontFamily->"Verdana",
+ CellTags->"SliderZoom"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[True], Cell[" Gamepad Controls"]}],
+  "\"Control this Demonstration with a gamepad or other\\nhuman interface \
+device connected to your computer.\""]], "ControlSuggestions",
+ CellChangeTimes->{3.35696210375764*^9, 3.3895522232313623`*^9, 
+  3.620076912854425*^9},
+ FontFamily->"Verdana",
+ CellTags->"GamepadControls"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[True], Cell[" Automatic Animation"]}],
+  RowBox[{"\"Animate a slider in this Demonstration by clicking the\"", 
+    AdjustmentBox[
+     Cell[
+      GraphicsData[
+      "CompressedBitmap", 
+       "eJzzTSzJSM1NLMlMTlRwL0osyMhMLlZwyy8CCjEzMjAwcIKwAgOI/R/IhBKc\n\
+/4EAyGAG0f+nTZsGwgysIJIRKsWKLAXGIHFmEpUgLADxWUAkI24jZs+eTaEt\n\
+IG+wQKRmzJgBlYf5lhEA30OqWA=="], "Graphics", ImageSize -> {9, 9}, ImageMargins -> 
+      0, CellBaseline -> Baseline], BoxBaselineShift -> 0.1839080459770115, 
+     BoxMargins -> {{0., 0.}, {-0.1839080459770115, 0.1839080459770115}}], 
+    "\"button\\nnext to the slider, and then clicking the play button that \
+appears.\\nAnimate all controls by selecting \"", 
+    StyleBox["Autorun", FontWeight -> "Bold"], "\" from the\"", 
+    AdjustmentBox[
+     Cell[
+      GraphicsData[
+      "CompressedBitmap", 
+       "eJyNULENwyAQfEySIlMwTVJlCGRFsosokeNtqBmDBagoaZjAI1C8/8GUUUC6\n\
+57h7cQ8PvU7Pl17nUav7oj/TPH7V7b2QJAUAXBkKmCPRowxICy64bRvGGNF7\n\
+X8CctGoDSN4xhIDGGDhzFXwUh3/ClBKrDQPmnGXtI6u0OOd+tZBVUqy1xSaH\n\
+UqiK6pPe4XdEdAz6563tx/gejuORGMxJaz8mdpJn7hc="], "Graphics", 
+      ImageSize -> {10, 10}, ImageMargins -> 0, CellBaseline -> Baseline], 
+     BoxBaselineShift -> 0.1839080459770115, 
+     BoxMargins -> {{0., 0.}, {-0.1839080459770115, 0.1839080459770115}}], 
+    "\"menu.\""}]]], "ControlSuggestions",
+ CellChangeTimes->{3.6194617055789127`*^9},
+ FontFamily->"Verdana",
+ CellTags->"AutomaticAnimation"],
+
+Cell[BoxData[
+ TooltipBox[
+  RowBox[{
+   CheckboxBox[False], Cell[" Bookmark Animation"]}],
+  RowBox[{
+   "\"See a prepared animation of this Demonstration by selecting\\n\"", 
+    StyleBox["Animate Bookmarks", FontWeight -> "Bold"], "\" from the\"", 
+    AdjustmentBox[
+     Cell[
+      GraphicsData[
+      "CompressedBitmap", 
+       "eJyNULENwyAQfEySIlMwTVJlCGRFsosokeNtqBmDBagoaZjAI1C8/8GUUUC6\n\
+57h7cQ8PvU7Pl17nUav7oj/TPH7V7b2QJAUAXBkKmCPRowxICy64bRvGGNF7\n\
+X8CctGoDSN4xhIDGGDhzFXwUh3/ClBKrDQPmnGXtI6u0OOd+tZBVUqy1xSaH\n\
+UqiK6pPe4XdEdAz6563tx/gejuORGMxJaz8mdpJn7hc="], "Graphics", 
+      ImageSize -> {10, 10}, ImageMargins -> 0, CellBaseline -> Baseline], 
+     BoxBaselineShift -> 0.1839080459770115, 
+     BoxMargins -> {{0., 0.}, {-0.1839080459770115, 0.1839080459770115}}], 
+    "\"menu.\""}]]], "ControlSuggestions",
+ FontFamily->"Verdana",
+ CellTags->"BookmarkAnimation"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "SearchTermsSection"],
+
+Cell["Gauss gun", "SearchTerms",
+ CellChangeTimes->{{3.61946170869801*^9, 3.619461712158218*^9}},
+ CellID->575451788],
+
+Cell["Gauss rifle", "SearchTerms",
+ CellChangeTimes->{{3.619461712820174*^9, 3.619461715166664*^9}},
+ CellID->1499338475],
+
+Cell["Gauss accelerator", "SearchTerms",
+ CellChangeTimes->{{3.619461716278517*^9, 3.6194617209834747`*^9}},
+ CellID->808635427],
+
+Cell["linear accelerator", "SearchTerms",
+ CellChangeTimes->{{3.619461723421254*^9, 3.619461727840489*^9}},
+ CellID->1459103373],
+
+Cell["magnet", "SearchTerms",
+ CellChangeTimes->{{3.6194617289817533`*^9, 3.619461731040769*^9}},
+ CellID->1034624918],
+
+Cell["conservation of energy", "SearchTerms",
+ CellChangeTimes->{{3.619461735366267*^9, 3.6194617391667*^9}},
+ CellID->765907067],
+
+Cell["collision", "SearchTerms",
+ CellChangeTimes->{{3.619461743954453*^9, 3.619461745327426*^9}},
+ CellID->583094951],
+
+Cell["elastic collision", "SearchTerms",
+ CellChangeTimes->{{3.6195065084599648`*^9, 3.6195065119097033`*^9}},
+ CellID->1966485707],
+
+Cell["Newton's cradle", "SearchTerms",
+ CellChangeTimes->{{3.6195130620380507`*^9, 3.6195130625792923`*^9}},
+ CellID->951950219]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "RelatedLinksSection"],
+
+Cell[TextData[ButtonBox["Elastic Collision of Two Spheres",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://demonstrations.wolfram.com/ElasticCollisionOfTwoSpheres/"], 
+   None},
+ ButtonNote->
+  "http://demonstrations.wolfram.com/ElasticCollisionOfTwoSpheres/"]], \
+"RelatedLinks",
+ CellChangeTimes->{{3.61950616689427*^9, 3.619506167429656*^9}, {
+  3.6195127653351316`*^9, 3.61951277504412*^9}},
+ CellID->658582295],
+
+Cell[TextData[ButtonBox["Elastic Collisions of Two Spheres",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://demonstrations.wolfram.com/ElasticCollisionsOfTwoSpheres/ "], 
+   None},
+ ButtonNote->
+  "http://demonstrations.wolfram.com/ElasticCollisionsOfTwoSpheres/ "]], \
+"RelatedLinks",
+ CellChangeTimes->{{3.6195062645089912`*^9, 3.6195062812726994`*^9}, {
+  3.6195127884914217`*^9, 3.6195127951313477`*^9}},
+ CellID->847290129],
+
+Cell[TextData[ButtonBox["Conservation of Momentum",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://scienceworld.wolfram.com/physics/ConservationofMomentum.html"],
+    None},
+ ButtonNote->
+  "http://scienceworld.wolfram.com/physics/ConservationofMomentum.html"]], \
+"RelatedLinks",
+ CellChangeTimes->{{3.619506324998046*^9, 3.6195063357633457`*^9}, {
+   3.619512799333499*^9, 3.619512832978736*^9}, 3.619512908447505*^9, 
+   3.6195130480494623`*^9},
+ CellID->1039807278],
+
+Cell[TextData[ButtonBox["Elastic Collision",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://scienceworld.wolfram.com/physics/ElasticCollision.html "], 
+   None},
+ ButtonNote->
+  "http://scienceworld.wolfram.com/physics/ElasticCollision.html "]], \
+"RelatedLinks",
+ CellChangeTimes->{{3.619512891891687*^9, 3.619512900990448*^9}},
+ CellID->493196909],
+
+Cell[TextData[ButtonBox["Phenomenological Approximation to Newton's Cradle",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://demonstrations.wolfram.com/\
+PhenomenologicalApproximationToNewtonsCradle/"], None},
+ ButtonNote->
+  "http://demonstrations.wolfram.com/\
+PhenomenologicalApproximationToNewtonsCradle/"]], "RelatedLinks",
+ CellChangeTimes->{{3.619506566182416*^9, 3.6195065672026253`*^9}, {
+  3.61951303906875*^9, 3.619513041827365*^9}},
+ CellID->674160583]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "AuthorSection"],
+
+Cell[TextData[{
+ "Contributed by: ",
+ ButtonBox["Aaron Becker",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Aaron+Becker"], 
+    None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/author.html?author=Aaron+Becker"]
+}], "Author",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.432333043774981*^9, 3.432333045441087*^9}, {
+   3.619461751608841*^9, 3.619461753416134*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{989, 596},
+WindowMargins->{{Automatic, 80}, {39, Automatic}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "Demonstration.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "ResizeImages"->{
+  Cell[137370, 3216, 331, 8, 29, "ControlSuggestions",
+   CellTags->"ResizeImages"]},
+ "RotateAndZoomIn3D"->{
+  Cell[137704, 3226, 661, 16, 29, "ControlSuggestions",
+   CellTags->"RotateAndZoomIn3D"]},
+ "DragLocators"->{
+  Cell[138368, 3244, 318, 10, 29, "ControlSuggestions",
+   CellTags->"DragLocators"]},
+ "CreateAndDeleteLocators"->{
+  Cell[138689, 3256, 615, 14, 29, "ControlSuggestions",
+   CellTags->"CreateAndDeleteLocators"]},
+ "SliderZoom"->{
+  Cell[139307, 3272, 870, 22, 29, "ControlSuggestions",
+   CellTags->"SliderZoom"]},
+ "GamepadControls"->{
+  Cell[140180, 3296, 371, 9, 29, "ControlSuggestions",
+   CellTags->"GamepadControls"]},
+ "AutomaticAnimation"->{
+  Cell[140554, 3307, 1485, 31, 29, "ControlSuggestions",
+   CellTags->"AutomaticAnimation"]},
+ "BookmarkAnimation"->{
+  Cell[142042, 3340, 886, 20, 29, "ControlSuggestions",
+   CellTags->"BookmarkAnimation"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"ResizeImages", 147299, 3501},
+ {"RotateAndZoomIn3D", 147409, 3504},
+ {"DragLocators", 147520, 3507},
+ {"CreateAndDeleteLocators", 147637, 3510},
+ {"SliderZoom", 147752, 3513},
+ {"GamepadControls", 147859, 3516},
+ {"AutomaticAnimation", 147973, 3519},
+ {"BookmarkAnimation", 148091, 3522}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 108, 1, 76, "DemoTitle"],
+Cell[CellGroupData[{
+Cell[712, 27, 33, 0, 275, "InitializationSection"],
+Cell[748, 29, 369, 8, 25, "Input",
+ InitializationCell->True,
+ CellID->1726238253],
+Cell[1120, 39, 878, 25, 40, "Input",
+ InitializationCell->True,
+ CellID->1427785712],
+Cell[2001, 66, 576, 16, 25, "Input",
+ InitializationCell->True,
+ CellID->1601929535],
+Cell[2580, 84, 1648, 44, 96, "Input",
+ InitializationCell->True,
+ CellID->1913216466],
+Cell[4231, 130, 372, 8, 25, "Input",
+ InitializationCell->True,
+ CellID->474106050],
+Cell[4606, 140, 658, 17, 43, "Input",
+ InitializationCell->True,
+ CellID->348522383],
+Cell[5267, 159, 787, 22, 25, "Input",
+ InitializationCell->True,
+ CellID->2021265122],
+Cell[6057, 183, 695, 18, 25, "Input",
+ InitializationCell->True,
+ CellID->1611457005],
+Cell[6755, 203, 1260, 35, 63, "Input",
+ InitializationCell->True,
+ CellID->1001732982],
+Cell[8018, 240, 814, 22, 51, "Input",
+ InitializationCell->True,
+ CellID->1326074202],
+Cell[8835, 264, 1274, 34, 41, "Input",
+ InitializationCell->True,
+ CellID->1410320318],
+Cell[10112, 300, 1369, 37, 41, "Input",
+ InitializationCell->True,
+ CellID->602566128],
+Cell[11484, 339, 580, 15, 50, "Input",
+ InitializationCell->True,
+ CellID->625462413],
+Cell[12067, 356, 3039, 80, 263, "Input",
+ InitializationCell->True,
+ CellID->205617133],
+Cell[15109, 438, 864, 22, 41, "Input",
+ InitializationCell->True,
+ CellID->62886909]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16010, 465, 29, 0, 243, "ManipulateSection"],
+Cell[CellGroupData[{
+Cell[16064, 469, 23198, 552, 1253, "Input"],
+Cell[39265, 1023, 17825, 388, 621, "Output",
+ CellID->1902170897]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[57139, 1417, 36, 0, 181, "ManipulateCaptionSection"],
+Cell[57178, 1419, 1532, 22, 87, "ManipulateCaption"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[58747, 1446, 28, 0, 179, "ThumbnailSection"],
+Cell[58778, 1448, 17733, 384, 567, "Output",
+ CellID->170427315]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[76548, 1837, 28, 0, 149, "SnapshotsSection"],
+Cell[76579, 1839, 17719, 383, 567, "Output",
+ CellID->1776181754],
+Cell[94301, 2224, 17722, 383, 567, "Output",
+ CellID->116562531],
+Cell[112026, 2609, 17722, 383, 567, "Output",
+ CellID->561372453]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[129785, 2997, 26, 0, 357, "DetailsSection"],
+Cell[129814, 2999, 494, 9, 23, "DetailNotes",
+ CellID->1868539560],
+Cell[130311, 3010, 801, 25, 31, "DetailNotes",
+ CellID->2021055790],
+Cell[131115, 3037, 1457, 34, 71, "DetailNotes",
+ CellID->1675907120],
+Cell[132575, 3073, 582, 15, 23, "DetailNotes",
+ CellID->709828134],
+Cell[133160, 3090, 1217, 38, 38, "DetailNotes",
+ CellID->727313440],
+Cell[134380, 3130, 644, 16, 39, "DetailNotes",
+ CellID->1520742732],
+Cell[135027, 3148, 675, 20, 49, "DetailNotes",
+ CellID->36836],
+Cell[135705, 3170, 626, 10, 55, "DetailNotes",
+ CellID->1920213777],
+Cell[136334, 3182, 122, 2, 23, "DetailNotes",
+ CellID->2063102884],
+Cell[136459, 3186, 441, 11, 23, "DetailNotes",
+ CellID->612686035],
+Cell[136903, 3199, 390, 10, 23, "DetailNotes",
+ CellID->230102880]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[137330, 3214, 37, 0, 131, "ControlSuggestionsSection"],
+Cell[137370, 3216, 331, 8, 29, "ControlSuggestions",
+ CellTags->"ResizeImages"],
+Cell[137704, 3226, 661, 16, 29, "ControlSuggestions",
+ CellTags->"RotateAndZoomIn3D"],
+Cell[138368, 3244, 318, 10, 29, "ControlSuggestions",
+ CellTags->"DragLocators"],
+Cell[138689, 3256, 615, 14, 29, "ControlSuggestions",
+ CellTags->"CreateAndDeleteLocators"],
+Cell[139307, 3272, 870, 22, 29, "ControlSuggestions",
+ CellTags->"SliderZoom"],
+Cell[140180, 3296, 371, 9, 29, "ControlSuggestions",
+ CellTags->"GamepadControls"],
+Cell[140554, 3307, 1485, 31, 29, "ControlSuggestions",
+ CellTags->"AutomaticAnimation"],
+Cell[142042, 3340, 886, 20, 29, "ControlSuggestions",
+ CellTags->"BookmarkAnimation"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[142965, 3365, 30, 0, 165, "SearchTermsSection"],
+Cell[142998, 3367, 117, 2, 23, "SearchTerms",
+ CellID->575451788],
+Cell[143118, 3371, 121, 2, 23, "SearchTerms",
+ CellID->1499338475],
+Cell[143242, 3375, 128, 2, 23, "SearchTerms",
+ CellID->808635427],
+Cell[143373, 3379, 128, 2, 23, "SearchTerms",
+ CellID->1459103373],
+Cell[143504, 3383, 118, 2, 23, "SearchTerms",
+ CellID->1034624918],
+Cell[143625, 3387, 129, 2, 23, "SearchTerms",
+ CellID->765907067],
+Cell[143757, 3391, 118, 2, 23, "SearchTerms",
+ CellID->583094951],
+Cell[143878, 3395, 131, 2, 23, "SearchTerms",
+ CellID->1966485707],
+Cell[144012, 3399, 128, 2, 23, "SearchTerms",
+ CellID->951950219]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[144177, 3406, 31, 0, 149, "RelatedLinksSection"],
+Cell[144211, 3408, 423, 10, 23, "RelatedLinks",
+ CellID->658582295],
+Cell[144637, 3420, 436, 10, 23, "RelatedLinks",
+ CellID->847290129],
+Cell[145076, 3432, 477, 11, 23, "RelatedLinks",
+ CellID->1039807278],
+Cell[145556, 3445, 357, 9, 23, "RelatedLinks",
+ CellID->493196909],
+Cell[145916, 3456, 471, 10, 23, "RelatedLinks",
+ CellID->674160583]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[146424, 3471, 25, 0, 149, "AuthorSection"],
+Cell[146452, 3473, 436, 12, 23, "Author"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
