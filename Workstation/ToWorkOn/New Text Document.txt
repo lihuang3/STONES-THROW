@@ -1,0 +1,9 @@
+http://heyes-jones.com/astar.php
+
+http://web.mit.edu/eranki/www/tutorials/search/
+
+https://github.com/justinhj/astar-algorithm-cpp/blob/master/cpp/findpath.cpp
+
+http://www.redblobgames.com/pathfinding/a-star/introduction.html
+
+http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
