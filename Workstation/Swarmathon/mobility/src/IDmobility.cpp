@@ -33,22 +33,16 @@ void setVelocity(double linearVel, double angularVel);
 //Numeric Variables
 geometry_msgs::Pose2D currentLocation;
 geometry_msgs::Pose2D goalLocation;
-
-//geometry_msgs::Pose2D tagLocation;
-float tagLocation_x [4] = {0};
-float tagLocation_y [4] = {0};
-float tag_distance = 0; 
-int cnt = 0;
-int ii;
-
 int currentMode = 0;
 float mobilityLoopTimeStep = 0.1; //time between the mobility loop calls
 float status_publish_interval = 5;
 float killSwitchTimeout = 10;
 std_msgs::Int16 targetDetected; //ID of the detected target
-
 bool targetsCollected [256] = {0}; //array of booleans indicating whether each target ID has been found
-
+int myID = -1;
+int IDcnt=0;
+string hostID [3];
+const int NSwarmie = 3;
 // state machine states
 #define STATE_MACHINE_TRANSFORM	0
 #define STATE_MACHINE_ROTATE	1
@@ -67,10 +61,13 @@ ros::Publisher status_publisher;
 ros::Publisher targetCollectedPublish;
 ros::Publisher targetPickUpPublish;
 ros::Publisher targetDropOffPublish;
+//Todo
+ros::Publisher hostIDPublisher;
 
-//ros::Publisher tagLocationPublish;
 
 //Subscribers
+
+ros::Subscriber hostIDSubscriber;
 ros::Subscriber joySubscriber;
 ros::Subscriber modeSubscriber;
 ros::Subscriber targetSubscriber;
@@ -78,18 +75,18 @@ ros::Subscriber obstacleSubscriber;
 ros::Subscriber odometrySubscriber;
 ros::Subscriber targetsCollectedSubscriber;
 
-//ros::Subscriber tagLocationSubscriber;
 //Timers
 ros::Timer stateMachineTimer;
 ros::Timer publish_status_timer;
 ros::Timer killSwitchTimer;
-
+//Todo
+ros::Timer hostIDTimer;
 // OS Signal Handler
 void sigintEventHandler(int signal);
 
 //Callback handlers
-//void tagLocationHandler(const geometry_msgs::Twist::ConstPtr& message);
-
+//Todo
+void hostIDHandler(const std_msgs::String::ConstPtr& message);
 void joyCmdHandler(const geometry_msgs::Twist::ConstPtr& message);
 void modeHandler(const std_msgs::UInt8::ConstPtr& message);
 void targetHandler(const shared_messages::TagsImage::ConstPtr& tagInfo);
@@ -99,7 +96,8 @@ void mobilityStateMachine(const ros::TimerEvent&);
 void publishStatusTimerEventHandler(const ros::TimerEvent& event);
 void targetsCollectedHandler(const std_msgs::Int16::ConstPtr& message);
 void killSwitchTimerEventHandler(const ros::TimerEvent& event);
-
+//Todo
+void hostIDTimerEventHandler(const ros::TimerEvent& event);
 int main(int argc, char **argv) {
 
     gethostname(host, sizeof (host));
@@ -134,7 +132,10 @@ int main(int argc, char **argv) {
     obstacleSubscriber = mNH.subscribe((publishedName + "/obstacle"), 10, obstacleHandler);
     odometrySubscriber = mNH.subscribe((publishedName + "/odom/ekf"), 10, odometryHandler);
     targetsCollectedSubscriber = mNH.subscribe(("targetsCollected"), 10, targetsCollectedHandler);
-
+   // Todo
+    hostIDSubscriber = mNH.subscribe("hostID", 10, hostIDHandler);
+    
+    hostIDPublisher = mNH.advertise<std_msgs::String>(("hostID"), 1, true);
     status_publisher = mNH.advertise<std_msgs::String>((publishedName + "/status"), 1, true);
     velocityPublish = mNH.advertise<geometry_msgs::Twist>((publishedName + "/velocity"), 10);
     stateMachinePublish = mNH.advertise<std_msgs::String>((publishedName + "/state_machine"), 1, true);
@@ -145,7 +146,7 @@ int main(int argc, char **argv) {
     publish_status_timer = mNH.createTimer(ros::Duration(status_publish_interval), publishStatusTimerEventHandler);
     killSwitchTimer = mNH.createTimer(ros::Duration(killSwitchTimeout), killSwitchTimerEventHandler);
     stateMachineTimer = mNH.createTimer(ros::Duration(mobilityLoopTimeStep), mobilityStateMachine);
-    
+    hostIDTimer = mNH.createTimer(ros::Duration(100), hostIDTimerEventHandler);
     ros::spin();
     
     return EXIT_SUCCESS;
@@ -153,7 +154,15 @@ int main(int argc, char **argv) {
 
 void mobilityStateMachine(const ros::TimerEvent&) {
     std_msgs::String stateMachineMsg;
-    
+    if (myID<0){
+ 	for(int ii=1;ii<(NSwarmie+1);ii=ii+1)
+		{
+		if (hostID [ii] == publishedName) myID = ii;
+			
+		}	
+
+	}
+
     if (currentMode == 2 || currentMode == 3) { //Robot is in automode
 
 		switch(stateMachineState) {
@@ -190,16 +199,19 @@ void mobilityStateMachine(const ros::TimerEvent&) {
 				//Otherwise, assign a new goal
 				else {
 					 //select new heading from Gaussian distribution around current heading
-					//Todo				        
-					//goalLocation.x = 
-
-
-
 					goalLocation.theta = rng->gaussian(currentLocation.theta, 0.25);
-					
+
 					//select new position 50 cm from current location
+					if (myID == 1){
 					goalLocation.x = currentLocation.x + (0.5 * cos(goalLocation.theta));
 					goalLocation.y = currentLocation.y + (0.5 * sin(goalLocation.theta));
+					}else if (myID ==2){
+					goalLocation.x = currentLocation.x + (0.0 * cos(goalLocation.theta));
+					goalLocation.y = currentLocation.y + (0.0 * sin(goalLocation.theta));
+					}else{
+					goalLocation.x = currentLocation.x + (0 * cos(goalLocation.theta));
+					goalLocation.y = currentLocation.y + (0.5);
+					}
 				}
 				
 				//Purposefully fall through to next case without breaking
@@ -303,35 +315,6 @@ void targetHandler(const shared_messages::TagsImage::ConstPtr& message) {
 			
 			//publish detected target
 			targetCollectedPublish.publish(targetDetected);
-			
-			//Todo
-			//Add target location for own use
-			if(cnt < 4){
-			if (cnt ==0){
-				cnt = cnt +1;
-				tagLocation.x[cnt] = currentLocation.x;
-				tagLocation.y[cnt] = currentLocation.y;
-				}    
-			else {
-			        for (int ii = 1;ii<=cnt;ii=ii+1){			         
-				   tag_distance = sqrt(pow(currentLocation.x-tagLocation_x[ii],2)+pow(currentLocation.y-tagLocation_y[ii],2));
-				       if(tag_distance > 1){
-					cnt = cnt +1;
-					tagLocation.x[cnt] = currentLocation.x;
-					tagLocation.y[cnt] = currentLocation.y;
-					} 
-				    }
-				   			
-
-				}
-								
-
-				}
-
-
-				
-			//Todo
-			//add tag location and publish the location
 
 			//publish to scoring code
 			targetPickUpPublish.publish(message->image);
@@ -410,6 +393,21 @@ void killSwitchTimerEventHandler(const ros::TimerEvent& t)
 
 void targetsCollectedHandler(const std_msgs::Int16::ConstPtr& message) {
 	targetsCollected[message->data] = 1;
+}
+//Todo
+void hostIDTimerEventHandler(const ros::TimerEvent& event)
+{
+  std_msgs::String msg;
+  msg.data = publishedName;
+  hostIDPublisher.publish(msg); 
+ 
+}
+
+void hostIDHandler(const std_msgs::String::ConstPtr& message){
+   if(IDcnt<4){
+   IDcnt = IDcnt+1;
+   hostID [IDcnt] = message->data;
+   }
 }
 
 void sigintEventHandler(int sig)

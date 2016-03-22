@@ -1,0 +1,9 @@
+#1 compile cpp:
+
+	g++ programname.cpp -o executable_programname
+
+
+#2 run cpp exe:
+	./programname
+or
+	chmod +x programname
