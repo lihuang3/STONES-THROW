@@ -11,12 +11,22 @@ find_package(catkin REQUIRED COMPONENTS
   shared_messages
 )
 
-catkin_package(
-  CATKIN_DEPENDS geometry_msgs roscpp sensor_msgs std_msgs random_numbers message_runtime shared_messages
-)
-
 include_directories(
   ${catkin_INCLUDE_DIRS}
+)
+
+add_message_files(
+	FILES
+	target.msg
+)
+
+generate_messages(
+	DEPENDENCIES
+	std_msgs
+)
+
+catkin_package(
+  CATKIN_DEPENDS geometry_msgs roscpp sensor_msgs std_msgs random_numbers message_runtime shared_messages
 )
 
 add_executable(
@@ -24,6 +34,7 @@ add_executable(
 )
 
 add_dependencies(mobility ${catkin_EXPORTED_TARGETS})
+add_dependencies(mobility ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 target_link_libraries(
   mobility
