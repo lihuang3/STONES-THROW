@@ -1,0 +1,83 @@
+%%%% Weekly Report Information %%%%
+\newcommand{\handoutName}{Weekly report}
+%\newcommand{\handoutdate}{August 25, 2015}  %use this to hard code the date
+\newcommand{\handoutdate}{\today}
+\newcommand{\duedate}{}
+
+
+\input{Header.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%{\scriptsize
+%%Weekly reports are to be emailed to atbecker@uh.edu by 5:00pm on Tuesdays.  The purpose of a weekly report is to:
+%%(1) give you text and images for your papers, thesis, and dissertation, (2) document progress, (3) identify if you are stuck or need resources.
+%%}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{My \emph{Goals} from last week}
+\begin{itemize}
+\item CASE 2016 video
+\item Swarmathon algorithm
+
+
+
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{My \emph{Accomplishments} this week}
+
+
+\begin{itemize}
+\subsection{SMT video}
+\item Uploaded the latest version video of SMT manifolds and amplifiers
+\subsection{Swarmathon}
+Finished Swarmathon search algorithm. The following items are the function I programmed. 
+\item Each robot is assigned a unique ID via publisher to carry out different tasks.
+\item The algorithm detects the boundary of the map to set up coordinate frame and grid division
+\item The whole map is divided into 4 equal-size quadrants, and each of these 4 quadrants is further divided into 4 smaller equal-size, and so on till the smallest quadrant has a grid resolution $\le$ 0.8 m.
+\item Assign weight to each grid.
+\item As targets are detected in a grid, the grid weight increases and so do the neighboring grids
+\item As a robot reaches a desired region but find targets already collected, decreases the grid weight
+\item Each time, a robot is trying locate the largest weight grid and set for goal location.
+\item The reason using grid division is to reduce on-board computation, so a robot does not have to scan the whole map to decide the next goal location.
+   
+
+%%
+%%Deliverables can be documents, code, videos, plots, experiments, etc.	Save and backup all work [code, data, LaTeX, images, videos].  Papers and code should be saved to our git server: \href{github.com/aabecker}{https://github.com/aabecker}.
+%%
+
+%\item A couple of images are added here to show parts of my work.
+
+\end{itemize}
+
+%	\begin{figure}[h]
+%		\begin{center}
+%		\includegraphics[width = \columnwidth]{fig/schematic_R}
+%
+%		\vspace{1em}
+%		\caption{}
+%	\end{center}
+%	\end{figure}
+
+
+
+
+%%\section{Meeting with Dr. Becker on $<$INSERT DATE and TIME$>$}
+%%
+%%What I need Dr. Becker to do:
+%%\begin{itemize}
+%%\item something for Dr. Becker to do
+%%\item $\ldots$
+%%\end{itemize}
+%%
+
+
+
+%%
+%%{\tiny
+%%Template available at \href{https://github.com/aabecker/RoboticSwarmControlLab/blob/master/WeeklyReportTemplate/weekly_Report_Template.pdf}{https://github.com/aabecker/RoboticSwarmControlLab/blob/master/WeeklyReportTemplate/weekly\_Report\_Template.pdf}
+%%}
+
+
+\end{document}
+
